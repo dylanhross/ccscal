@@ -47,99 +47,25 @@ class GetData (object):
 		GetData -- Class
 		
 		Extracts and stores the raw data from a .txt data file:
-			GetData.xlst 		- m/z values (list)
-			GetData.ylst		- dtbin values (list)
-			GetData.zlst		- intensity values (list)
+			GetData.data		- array with mass, dtbin, and intensity from the
+									pre-processsed .txt file (array)
 		
 		Input(s):
 			data_filename		- file name of the raw data file (string)
 			pp					- call PreProcessTxt.o to pre-process the input .txt file
 									using a specified mass and mass window specified by a 
 									two-membered list: [specified mass, mass window]
-									(boolean or list) [default = False]
+									(list)
 	"""
-	def __init__ (self, data_filename, pp=False):
-		# if the pre-process flag is not set continue as usual...
-		if not pp:
-			self.fn = data_filename
-			self.open_data = open(self.fn, "r+")
-			self.line_list = self.open_data.readlines()
-			self.makeGll()
-			self.extract()
-			self.num_vals = len(self.xlst)
-			self.open_data.close()
-			self.line_list = []
-			self.good_line_list = []
-			self.good_x_values = []
-			self.good_y_values = []
-			self.good_z_values = []
-		else: 
-			# create the pre-processed data file
-			self.callPreProcessTxt(data_filename, pp)
-			# generate an array with the mass, dtbin, and intensity values from the pre-processed
-			# data file
-			ppfilename = os.path.splitext(data_filename)[0] + ".pp.txt"
-			self.data = numpy.genfromtxt(ppfilename, unpack=True)
+	def __init__ (self, data_filename, pp):
+		# create the pre-processed data file
+		self.callPreProcessTxt(data_filename, pp)
+		# generate an array with the mass, dtbin, and intensity values from the pre-processed
+		# data file
+		self.ppfilename = os.path.splitext(data_filename)[0] + ".pp-" + str(pp[0]) + ".txt"
+		self.data = numpy.genfromtxt(self.ppfilename, unpack=True)
 			
 
-	"""
-		GetData.makeGll -- Method
-		
-		Generates a good_line_list containing only lines which begin with a number or a 
-		a space. This allows data to be extracted from files with text headers.
-		
-		Input(s):
-			none
-	"""
-	def makeGll (self):
-		self.good_line_list = []		
-		for n in self.line_list:
-			self.tempL = []
-			for e in n:	
-				self.tempL.append(e)
-			if self.tempL[0] == "0"\
-			or self.tempL[0] == "1"\
-			or self.tempL[0] == "2"\
-			or self.tempL[0] == "3"\
-			or self.tempL[0] == "4"\
-			or self.tempL[0] == "5"\
-			or self.tempL[0] == "6"\
-			or self.tempL[0] == "7"\
-			or self.tempL[0] == "8"\
-			or self.tempL[0] == "9"\
-			or self.tempL[0] == " " :
-				self.good_line_list.append(n)
-		self.line_list = []
-
-	"""
-		GetData.extract -- Method
-		
-		Extracts values from the first column into GetData.xlst, values from the second
-		column into GetData.ylst, and values from the third column into GetData.zlst
-		
-		Input(s):
-			none
-	"""
-	def extract (self):
-		self.good_x_values = []
-		self.good_y_values = []
-		self.good_z_values = []				
-		for n1 in range(0, (len(self.good_line_list) )) :
-			self.Lchop = []
-			self.Lchop = self.good_line_list[n1].strip().split()
-			self.good_x_values.append(self.Lchop[0])
-			self.good_y_values.append(self.Lchop[1])
-			self.good_z_values.append(self.Lchop[2])
-		for n3 in range (0, len(self.good_x_values)) :
-			self.good_x_values[n3] = float (self.good_x_values[n3])
-			self.good_y_values[n3] = float (self.good_y_values[n3])
-			self.good_z_values[n3] = float (self.good_z_values[n3])
-		self.xlst = self.good_x_values
-		self.ylst = self.good_y_values
-		self.zlst = self.good_z_values	
-		self.good_x_values = []
-		self.good_y_values = []
-		self.good_z_values = []
 	
 	"""
 		GetData.callPreProcessTxt -- Method
@@ -174,16 +100,17 @@ class DtHist (object):
 				  GetData,\
 				  specified_mass,\
 				  mass_epsilon):
-		self.specmass = float(specified_mass)
+		self.specmass = specified_mass
 		self.mass_epsilon = mass_epsilon
-		self.mass_epsilon = float(self.mass_epsilon)
+		# make internal lists from the GetData object
+		self.datarray = GetData.data
+		self.masslst = GetData.data[0]
 		self.dtbinlst = []
 		self.intenlst = []
-		self.generateLists(GetData)
-		self.getAvgDtbin()
+		self.generateLists()
 		self.dtbintransformed = []
-		self.filename = GetData.fn
-	
+		self.filename = GetData.ppfilename
+			
 	"""
 		DtHist.generateLists -- Method
 		
@@ -194,44 +121,12 @@ class DtHist (object):
 		Input(s):
 			GetData				- object containing raw data (GetData)
 	"""
-	def	generateLists (self, GetData):
-		for n in range (GetData.num_vals):
-			if abs(GetData.xlst[n] - self.specmass) <= self.mass_epsilon:
-				self.dtbinlst.append(GetData.ylst[n])
-				self.intenlst.append(GetData.zlst[n])
+	def	generateLists (self):
+		for n in range (len(self.masslst)):
+			if abs(self.masslst[n] - self.specmass) <= self.mass_epsilon:
+				self.dtbinlst.append(self.datarray[1][n])
+				self.intenlst.append(self.datarray[2][n])
 	
-	"""
-		DtHist.getAvgDtbin -- Method
-		
-		Computes the average dtbin, weighted by intensity, of the current dt histogram. 
-		Stores this value in:
-			DtHist.avg_dtbin	- average dtbin value weighted by intensity (float)
-		
-		Input(s):
-			none
-	"""
-	def getAvgDtbin (self):
-		self.dtbinintenmultlst = []
-		for n in range (len (self.dtbinlst)):
-			self.dtbinintenmultlst.append(self.dtbinlst[n] * self.intenlst[n])
-		self.avg_dtbin = sum (self.dtbinintenmultlst) / sum (self.intenlst)
-	
-	"""
-		DtHist.dtbinToDt -- Method
-		
-		Converts DtHist.dtbinlst and DtHist.avg_dtbin into units of dt (ms) instead of 
-		dtbin using the conversion factor dtbin_dt_equiv. Converted values are stored in:
-			DtHist.dtlst		- dt values (list)
-			DtHist.avg_dtb		- average dt value (float)
-		
-		Input(s):
-			dtbin_dt_equiv		- ms/dtbin conversion factor (float)
-	"""
-	def dtbinToDt (self, dtbin_dt_equiv):
-		self.dtlst = []
-		for n in range (len(self.dtbinlst)):
-			self.dtlst.append(self.dtbinlst[n] * self.dtbin_dt_equiv)
-		self.avg_dt = self.avg_dtbin * self.dtbin_dt_equiv
 	
 	"""
 		DtHist.transformHist -- Method
@@ -249,22 +144,6 @@ class DtHist (object):
 			for j in range (int(self.intenlst[i])):
 				self.dtbintransformed.append(self.dtbinlst[i])
 	
-	"""
-		DtHist.showDtHist -- Method
-		
-		Plots the data contained in Dthist.dtbintransformed using matplotlib.pyplot.hist();
-		
-		Input(s):
-			none
-	"""	
-	def showDtHist (self):
-		if self.dtbintransformed == []:
-			self.transformHist()
-		pplt.hist(self.dtbintransformed,100)
-		pplt.xlabel("dt bin")
-		pplt.ylabel("intensity")
-		pplt.show()
-		
 ##########################################################################################
 class GaussFit (object):
 	"""
@@ -408,7 +287,7 @@ class DataCollector (object):
 		if not rawdatafilename:
 			pass
 		else:
-			#only make a GetData object for the class if a rawdatafilename has been provided
+			# only make a GetData object for the class if a rawdatafilename has been provided
 			self.own_GetData = GetData(rawdatafilename)
 			
 
@@ -461,7 +340,7 @@ class DataCollector (object):
 		smass = specified_mass
 		mepsilon = mass_epsilon
 		if not have_GetData:
-			gd = GetData(dfname)
+			gd = GetData(dfname, [smass, (mepsilon * 2.0)])
 			dth = DtHist(gd, smass, mepsilon)
 			gf = GaussFit(dth)
 			return gf.opt_mean * self.bin_ms_equiv
@@ -490,7 +369,7 @@ class CcsCalibration (object):
 			cal_mz					- calibrant m/z values (list)
 			cal_lit_ccs				- calibrant literature ccs values (list)
 			edc						- edc delay coefficient (float)
-			[optional] nonstd_mass_epsilon - specify a different mass epsilon to use
+			[optional] mass_epsilon - specify a different mass epsilon to use
 												 other than the default within the 
 												 DataCollector.batchProcess method
 												 (float or boolean) [default = 0.5]
@@ -504,7 +383,7 @@ class CcsCalibration (object):
 				  cal_mz,\
 				  cal_lit_ccs,\
 				  edc,\
-				  nonstd_mass_epsilon=False,\
+				  mass_epsilon=0.5,\
 				  nonstd_dtbin_equiv=False):
 				  
 		if (nonstd_dtbin_equiv):
@@ -512,11 +391,10 @@ class CcsCalibration (object):
 		else:
 			dtbin_equiv = 0.0689
 
-		self.data = DataCollector(mzlistinput=cal_mz,\
-								  rawdatafilename=data_file,\
-								  dtbintodt=dtbin_equiv,\
-								  massepsilon=nonstd_mass_epsilon)
-		self.data.batchProcess()
+		self.data = DataCollector()
+		self.dt_list = []
+		for thing in cal_mz:
+			self.dt_list.append(self.data.process(thing, data_file_name=data_file, mass_epsilon=mass_epsilon))
 		
 		
 		self.cal_lit_ccs = cal_lit_ccs
@@ -525,7 +403,7 @@ class CcsCalibration (object):
 		self.n2_mass = 28.0134	
 		
 		# make array with mass, dt, and litccs
-		self.mass_dt_litccs = numpy.array([cal_mz, self.data.dt_list, cal_lit_ccs])
+		self.mass_dt_litccs = numpy.array([cal_mz, self.dt_list, cal_lit_ccs])
 		
 		# make a new array with corrected drift time
 		self.corrected_dt = numpy.array(self.mass_dt_litccs[1])
@@ -925,7 +803,7 @@ if __name__ == '__main__' :
 								 ccscal_input.calibrant_masses,\
 								 ccscal_input.calibrant_literature_ccs,\
 								 ccscal_input.edc,\
-								 nonstd_mass_epsilon=ccscal_input.mass_epsilon)
+								 mass_epsilon=ccscal_input.mass_epsilon)
 
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)

@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 	// store the input file name as a string
 	std::string inputFileName = argv[1];
 	// create the outputfile name
-	std::string outputFileName = inputFileName.substr(0, (inputFileName.length() - 4)) + ".pp.txt";
+	std::string outputFileName = inputFileName.substr(0, (inputFileName.length() - 4)) + ".pp-" + argv[2] + ".txt";
 	// start an input file stream
 	std::ifstream inputFile (inputFileName);
 	// start on output file stream
