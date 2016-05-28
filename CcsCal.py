@@ -38,6 +38,9 @@ import argparse
 # need os for some file operations
 import os
 
+# need subprocess.call for calling external scripts
+from subprocess import call
+
 ##########################################################################################
 class GetData (object):
 	"""
@@ -50,20 +53,34 @@ class GetData (object):
 		
 		Input(s):
 			data_filename		- file name of the raw data file (string)
+			pp					- call PreProcessTxt.o to pre-process the input .txt file
+									using a specified mass and mass window specified by a 
+									two-membered list: [specified mass, mass window]
+									(boolean or list) [default = False]
 	"""
-	def __init__ (self, data_filename):
-		self.fn = data_filename
-		self.open_data = open(self.fn, "r+")
-		self.line_list = self.open_data.readlines()
-		self.makeGll()
-		self.extract()
-		self.num_vals = len(self.xlst)
-		self.open_data.close()
-		self.line_list = []
-		self.good_line_list = []
-		self.good_x_values = []
-		self.good_y_values = []
-		self.good_z_values = []
+	def __init__ (self, data_filename, pp=False):
+		# if the pre-process flag is not set continue as usual...
+		if not pp:
+			self.fn = data_filename
+			self.open_data = open(self.fn, "r+")
+			self.line_list = self.open_data.readlines()
+			self.makeGll()
+			self.extract()
+			self.num_vals = len(self.xlst)
+			self.open_data.close()
+			self.line_list = []
+			self.good_line_list = []
+			self.good_x_values = []
+			self.good_y_values = []
+			self.good_z_values = []
+		else: 
+			# create the pre-processed data file
+			self.callPreProcessTxt(data_filename, pp)
+			# generate an array with the mass, dtbin, and intensity values from the pre-processed
+			# data file
+			ppfilename = os.path.splitext(data_filename)[0] + ".pp.txt"
+			self.data = numpy.genfromtxt(ppfilename, unpack=True)
+			
 
 	"""
 		GetData.makeGll -- Method
@@ -123,6 +140,19 @@ class GetData (object):
 		self.good_x_values = []
 		self.good_y_values = []
 		self.good_z_values = []
+	
+	"""
+		GetData.callPreProcessTxt -- Method
+		
+		Calls PreProcessTxt.o using the specified mass and mass window in the list pp
+		
+		Input(s):
+			data_filename		- file name of the raw data file (string)
+			pp					- specified 
+	"""	
+	def callPreProcessTxt(self, data_filename, pp):
+			functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o " + data_filename + " " + str(pp[0]) + " " + str(pp[1])
+			call(functionCallLine, shell=True)
 		
 ##########################################################################################
 class DtHist (object):
