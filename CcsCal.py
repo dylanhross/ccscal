@@ -1,6 +1,8 @@
 """
 	>>>CcsCal.py<<<
 	Dylan H. Ross
+	
+	!!!ccscal-plusplus!!!
 
 		This program contains several utilities for processing raw mass-spec data with
 		a drift time dimension: extracting drift time for a particular mass, creating
@@ -110,6 +112,8 @@ class DtHist (object):
 		self.generateLists()
 		self.dtbintransformed = []
 		self.filename = GetData.ppfilename
+		
+		# need to make a summed array...
 			
 	"""
 		DtHist.generateLists -- Method
