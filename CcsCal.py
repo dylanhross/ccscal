@@ -54,36 +54,68 @@ class GetData (object):
 		
 		Input(s):
 			data_filename		- file name of the raw data file (string)
-			pp					- call PreProcessTxt.o to pre-process the input .txt file
-									using a specified mass and mass window specified by a 
-									two-membered list: [specified mass, mass window]
-									(list)
+			specified_mass		- mass to extract data for (float)
+			mass_window			- window of masses to bin data together for (float)
 	"""
-	def __init__ (self, data_filename, pp):
+	def __init__ (self, data_filename, specified_mass, mass_window):
 		# create the pre-processed data file
-		self.callPreProcessTxt(data_filename, pp)
+		self.callPreProcessTxt(data_filename, specified_mass, mass_window)
+		# store the file name of the pre-processed file
+		self.ppfilename = os.path.splitext(data_filename)[0] + ".pp-" + \
+											str(specified_mass) + ".txt"
 		# generate an array with the mass, dtbin, and intensity values from the pre-processed
 		# data file
-		self.ppfilename = os.path.splitext(data_filename)[0] + ".pp-" + str(pp[0]) + ".txt"
 		self.data = numpy.genfromtxt(self.ppfilename, unpack=True)
-			
-
+		# fine filter extracted data for mass and mass window
+		self.fineFilterForMass(specified_mass, mass_window)
+		
 	
 	"""
 		GetData.callPreProcessTxt -- Method
 		
-		Calls PreProcessTxt.o using the specified mass and mass window in the list pp
+		Calls PreProcessTxt.o using the specified mass and mass window provided as parameters. The
+		mass window it actually uses is a rough mass window (i.e. double the mass window provided)
 		
 		Input(s):
 			data_filename		- file name of the raw data file (string)
-			pp					- specified 
+			specified_mass		- mass to extract data for (float)
+			mass_window			- window of masses to bin data together for (float)
 	"""	
-	def callPreProcessTxt(self, data_filename, pp):
-			functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o " + data_filename + " " + str(pp[0]) + " " + str(pp[1])
-			call(functionCallLine, shell=True)
+	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
+		# pre-process data with rough mass_window (i.e. double the original mass window)
+		useWindow = 2.0 * mass_window
+		### TO DO: find a better way of specifying the PreProcessTxt.o executable location 
+		functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o" + " " +\
+							data_filename + " " +\
+							str(specified_mass) + " " + \
+							str(useWindow)
+		# had to use shell=True flag here... not sure if I had to do that with RawToTxt 
+		# but eventually I may need to figure something else out since I am sure sure how
+		# well it will work with this flag on Windows. 
+		call(functionCallLine, shell=True)
+	
+	"""
+		GetData.fineFilterForMass -- Method
+		
+		Looks through the data array from the pre-processed data file for masses within the 
+		fine mass window 
+		
+		Input(s):
+			specified_mass		- mass to extract data for (float)
+			mass_window			- window of masses to bin data together for (float)
+	"""		
+	def fineFilterForMass(self, specified_mass, mass_window):
+		# prepare an array with dtbin and intensity values
+		self.dtBinAndIntensity = numpy.zeros([2, 200])
+		for n in range(1, 201):
+			self.dtBinAndIntensity[0][n - 1] = n
+		for n in range(len(self.data[0])):
+			if (numpy.abs(specified_mass - self.data[0][n]) <= mass_window):
+				# add the intensity to its corresponding bin
+				self.dtBinAndIntensity[1][int(self.data[1][n]) - 1] += self.data[2][n]
+		
 		
 ##########################################################################################
-
 class GaussFit (object):
 	"""
 		GaussFit -- Class
@@ -683,16 +715,19 @@ class GenerateReport (object):
 ##########################################################################################
 
 
+"""
+
+	
 
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
-	"""
-		This is the execution path to follow if this program is called directly through
-		the commmand line. 
+	# add the triple quotes back in later... 
+		#This is the execution path to follow if this program is called directly through
+		#the commmand line. 
 
-		The following argument is required:
-			-i, --input			full path to ccscal_input.py
-	"""	
+		#The following argument is required:
+		#	-i, --input			full path to ccscal_input.py
+
 	#
 	### PARSE THE COMMAND-LINE ARGUMENTS
 	#	
@@ -778,3 +813,4 @@ if __name__ == '__main__' :
 	#
 	### COMPLETE
 
+"""
