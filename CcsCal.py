@@ -83,72 +83,7 @@ class GetData (object):
 			call(functionCallLine, shell=True)
 		
 ##########################################################################################
-class DtHist (object):
-	"""
-		DtHist -- Class
-		
-		Uses raw data from a GetData object to generate a histogram of dtbin vs intensity 
-		with all data points within an m/z range of a specified m/z:
-			DtHist.dtbinlst 	- dtbin values (list)
-			DtHist.intenlst		- intensity values (list)
-		
-		Input(s):
-			GetData				- object containing raw data (GetData)
-			specified_mass		- m/z value to extract dt histogram for (float)
-			mass_epsilon		- the m/z range above and below the specified mass to 
-								  collect values for (float)
-	"""
-	def __init__ (self,\
-				  GetData,\
-				  specified_mass,\
-				  mass_epsilon):
-		self.specmass = specified_mass
-		self.mass_epsilon = mass_epsilon
-		# make internal lists from the GetData object
-		self.datarray = GetData.data
-		self.masslst = GetData.data[0]
-		self.dtbinlst = []
-		self.intenlst = []
-		self.generateLists()
-		self.dtbintransformed = []
-		self.filename = GetData.ppfilename
-		
-		# need to make a summed array...
-			
-	"""
-		DtHist.generateLists -- Method
-		
-		Adds values from GetData.ylst and GetData.zlst into DtHist.dtbinlst and 
-		DtHist.intenlst, respectively, if the corresponding value in GetData.xlst is
-		within mass epsilon of the specified mass
-		
-		Input(s):
-			GetData				- object containing raw data (GetData)
-	"""
-	def	generateLists (self):
-		for n in range (len(self.masslst)):
-			if abs(self.masslst[n] - self.specmass) <= self.mass_epsilon:
-				self.dtbinlst.append(self.datarray[1][n])
-				self.intenlst.append(self.datarray[2][n])
-	
-	
-	"""
-		DtHist.transformHist -- Method
-		
-		Converts DtHist.dtbinlst and DtHist.avg_dtbin into a single list of dtbin values
-		repeated by the corresponding intensity number, which can be used to produce a 
-		matplotlib.pyplot.hist() object. The transformed list is stored in:
-			DtHist.dtbintransformed	- transformed dtbin values (list)
-		
-		Input(s):
-			none
-	"""	
-	def transformHist (self):
-		for i in range(len(self.dtbinlst) -1):
-			for j in range (int(self.intenlst[i])):
-				self.dtbintransformed.append(self.dtbinlst[i])
-	
-##########################################################################################
+
 class GaussFit (object):
 	"""
 		GaussFit -- Class
