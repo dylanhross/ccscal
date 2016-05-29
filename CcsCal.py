@@ -227,8 +227,8 @@ class GaussFit (object):
 	"""		
 	def saveGaussFitFig (self, figure_file_name, get_data):
 		p = pplt
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], 'b', label="raw")
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[2],'g--', label="gaussian fit")
+		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], color='blue', ls='--', marker='o', ms=5, mec='blue', mfc='blue', label="raw")
+		p.plot(self.rawandfitdata[0], self.rawandfitdata[2], color='black', ls='-', label="gaussian fit")
 		p.legend(loc="best")
 		p.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 		p.xlabel("dt bin")
