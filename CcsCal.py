@@ -48,26 +48,36 @@ class GetData (object):
 	"""
 		GetData -- Class
 		
-		Extracts and stores the raw data from a .txt data file:
-			GetData.data		- array with mass, dtbin, and intensity from the
-									pre-processsed .txt file (array)
+		Preprocesses a specified raw data file using a specified mass and rough mass window
+		then takes that rough data and extracts from it the dtbin and intensity data for a
+		specified mass in a fine mass window, summing the intensities for each dtbin
+		
+		Data Stored:
+			GetData.data			- array with mass, dtbin, and intensity from the
+										pre-processsed .txt file (numpy.array)
+			GetData.ppFileName		- file name of pre-processed data file (string)
+			GetData.dtBinAndIntensity - array with dtbin values and summed intensities 
+											for each (numpy.array)
+			GetData.specifiedMass 	- the specified mass for which data was extracted (float)
 		
 		Input(s):
-			data_filename		- file name of the raw data file (string)
-			specified_mass		- mass to extract data for (float)
-			mass_window			- window of masses to bin data together for (float)
-	"""
+			data_filename			- file name of the raw data file (string)
+			specified_mass			- mass to extract data for (float)
+			mass_window				- window of masses to bin data together for (float)
+	"""	
 	def __init__ (self, data_filename, specified_mass, mass_window):
 		# create the pre-processed data file
 		self.callPreProcessTxt(data_filename, specified_mass, mass_window)
 		# store the file name of the pre-processed file
-		self.ppfilename = os.path.splitext(data_filename)[0] + ".pp-" + \
+		self.ppFileName = os.path.splitext(data_filename)[0] + ".pp-" + \
 											str(specified_mass) + ".txt"
 		# generate an array with the mass, dtbin, and intensity values from the pre-processed
 		# data file
-		self.data = numpy.genfromtxt(self.ppfilename, unpack=True)
+		self.data = numpy.genfromtxt(self.ppFileName, unpack=True)
 		# fine filter extracted data for mass and mass window
 		self.fineFilterForMass(specified_mass, mass_window)
+		# store the specified mass
+		self.specifiedMass = specified_mass
 		
 	
 	"""
@@ -120,41 +130,50 @@ class GaussFit (object):
 	"""
 		GaussFit -- Class
 		
-		Fits a Gaussian distribution to the dt histogram in a specified DtHist object
+		Fits a Gaussian distribution to the dt distribution in a specified GetData object
 		using a least squares fitting method. The results of the least squares fit are
-		stored as the optimized parameters for the Gaussian function:
+		stored as the optimized parameters for the Gaussian function
+		
+		Data Stored:
 			GaussFit.optparams 		- optimized amplitude, mu, and sigma (tuple)
 		
 		Input(s):
-			DtHist_obj				- object containing the dt histogram to be fit with
-									  Gaussian function (DtHist)
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)
+									  
 	"""
-	def __init__ (self, DtHist_obj):
-		DtHist_obj.transformHist()
-		self.initparams = (\
-		numpy.amax(DtHist_obj.intenlst),\
-		numpy.mean(DtHist_obj.dtbintransformed),\
-		numpy.std(DtHist_obj.dtbintransformed))
-		self.fit_failed = False
+	def __init__ (self, get_data):
+		# generate the initial parameters, initial sigma is set to 10 dtbins ARBITRARILY
+		self.initparams = ((numpy.amax(get_data.dtBinAndIntensity[1])),\
+							(numpy.sum(get_data.dtBinAndIntensity[0] * \
+								get_data.dtBinAndIntensity[1]) / \
+								numpy.sum(get_data.dtBinAndIntensity[1])),\
+							(10.0))
+		# set fit failed flag
+		fitFailed = False
+		# make internal copies of the specified mass and data filename
+		self.mass = get_data.specifiedMass
+		self.filename = get_data.ppFileName
+		# fit the distribution on get_data
+		self.doFit(get_data)
 		
-		self.dtbinandcombinedintensity = numpy.zeros([max(DtHist_obj.dtbinlst) + 1, max(DtHist_obj.dtbinlst) + 1])
-		for n in range (len(DtHist_obj.dtbinlst)):
-			self.dtbinandcombinedintensity[0][DtHist_obj.dtbinlst[n]] = DtHist_obj.dtbinlst[n]
-			self.dtbinandcombinedintensity[1][DtHist_obj.dtbinlst[n]] += DtHist_obj.intenlst[n]
-		
-		self.mass = DtHist_obj.specmass
-		self.filename = DtHist_obj.filename
-		self.doFit()
-		
-		if not self.fit_failed:
+		if not fitFailed:
 			self.opt_mean = self.optparams[1]
+			
+			
+		### TO DO: test this part...	
 			
 		#create an array with the raw dtbin and intensity values
 		# and fitted intensity values
-		self.rawandfitdata = numpy.array([self.dtbinandcombinedintensity[0], self.dtbinandcombinedintensity[1], self.dtbinandcombinedintensity[0]])
-		self.rawandfitdata[2] = self.gaussFunc(self.rawandfitdata[2], self.optparams[0], self.optparams[1], self.optparams[2])
+		self.rawandfitdata = numpy.array([get_data.dtBinAndIntensity[0], \
+											get_data.dtBinAndIntensity[1], \
+											get_data.dtBinAndIntensity[1]])
+		self.rawandfitdata[2] = self.gaussFunc(get_data.dtBinAndIntensity[1], \
+												self.optparams[0], \
+												self.optparams[1], \
+												self.optparams[2])
 		
-		self.saveGaussFitFig(DtHist_obj.filename)
+		self.saveGaussFitFig(self.filename, get_data)
 		
 	
 	"""
@@ -182,18 +201,19 @@ class GaussFit (object):
 		good fit is not reached within a maximum number of optimization steps, 
 		specifically within 1000 steps. Stores the optimized mu parameter for easy 
 		reference by other objects:
-			GaussFit.opt_mean	- optimized mean dtbin (float) 
+			GaussFit.opt_mean		- optimized mean dtbin (float) 
 		
 		Input(s):
-			none
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)
 	"""	
-	def doFit (self):
+	def doFit (self, get_data):
 		try:
 			self.optparams,self.covar = curve_fit(self.gaussFunc,\
-												  self.dtbinandcombinedintensity[0],\
-			    								  self.dtbinandcombinedintensity[1],\
-												  p0=self.initparams,
-												  maxfev=1000)
+													get_data.dtBinAndIntensity[0],\
+													get_data.dtBinAndIntensity[1],\
+													p0=self.initparams,\
+													maxfev=1000)
 		except RuntimeError:
 			self.fit_failed = True
 			self.opt_mean = self.initparams[1]
@@ -208,9 +228,11 @@ class GaussFit (object):
 		calibration data 
 		
 		Input(s):
-			figure_file_name 	- choose a filename to save the figure under (string)					
+			figure_file_name 		- choose a filename to save the figure under (string)
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)					
 	"""		
-	def saveGaussFitFig (self, figure_file_name):
+	def saveGaussFitFig (self, figure_file_name, get_data):
 		p = pplt
 		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], 'bo', label="raw")
 		p.plot(self.rawandfitdata[0], self.rawandfitdata[2],'g--', label="gaussian fit")
