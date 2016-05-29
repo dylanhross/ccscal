@@ -156,26 +156,19 @@ class GaussFit (object):
 		self.filename = get_data.ppFileName
 		# fit the distribution on get_data
 		self.doFit(get_data)
-		
 		if not fitFailed:
-			self.opt_mean = self.optparams[1]
-			
-			
-		### TO DO: test this part...	
-			
+			self.opt_mean = self.optparams[1]	
 		#create an array with the raw dtbin and intensity values
 		# and fitted intensity values
 		self.rawandfitdata = numpy.array([get_data.dtBinAndIntensity[0], \
 											get_data.dtBinAndIntensity[1], \
 											get_data.dtBinAndIntensity[1]])
-		self.rawandfitdata[2] = self.gaussFunc(get_data.dtBinAndIntensity[1], \
+		self.rawandfitdata[2] = self.gaussFunc(get_data.dtBinAndIntensity[0], \
 												self.optparams[0], \
 												self.optparams[1], \
 												self.optparams[2])
-		
 		self.saveGaussFitFig(self.filename, get_data)
 		
-	
 	"""
 		GaussFit.gaussFunc -- Method
 		
@@ -234,7 +227,7 @@ class GaussFit (object):
 	"""		
 	def saveGaussFitFig (self, figure_file_name, get_data):
 		p = pplt
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], 'bo', label="raw")
+		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], 'b', label="raw")
 		p.plot(self.rawandfitdata[0], self.rawandfitdata[2],'g--', label="gaussian fit")
 		p.legend(loc="best")
 		p.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
