@@ -283,26 +283,20 @@ class CcsCalibration (object):
 		
 		Input(s):
 			data_file				- name of raw data file (string)
-			cal_mz					- calibrant m/z values (list)
+			cal_masses				- calibrant m/z values (list)
 			cal_lit_ccs				- calibrant literature ccs values (list)
-			edc						- edc delay coefficient (float)
-			[optional] mass_epsilon - specify a different mass epsilon to use
-												 other than the default within the 
-												 DataCollector.batchProcess method
-												 (float or boolean) [default = 0.5]
-			[optional] nonstd_dtbin_equiv  - specify a different dtbin equivalent to 
-												 use other than the default within the 
-												 DataCollector.batchProcess method
-												 (float or boolean) [default = 0.0689]
+			mass_window 			- specify a mass window to extract values from (float)
+			[optional edc  			- edc delay coefficient (float) [default = 1.35]
+			[optional] dtbin_to_dt  - specify a different dtbin equivalent to use other than 
+										the default (float) [default = 0.0689]
 	"""
 	def __init__ (self, 
 				  data_file,\
 				  cal_masses,\
 				  cal_lit_ccs_vals,\
-				  mass_window, 
-				  edc=1.35
+				  mass_window,\
+				  edc=1.35,\
 				  dtbin_to_dt=0.0689):
-		
 		# store some calculation constants
 		self.edc = edc
 		self.n2_mass = 28.0134	
@@ -313,7 +307,9 @@ class CcsCalibration (object):
 		# make an array with calibrant lit ccs values
 		self.calLitCcs = numpy.array(cal_lit_ccs_vals)
 		# make an array with calibrant drift times
-		self.calDriftTimes = self.collector.process(data_file, self.calMasses, mass_window)
+		self.calDriftTimes = numpy.zeros([len(self.calMasses)])
+		for n in range(len(self.calMasses)):
+			self.calDriftTimes[n - 1] = self.collector.process(data_file, self.calMasses[n - 1], mass_window)
 		# make an array with corrected drift time
 		self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
 		# make an array with corrected lit ccs
@@ -323,7 +319,7 @@ class CcsCalibration (object):
 		#perform the calibration
 		self.fitCalCurve()
 		# make an array with calibrant calculated ccs
-		self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes))
+		self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
 
 	"""
 		CcsCalibration.reducedMass -- Method
@@ -647,21 +643,17 @@ class GenerateReport (object):
 		self.report_file.close()
 
 ##########################################################################################
-
-
-"""
-
 	
 
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
-	# add the triple quotes back in later... 
-		#This is the execution path to follow if this program is called directly through
-		#the commmand line. 
+	"""
+		This is the execution path to follow if this program is called directly through
+		the commmand line. 
 
-		#The following argument is required:
-		#	-i, --input			full path to ccscal_input.py
-
+		The following argument is required:
+			-i, --input			full path to ccscal_input.py
+	"""
 	#
 	### PARSE THE COMMAND-LINE ARGUMENTS
 	#	
@@ -710,14 +702,17 @@ if __name__ == '__main__' :
 	calibration = CcsCalibration(ccscal_input.calibrant_data_file,\
 								 ccscal_input.calibrant_masses,\
 								 ccscal_input.calibrant_literature_ccs,\
-								 ccscal_input.edc,\
-								 mass_epsilon=ccscal_input.mass_epsilon)
+								 mass_window=ccscal_input.mass_window,\
+								 edc=ccscal_input.edc)
 
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
 	# write the calibration statistics to the report file
 	report.writeCalibrationReport(calibration)
 	print "...DONE"
+	
+	
+	"""
 	#
 	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
 	#
@@ -738,6 +733,8 @@ if __name__ == '__main__' :
 		ccs =  calibration.getCalibratedCcs(pair[1], driftTime)
 		report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
 		print "...DONE"
+	
+	"""
 	#
 	### CLOSE THE REPORT FILE
 	report.finish()
@@ -747,4 +744,3 @@ if __name__ == '__main__' :
 	#
 	### COMPLETE
 
-"""
