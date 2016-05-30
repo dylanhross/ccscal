@@ -79,7 +79,6 @@ class GetData (object):
 		# store the specified mass
 		self.specifiedMass = specified_mass
 		
-	
 	"""
 		GetData.callPreProcessTxt -- Method
 		
@@ -123,8 +122,7 @@ class GetData (object):
 			if (numpy.abs(specified_mass - self.data[0][n]) <= mass_window):
 				# add the intensity to its corresponding bin
 				self.dtBinAndIntensity[1][int(self.data[1][n]) - 1] += self.data[2][n]
-		
-		
+
 ##########################################################################################
 class GaussFit (object):
 	"""
@@ -136,6 +134,7 @@ class GaussFit (object):
 		
 		Data Stored:
 			GaussFit.optparams 		- optimized amplitude, mu, and sigma (tuple)
+			GaussFit.opt_mean		- optimized mean of Gaussian distribution fit to data
 		
 		Input(s):
 			get_data				- object containing the dt distribution to be fit with 
@@ -236,108 +235,40 @@ class GaussFit (object):
 		p.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + "\nmass: " + str(self.mass))
 		p.savefig(os.path.splitext(figure_file_name)[0] + "_mass-" + str(int(self.mass)) + ".png", bbox_inches='tight')
 		p.close()
-		
+
 ##########################################################################################
 class DataCollector (object):
 	"""
 		DataCollector -- Class
 		
 		Performs all of the steps necessary to extract drift time from a raw data file
-		for a specified mass then stores the extracted drift time:
-			DataCollector.drift_times - drift time associated with a m/z (dictionary)
+		for a specified mass
 		
 		Input(s):
-			[optional] mzlistinput	- m/z values to extract drift times for (list or boolean) 
-									  [default = False]
-			[optional] rawdatafilename	- name of the file to extract data from (string 
-										or boolean) [default = False]
-			[optional] parallelize	- use parallelization in the data extraction process
-									  (boolean) [default = False]
-			[optional] massepsilon	- specify a different mass epsilon to use (float) 
-									  [default = 0.5]
-			[optional] dtbintodt	- conversion factor to go from dtbin to dt in
-									  miliseconds, based on TOF pusher frequency (float)
-									  [default = 0.0689]
+			[optional] dtbin_to_dt	- conversion factor for going from dtbin to drift time
+										in milliseconds, based on the TOF pusher frequency
+										[default = 0.0689]
 	"""
-	def __init__ (self,\
-				  mzlistinput=False,\
-				  rawdatafilename=False,\
-				  parallelize=False,\
-				  massepsilon=0.5,\
-				  dtbintodt=0.0689):
-		self.mz_list = mzlistinput
-		self.m_epsilon = massepsilon
-		self.bin_ms_equiv = dtbintodt
-		
-		
-		if not rawdatafilename:
-			pass
-		else:
-			# only make a GetData object for the class if a rawdatafilename has been provided
-			self.own_GetData = GetData(rawdatafilename)
-			
-
-			
-		self.parallelize = parallelize
-		
-	"""
-		DataCollector.batchProcess -- Method
-		
-		Performs drift time extraction for a set list of masses from one raw data input
-		file by calling the process method for each m/z in the DataCollector.mz_list
-		
-		Input(s):
-			none
-	"""
-	def batchProcess (self):
-		if not self.parallelize:
-			self.dt_list = []
-			for mass in self.mz_list:
-				self.dt_list.append(self.process(mass,\
-											have_GetData=True,\
-											mass_epsilon=self.m_epsilon))
-
-		else:
-			print "Sorry, parallelization has not been implemented yet."
+	def __init__ (self, dtbin_to_dt=0.0689):
+		self.dtBinToDt = dtbin_to_dt
 	
 	"""
 		DataCollector.process -- Method
 		
-		Performs drift time extraction for a single m/z 
+		Performs drift time extraction for a single mass using a single mass window from a 
+		specified data file
 		
 		Input(s):
-			specified_mass			- the m/z to extract drift time for (float)
 			data_file_name			- name of the raw data file (string)
-			[optional] mass_epsilon	- specify a different mass epsilon to use (float) 
-									  [default = 0.5]
-			[optional] own_get_data	- use a GetData object that has already been 
-									  created in this class (GetData or boolean) 
-									  [default = False]
+			specified_mass			- the m/z to extract drift time for (float)
+			mass_epsilon			- specify a different mass epsilon to use (float)
 									  
 		Returns:
-									- drift time for the m/z in ms (float)						
+									- drift time for the specified mass in ms (float)						
 	"""		
-	def process (self,\
-				 specified_mass,\
-				 data_file_name="name",\
-				 mass_epsilon=0.5,\
-				 have_GetData=False):
-		dfname = data_file_name
-		smass = specified_mass
-		mepsilon = mass_epsilon
-		if not have_GetData:
-			gd = GetData(dfname, [smass, (mepsilon * 2.0)])
-			dth = DtHist(gd, smass, mepsilon)
-			gf = GaussFit(dth)
-			return gf.opt_mean * self.bin_ms_equiv
-				
-		else:
-			dth = DtHist(self.own_GetData,\
-						  smass,\
-						  mepsilon)
-			gf = GaussFit(dth)
-			
-			return gf.opt_mean * self.bin_ms_equiv
+	def process (self, data_file_name, specified_mass, mass_window):
+		gauss = GaussFit(GetData(data_file_name, specified_mass, mass_window))
+		return gauss.opt_mean * self.dtBinToDt
 
 ##########################################################################################
 class CcsCalibration (object):
