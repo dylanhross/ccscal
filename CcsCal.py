@@ -22,14 +22,11 @@
 import matplotlib.pyplot as pplt
 import matplotlib.gridspec as gs
 
-# need numpy for math stuff
+# need numpy for math stuff and arrays
 import numpy
 
 # need curve fit module from scipy for fitting curves
 from scipy.optimize import curve_fit
-
-# need sys for making progress bar that refreshes and for altering the python paths
-import sys
 
 # need the time module to do performance reporting
 import time
@@ -40,7 +37,7 @@ import argparse
 # need os for some file operations
 import os
 
-# need subprocess.call for calling external scripts
+# need subprocess.call for calling external scripts/programs
 from subprocess import call
 
 # need savgol_filter to smooth raw data with Savitsky-Golay filter
@@ -159,6 +156,7 @@ class GaussFit (object):
 		# fit the distribution on get_data
 		# perform smoothing of raw data using Savitsky-Golay filter
 		# smooth window is 5, polynomial order is 3
+		# TODO: make filtering optional and filtering parameters adjustable
 		get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
 		# fit the smoothed data
 		self.doFit(get_data)
