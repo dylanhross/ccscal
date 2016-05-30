@@ -1,4 +1,4 @@
-# ccscal
+# ccscal-plusplus
 A program for extracting drift times from ion mobility-mass spec data and obtaining calibrated CCS 
 
 	>>>CcsCal.py<<<
