@@ -279,7 +279,7 @@ class CcsCalibration (object):
 		calibrant masses. Then, using a list of calibrant literature ccs values, a 
 		ccs calibration curve is generated. Once the curve has been fit, the 
 		CcsCalibration.getCalibratedCcs method can be used to get a calibrated ccs for a 
-		given m/z and drift time
+		given mass and drift time
 		
 		Input(s):
 			data_file				- name of raw data file (string)
@@ -297,51 +297,33 @@ class CcsCalibration (object):
 	"""
 	def __init__ (self, 
 				  data_file,\
-				  cal_mz,\
-				  cal_lit_ccs,\
-				  edc,\
-				  mass_epsilon=0.5,\
-				  nonstd_dtbin_equiv=False):
-				  
-		if (nonstd_dtbin_equiv):
-			dtbin_equiv = nonstd_dtbin_equiv
-		else:
-			dtbin_equiv = 0.0689
-
-		self.data = DataCollector()
-		self.dt_list = []
-		for thing in cal_mz:
-			self.dt_list.append(self.data.process(thing, data_file_name=data_file, mass_epsilon=mass_epsilon))
+				  cal_masses,\
+				  cal_lit_ccs_vals,\
+				  mass_window, 
+				  edc=1.35
+				  dtbin_to_dt=0.0689):
 		
-		
-		self.cal_lit_ccs = cal_lit_ccs
+		# store some calculation constants
 		self.edc = edc
-		
 		self.n2_mass = 28.0134	
-		
-		# make array with mass, dt, and litccs
-		self.mass_dt_litccs = numpy.array([cal_mz, self.dt_list, cal_lit_ccs])
-		
-		# make a new array with corrected drift time
-		self.corrected_dt = numpy.array(self.mass_dt_litccs[1])
-		# and correct it
-		self.corrected_dt = self.correctedDriftTime(self.corrected_dt, self.mass_dt_litccs[0])
-		
-		# make another new array with corrected lit ccs
-		self.corrected_lit_ccs = numpy.array(self.mass_dt_litccs[2])
-		# and correct it
-		self.corrected_lit_ccs = self.corrected_lit_ccs * numpy.sqrt(self.reducedMass(self.mass_dt_litccs[0]))
-		
-	
+		# create an empty DataCollector object
+		self.collector = DataCollector(dtbin_to_dt=dtbin_to_dt)
+		# make an array with calibrant masses
+		self.calMasses = numpy.array(cal_masses)
+		# make an array with calibrant lit ccs values
+		self.calLitCcs = numpy.array(cal_lit_ccs_vals)
+		# make an array with calibrant drift times
+		self.calDriftTimes = self.collector.process(data_file, self.calMasses, mass_window)
+		# make an array with corrected drift time
+		self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
+		# make an array with corrected lit ccs
+		self.correctedLitCcs = self.calLitCcs * numpy.sqrt(self.reducedMass(self.calMasses))
 		# Optimized parameters A, t0, B (starts as the initial parameters [0, 0, 1])
 		self.optparams = [0, 0, 1]
-		
-		
 		#perform the calibration
 		self.fitCalCurve()
-		
 		# make an array with calibrant calculated ccs
-		self.calibrant_calc_ccs = numpy.array(self.getCalibratedCcs(self.mass_dt_litccs[0], self.mass_dt_litccs[1]))
+		self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes))
 
 	"""
 		CcsCalibration.reducedMass -- Method
@@ -402,13 +384,13 @@ class CcsCalibration (object):
 			self.optparams,self.covar=\
 			curve_fit(\
 			self.baseCalCurve,\
-			self.corrected_dt,\
-			self.corrected_lit_ccs,\
+			self.correctedDt,\
+			self.correctedLitCcs,\
 			p0=self.optparams,\
 			maxfev=2000)
 		except RuntimeError:
 			self.fit_failed = True
-			print "FIT FAILED WITH RUNTIME ERROR..."
+			print "CCS CALIBRATION CURVE FIT FAILED WITH RUNTIME ERROR..."
 	
 	"""
 		CcsCalibration.getCalibratedCcs -- Method
@@ -447,22 +429,28 @@ class CcsCalibration (object):
 		g = gs.GridSpec(2,1,height_ratios=[5,2])
 		p = pplt
 		p.subplot(g[0])
-		p.plot(self.corrected_dt,\
-			   self.corrected_lit_ccs, \
+		p.plot(self.correctedDt,\
+			   self.correctedLitCcs, \
 			   'ko' , \
 			   fillstyle='none', \
 			   markeredgewidth=1.0, \
 			   label="calibrants")
-		p.plot(self.corrected_dt, self.baseCalCurve(self.corrected_dt, self.optparams[0], self.optparams[1], self.optparams[2]), 'black', label="fitted curve")
+		p.plot(self.correctedDt, 
+				self.baseCalCurve(self.correctedDt,\
+									self.optparams[0],\
+									self.optparams[1],\
+									self.optparams[2]),\
+				'black', \
+				label="fitted curve")
 		p.legend(loc="best")
 		p.title("CCS Calibration")
 		p.ylabel("corrected CCS")
 		p.subplot(g[1])
-		p.bar(self.corrected_dt, \
-			  numpy.array((100 * (self.mass_dt_litccs[2] - self.calibrant_calc_ccs) / self.mass_dt_litccs[2])), 
-			  0.25, \
-			  color='black', \
-			  align='center')
+		p.bar(self.correctedDt, \
+				numpy.array((100 * (self.calLitCcs - self.calCalcCcs) / self.calLitCcs)), 
+			  	0.25, \
+			  	color='black', \
+			  	align='center')
 		p.xlabel("corrected drift time (ms)")
 		p.ylabel("residual CCS (%)")
 		p.axhline(y=0, color='black')
