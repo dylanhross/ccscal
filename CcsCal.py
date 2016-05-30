@@ -37,6 +37,9 @@ import argparse
 # need os for some file operations
 import os
 
+# need sys for adding input file to python path
+import sys
+
 # need subprocess.call for calling external scripts/programs
 from subprocess import call
 
