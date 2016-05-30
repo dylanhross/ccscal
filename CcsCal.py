@@ -684,6 +684,7 @@ if __name__ == '__main__' :
 		The following argument is required:
 			-i, --input			full path to ccscal_input.py
 	"""
+	start_time = time.time()
 	#
 	### PARSE THE COMMAND-LINE ARGUMENTS
 	#	
@@ -774,3 +775,6 @@ if __name__ == '__main__' :
 	#
 	### COMPLETE
 
+	end_time = time.time()
+	print ""
+	print "total time: ", (end_time - start_time)
