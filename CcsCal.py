@@ -740,14 +740,14 @@ if __name__ == '__main__' :
 	print "...DONE"
 	
 	
-	"""
+
 	#
 	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
 	#
 	# initialize a DataCollector object
 	collector = DataCollector()
 	# write the header for the compound data table in the report
-	report.writeCompoundDataTableHeader()
+	 #report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
 	count = 0
 	for pair in (ccscal_input.compound_data_files_and_masses):
@@ -755,14 +755,14 @@ if __name__ == '__main__' :
 		print "Extracting Drift Time for Mass:", pair[1], "from Data File:", pair[0],\
 			  "(" + str(count), "of", str(len(ccscal_input.compound_data_files_and_masses)) + ")..."
 		# extract drift time and get calibrated CCS for the filename/mass pair
-		driftTime = collector.process(pair[1], data_file_name=(ccscal_input.compound_root_directory + pair[0]))
+		driftTime = collector.process((ccscal_input.compound_root_directory + pair[0]), pair[1], ccscal_input.mass_window)
 		print "...DONE"
 		print "Getting Calibrated CCS..."
 		ccs =  calibration.getCalibratedCcs(pair[1], driftTime)
-		report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
+		 #report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
 		print "...DONE"
 	
-	"""
+
 	#
 	### CLOSE THE REPORT FILE
 	 #report.finish()
