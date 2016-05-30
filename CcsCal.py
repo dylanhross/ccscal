@@ -22,14 +22,11 @@
 import matplotlib.pyplot as pplt
 import matplotlib.gridspec as gs
 
-# need numpy for math stuff
+# need numpy for math stuff and arrays
 import numpy
 
 # need curve fit module from scipy for fitting curves
 from scipy.optimize import curve_fit
-
-# need sys for making progress bar that refreshes and for altering the python paths
-import sys
 
 # need the time module to do performance reporting
 import time
@@ -40,156 +37,145 @@ import argparse
 # need os for some file operations
 import os
 
-# need subprocess.call for calling external scripts
+# need sys for adding input file to python path
+import sys
+
+# need subprocess.call for calling external scripts/programs
 from subprocess import call
+
+# need savgol_filter to smooth raw data with Savitsky-Golay filter
+from scipy.signal import savgol_filter
 
 ##########################################################################################
 class GetData (object):
 	"""
 		GetData -- Class
 		
-		Extracts and stores the raw data from a .txt data file:
-			GetData.data		- array with mass, dtbin, and intensity from the
-									pre-processsed .txt file (array)
+		Preprocesses a specified raw data file using a specified mass and rough mass window
+		then takes that rough data and extracts from it the dtbin and intensity data for a
+		specified mass in a fine mass window, summing the intensities for each dtbin
+		
+		Data Stored:
+			GetData.data			- array with mass, dtbin, and intensity from the
+										pre-processsed .txt file (numpy.array)
+			GetData.ppFileName		- file name of pre-processed data file (string)
+			GetData.dtBinAndIntensity - array with dtbin values and summed intensities 
+											for each (numpy.array)
+			GetData.specifiedMass 	- the specified mass for which data was extracted (float)
 		
 		Input(s):
-			data_filename		- file name of the raw data file (string)
-			pp					- call PreProcessTxt.o to pre-process the input .txt file
-									using a specified mass and mass window specified by a 
-									two-membered list: [specified mass, mass window]
-									(list)
-	"""
-	def __init__ (self, data_filename, pp):
+			data_filename			- file name of the raw data file (string)
+			specified_mass			- mass to extract data for (float)
+			mass_window				- window of masses to bin data together for (float)
+	"""	
+	def __init__ (self, data_filename, specified_mass, mass_window):
 		# create the pre-processed data file
-		self.callPreProcessTxt(data_filename, pp)
+		self.callPreProcessTxt(data_filename, specified_mass, mass_window)
+		# store the file name of the pre-processed file
+		self.ppFileName = os.path.splitext(data_filename)[0] + ".pp-" + \
+											str(specified_mass) + ".txt"
 		# generate an array with the mass, dtbin, and intensity values from the pre-processed
 		# data file
-		self.ppfilename = os.path.splitext(data_filename)[0] + ".pp-" + str(pp[0]) + ".txt"
-		self.data = numpy.genfromtxt(self.ppfilename, unpack=True)
-			
-
-	
+		self.data = numpy.genfromtxt(self.ppFileName, unpack=True)
+		# fine filter extracted data for mass and mass window
+		self.fineFilterForMass(specified_mass, mass_window)
+		# store the specified mass
+		self.specifiedMass = specified_mass
+		
 	"""
 		GetData.callPreProcessTxt -- Method
 		
-		Calls PreProcessTxt.o using the specified mass and mass window in the list pp
+		Calls PreProcessTxt.o using the specified mass and mass window provided as parameters. The
+		mass window it actually uses is a rough mass window (i.e. double the mass window provided)
 		
 		Input(s):
 			data_filename		- file name of the raw data file (string)
-			pp					- specified 
+			specified_mass		- mass to extract data for (float)
+			mass_window			- window of masses to bin data together for (float)
 	"""	
-	def callPreProcessTxt(self, data_filename, pp):
-			functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o " + data_filename + " " + str(pp[0]) + " " + str(pp[1])
-			call(functionCallLine, shell=True)
-		
-##########################################################################################
-class DtHist (object):
-	"""
-		DtHist -- Class
-		
-		Uses raw data from a GetData object to generate a histogram of dtbin vs intensity 
-		with all data points within an m/z range of a specified m/z:
-			DtHist.dtbinlst 	- dtbin values (list)
-			DtHist.intenlst		- intensity values (list)
-		
-		Input(s):
-			GetData				- object containing raw data (GetData)
-			specified_mass		- m/z value to extract dt histogram for (float)
-			mass_epsilon		- the m/z range above and below the specified mass to 
-								  collect values for (float)
-	"""
-	def __init__ (self,\
-				  GetData,\
-				  specified_mass,\
-				  mass_epsilon):
-		self.specmass = specified_mass
-		self.mass_epsilon = mass_epsilon
-		# make internal lists from the GetData object
-		self.datarray = GetData.data
-		self.masslst = GetData.data[0]
-		self.dtbinlst = []
-		self.intenlst = []
-		self.generateLists()
-		self.dtbintransformed = []
-		self.filename = GetData.ppfilename
-		
-		# need to make a summed array...
-			
-	"""
-		DtHist.generateLists -- Method
-		
-		Adds values from GetData.ylst and GetData.zlst into DtHist.dtbinlst and 
-		DtHist.intenlst, respectively, if the corresponding value in GetData.xlst is
-		within mass epsilon of the specified mass
-		
-		Input(s):
-			GetData				- object containing raw data (GetData)
-	"""
-	def	generateLists (self):
-		for n in range (len(self.masslst)):
-			if abs(self.masslst[n] - self.specmass) <= self.mass_epsilon:
-				self.dtbinlst.append(self.datarray[1][n])
-				self.intenlst.append(self.datarray[2][n])
-	
+	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
+		# pre-process data with rough mass_window (i.e. double the original mass window)
+		useWindow = 2.0 * mass_window
+		# TODO: find a better way of specifying the PreProcessTxt.o executable location 
+		functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o" + " " +\
+							data_filename + " " +\
+							str(specified_mass) + " " + \
+							str(useWindow)
+		# had to use shell=True flag here... not sure if I had to do that with RawToTxt 
+		# but eventually I may need to figure something else out since I am sure sure how
+		# well it will work with this flag on Windows. 
+		call(functionCallLine, shell=True)
 	
 	"""
-		DtHist.transformHist -- Method
+		GetData.fineFilterForMass -- Method
 		
-		Converts DtHist.dtbinlst and DtHist.avg_dtbin into a single list of dtbin values
-		repeated by the corresponding intensity number, which can be used to produce a 
-		matplotlib.pyplot.hist() object. The transformed list is stored in:
-			DtHist.dtbintransformed	- transformed dtbin values (list)
+		Looks through the data array from the pre-processed data file for masses within the 
+		fine mass window 
 		
 		Input(s):
-			none
-	"""	
-	def transformHist (self):
-		for i in range(len(self.dtbinlst) -1):
-			for j in range (int(self.intenlst[i])):
-				self.dtbintransformed.append(self.dtbinlst[i])
-	
+			specified_mass		- mass to extract data for (float)
+			mass_window			- window of masses to bin data together for (float)
+	"""		
+	def fineFilterForMass(self, specified_mass, mass_window):
+		# prepare an array with dtbin and intensity values
+		self.dtBinAndIntensity = numpy.zeros([2, 200])
+		for n in range(1, 201):
+			self.dtBinAndIntensity[0][n - 1] = n
+		for n in range(len(self.data[0])):
+			if (numpy.abs(specified_mass - self.data[0][n]) <= mass_window):
+				# add the intensity to its corresponding bin
+				self.dtBinAndIntensity[1][int(self.data[1][n]) - 1] += self.data[2][n]
+
 ##########################################################################################
 class GaussFit (object):
 	"""
 		GaussFit -- Class
 		
-		Fits a Gaussian distribution to the dt histogram in a specified DtHist object
+		Fits a Gaussian distribution to the dt distribution in a specified GetData object
 		using a least squares fitting method. The results of the least squares fit are
-		stored as the optimized parameters for the Gaussian function:
+		stored as the optimized parameters for the Gaussian function
+		
+		Data Stored:
 			GaussFit.optparams 		- optimized amplitude, mu, and sigma (tuple)
+			GaussFit.opt_mean		- optimized mean of Gaussian distribution fit to data
 		
 		Input(s):
-			DtHist_obj				- object containing the dt histogram to be fit with
-									  Gaussian function (DtHist)
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)
+									  
 	"""
-	def __init__ (self, DtHist_obj):
-		DtHist_obj.transformHist()
-		self.initparams = (\
-		numpy.amax(DtHist_obj.intenlst),\
-		numpy.mean(DtHist_obj.dtbintransformed),\
-		numpy.std(DtHist_obj.dtbintransformed))
-		self.fit_failed = False
-		
-		self.dtbinandcombinedintensity = numpy.zeros([max(DtHist_obj.dtbinlst) + 1, max(DtHist_obj.dtbinlst) + 1])
-		for n in range (len(DtHist_obj.dtbinlst)):
-			self.dtbinandcombinedintensity[0][DtHist_obj.dtbinlst[n]] = DtHist_obj.dtbinlst[n]
-			self.dtbinandcombinedintensity[1][DtHist_obj.dtbinlst[n]] += DtHist_obj.intenlst[n]
-		
-		self.mass = DtHist_obj.specmass
-		self.filename = DtHist_obj.filename
-		self.doFit()
-		
-		if not self.fit_failed:
-			self.opt_mean = self.optparams[1]
-			
+	def __init__ (self, get_data):
+		# generate the initial parameters, initial sigma is set to 10 dtbins ARBITRARILY
+		self.initparams = ((numpy.amax(get_data.dtBinAndIntensity[1])),\
+							(numpy.sum(get_data.dtBinAndIntensity[0] * \
+								get_data.dtBinAndIntensity[1]) / \
+								numpy.sum(get_data.dtBinAndIntensity[1])),\
+							(10.0))
+		# set fit failed flag
+		fitFailed = False
+		# make internal copies of the specified mass and data filename
+		self.mass = get_data.specifiedMass
+		self.filename = get_data.ppFileName
+		# fit the distribution on get_data
+		# perform smoothing of raw data using Savitsky-Golay filter
+		# smooth window is 5, polynomial order is 3
+		# TODO: make filtering optional and filtering parameters adjustable
+		get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
+		# fit the smoothed data
+		self.doFit(get_data)
+		if not fitFailed:
+			self.opt_mean = self.optparams[1]	
 		#create an array with the raw dtbin and intensity values
 		# and fitted intensity values
-		self.rawandfitdata = numpy.array([self.dtbinandcombinedintensity[0], self.dtbinandcombinedintensity[1], self.dtbinandcombinedintensity[0]])
-		self.rawandfitdata[2] = self.gaussFunc(self.rawandfitdata[2], self.optparams[0], self.optparams[1], self.optparams[2])
+		self.rawandfitdata = numpy.array([get_data.dtBinAndIntensity[0], \
+											get_data.dtBinAndIntensity[1], \
+											get_data.dtBinAndIntensity[1]])
+		self.rawandfitdata[2] = self.gaussFunc(get_data.dtBinAndIntensity[0], \
+												self.optparams[0], \
+												self.optparams[1], \
+												self.optparams[2])
+		self.saveGaussFitFig(self.filename, get_data)
 		
-		self.saveGaussFitFig(DtHist_obj.filename)
-		
-	
 	"""
 		GaussFit.gaussFunc -- Method
 		
@@ -215,18 +201,19 @@ class GaussFit (object):
 		good fit is not reached within a maximum number of optimization steps, 
 		specifically within 1000 steps. Stores the optimized mu parameter for easy 
 		reference by other objects:
-			GaussFit.opt_mean	- optimized mean dtbin (float) 
+			GaussFit.opt_mean		- optimized mean dtbin (float) 
 		
 		Input(s):
-			none
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)
 	"""	
-	def doFit (self):
+	def doFit (self, get_data):
 		try:
 			self.optparams,self.covar = curve_fit(self.gaussFunc,\
-												  self.dtbinandcombinedintensity[0],\
-			    								  self.dtbinandcombinedintensity[1],\
-												  p0=self.initparams,
-												  maxfev=1000)
+													get_data.dtBinAndIntensity[0],\
+													get_data.dtBinAndIntensity[1],\
+													p0=self.initparams,\
+													maxfev=1000)
 		except RuntimeError:
 			self.fit_failed = True
 			self.opt_mean = self.initparams[1]
@@ -241,121 +228,75 @@ class GaussFit (object):
 		calibration data 
 		
 		Input(s):
-			figure_file_name 	- choose a filename to save the figure under (string)					
+			figure_file_name 		- choose a filename to save the figure under (string)
+			get_data				- object containing the dt distribution to be fit with 
+										Gaussian function (GetData)					
 	"""		
-	def saveGaussFitFig (self, figure_file_name):
+	def saveGaussFitFig (self, figure_file_name, get_data):
 		p = pplt
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], 'bo', label="raw")
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[2],'g--', label="gaussian fit")
+		p.plot(self.rawandfitdata[0],\
+				self.rawandfitdata[1],\
+				color='blue',\
+				ls='--',\
+				marker='o',\
+				ms=5,\
+				mec='blue',\
+				mfc='blue',\
+				label="raw data\n(smoothed)")
+		p.plot(self.rawandfitdata[0],\
+				self.rawandfitdata[2],\
+				color='black',\
+				ls='-',\
+				label="gaussian fit")
 		p.legend(loc="best")
 		p.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 		p.xlabel("dt bin")
 		p.ylabel("intensity")
-		p.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + "\nmass: " + str(self.mass))
-		p.savefig(os.path.splitext(figure_file_name)[0] + "_mass-" + str(int(self.mass)) + ".png", bbox_inches='tight')
+		p.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + \
+												"\nmass: " + \
+												str(self.mass))
+		p.savefig(os.path.splitext(figure_file_name)[0] + \
+									"_mass-" + \
+									str(int(self.mass)) + \
+									".png", bbox_inches='tight')
 		p.close()
-		
+
 ##########################################################################################
 class DataCollector (object):
 	"""
 		DataCollector -- Class
 		
 		Performs all of the steps necessary to extract drift time from a raw data file
-		for a specified mass then stores the extracted drift time:
-			DataCollector.drift_times - drift time associated with a m/z (dictionary)
+		for a specified mass
+		
+		Data Stored:
+			TODO: fill this description in
 		
 		Input(s):
-			[optional] mzlistinput	- m/z values to extract drift times for (list or boolean) 
-									  [default = False]
-			[optional] rawdatafilename	- name of the file to extract data from (string 
-										or boolean) [default = False]
-			[optional] parallelize	- use parallelization in the data extraction process
-									  (boolean) [default = False]
-			[optional] massepsilon	- specify a different mass epsilon to use (float) 
-									  [default = 0.5]
-			[optional] dtbintodt	- conversion factor to go from dtbin to dt in
-									  miliseconds, based on TOF pusher frequency (float)
-									  [default = 0.0689]
+			[optional] dtbin_to_dt	- conversion factor for going from dtbin to drift time
+										in milliseconds, based on the TOF pusher frequency
+										[default = 0.0689]
 	"""
-	def __init__ (self,\
-				  mzlistinput=False,\
-				  rawdatafilename=False,\
-				  parallelize=False,\
-				  massepsilon=0.5,\
-				  dtbintodt=0.0689):
-		self.mz_list = mzlistinput
-		self.m_epsilon = massepsilon
-		self.bin_ms_equiv = dtbintodt
-		
-		
-		if not rawdatafilename:
-			pass
-		else:
-			# only make a GetData object for the class if a rawdatafilename has been provided
-			self.own_GetData = GetData(rawdatafilename)
-			
-
-			
-		self.parallelize = parallelize
-		
-	"""
-		DataCollector.batchProcess -- Method
-		
-		Performs drift time extraction for a set list of masses from one raw data input
-		file by calling the process method for each m/z in the DataCollector.mz_list
-		
-		Input(s):
-			none
-	"""
-	def batchProcess (self):
-		if not self.parallelize:
-			self.dt_list = []
-			for mass in self.mz_list:
-				self.dt_list.append(self.process(mass,\
-											have_GetData=True,\
-											mass_epsilon=self.m_epsilon))
-
-		else:
-			print "Sorry, parallelization has not been implemented yet."
+	def __init__ (self, dtbin_to_dt=0.0689):
+		self.dtBinToDt = dtbin_to_dt
 	
 	"""
 		DataCollector.process -- Method
 		
-		Performs drift time extraction for a single m/z 
+		Performs drift time extraction for a single mass using a single mass window from a 
+		specified data file
 		
 		Input(s):
-			specified_mass			- the m/z to extract drift time for (float)
 			data_file_name			- name of the raw data file (string)
-			[optional] mass_epsilon	- specify a different mass epsilon to use (float) 
-									  [default = 0.5]
-			[optional] own_get_data	- use a GetData object that has already been 
-									  created in this class (GetData or boolean) 
-									  [default = False]
+			specified_mass			- the m/z to extract drift time for (float)
+			mass_epsilon			- specify a different mass epsilon to use (float)
 									  
 		Returns:
-									- drift time for the m/z in ms (float)						
+									- drift time for the specified mass in ms (float)						
 	"""		
-	def process (self,\
-				 specified_mass,\
-				 data_file_name="name",\
-				 mass_epsilon=0.5,\
-				 have_GetData=False):
-		dfname = data_file_name
-		smass = specified_mass
-		mepsilon = mass_epsilon
-		if not have_GetData:
-			gd = GetData(dfname, [smass, (mepsilon * 2.0)])
-			dth = DtHist(gd, smass, mepsilon)
-			gf = GaussFit(dth)
-			return gf.opt_mean * self.bin_ms_equiv
-				
-		else:
-			dth = DtHist(self.own_GetData,\
-						  smass,\
-						  mepsilon)
-			gf = GaussFit(dth)
-			
-			return gf.opt_mean * self.bin_ms_equiv
+	def process (self, data_file_name, specified_mass, mass_window):
+		gauss = GaussFit(GetData(data_file_name, specified_mass, mass_window))
+		return gauss.opt_mean * self.dtBinToDt
 
 ##########################################################################################
 class CcsCalibration (object):
@@ -366,69 +307,49 @@ class CcsCalibration (object):
 		calibrant masses. Then, using a list of calibrant literature ccs values, a 
 		ccs calibration curve is generated. Once the curve has been fit, the 
 		CcsCalibration.getCalibratedCcs method can be used to get a calibrated ccs for a 
-		given m/z and drift time
+		given mass and drift time
+		
+		TODO: add Data Stored section
 		
 		Input(s):
 			data_file				- name of raw data file (string)
-			cal_mz					- calibrant m/z values (list)
+			cal_masses				- calibrant m/z values (list)
 			cal_lit_ccs				- calibrant literature ccs values (list)
-			edc						- edc delay coefficient (float)
-			[optional] mass_epsilon - specify a different mass epsilon to use
-												 other than the default within the 
-												 DataCollector.batchProcess method
-												 (float or boolean) [default = 0.5]
-			[optional] nonstd_dtbin_equiv  - specify a different dtbin equivalent to 
-												 use other than the default within the 
-												 DataCollector.batchProcess method
-												 (float or boolean) [default = 0.0689]
+			mass_window 			- specify a mass window to extract values from (float)
+			[optional edc  			- edc delay coefficient (float) [default = 1.35]
+			[optional] dtbin_to_dt  - specify a different dtbin equivalent to use other than 
+										the default (float) [default = 0.0689]
 	"""
 	def __init__ (self, 
 				  data_file,\
-				  cal_mz,\
-				  cal_lit_ccs,\
-				  edc,\
-				  mass_epsilon=0.5,\
-				  nonstd_dtbin_equiv=False):
-				  
-		if (nonstd_dtbin_equiv):
-			dtbin_equiv = nonstd_dtbin_equiv
-		else:
-			dtbin_equiv = 0.0689
-
-		self.data = DataCollector()
-		self.dt_list = []
-		for thing in cal_mz:
-			self.dt_list.append(self.data.process(thing, data_file_name=data_file, mass_epsilon=mass_epsilon))
-		
-		
-		self.cal_lit_ccs = cal_lit_ccs
+				  cal_masses,\
+				  cal_lit_ccs_vals,\
+				  mass_window,\
+				  edc=1.35,\
+				  dtbin_to_dt=0.0689):
+		# store some calculation constants
 		self.edc = edc
-		
 		self.n2_mass = 28.0134	
-		
-		# make array with mass, dt, and litccs
-		self.mass_dt_litccs = numpy.array([cal_mz, self.dt_list, cal_lit_ccs])
-		
-		# make a new array with corrected drift time
-		self.corrected_dt = numpy.array(self.mass_dt_litccs[1])
-		# and correct it
-		self.corrected_dt = self.correctedDriftTime(self.corrected_dt, self.mass_dt_litccs[0])
-		
-		# make another new array with corrected lit ccs
-		self.corrected_lit_ccs = numpy.array(self.mass_dt_litccs[2])
-		# and correct it
-		self.corrected_lit_ccs = self.corrected_lit_ccs * numpy.sqrt(self.reducedMass(self.mass_dt_litccs[0]))
-		
-	
+		# create an empty DataCollector object
+		self.collector = DataCollector(dtbin_to_dt=dtbin_to_dt)
+		# make an array with calibrant masses
+		self.calMasses = numpy.array(cal_masses)
+		# make an array with calibrant lit ccs values
+		self.calLitCcs = numpy.array(cal_lit_ccs_vals)
+		# make an array with calibrant drift times
+		self.calDriftTimes = numpy.zeros([len(self.calMasses)])
+		for n in range(len(self.calMasses)):
+			self.calDriftTimes[n - 1] = self.collector.process(data_file, self.calMasses[n - 1], mass_window)
+		# make an array with corrected drift time
+		self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
+		# make an array with corrected lit ccs
+		self.correctedLitCcs = self.calLitCcs * numpy.sqrt(self.reducedMass(self.calMasses))
 		# Optimized parameters A, t0, B (starts as the initial parameters [0, 0, 1])
 		self.optparams = [0, 0, 1]
-		
-		
 		#perform the calibration
 		self.fitCalCurve()
-		
 		# make an array with calibrant calculated ccs
-		self.calibrant_calc_ccs = numpy.array(self.getCalibratedCcs(self.mass_dt_litccs[0], self.mass_dt_litccs[1]))
+		self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
 
 	"""
 		CcsCalibration.reducedMass -- Method
@@ -489,13 +410,13 @@ class CcsCalibration (object):
 			self.optparams,self.covar=\
 			curve_fit(\
 			self.baseCalCurve,\
-			self.corrected_dt,\
-			self.corrected_lit_ccs,\
+			self.correctedDt,\
+			self.correctedLitCcs,\
 			p0=self.optparams,\
 			maxfev=2000)
 		except RuntimeError:
 			self.fit_failed = True
-			print "FIT FAILED WITH RUNTIME ERROR..."
+			print "CCS CALIBRATION CURVE FIT FAILED WITH RUNTIME ERROR..."
 	
 	"""
 		CcsCalibration.getCalibratedCcs -- Method
@@ -534,22 +455,28 @@ class CcsCalibration (object):
 		g = gs.GridSpec(2,1,height_ratios=[5,2])
 		p = pplt
 		p.subplot(g[0])
-		p.plot(self.corrected_dt,\
-			   self.corrected_lit_ccs, \
+		p.plot(self.correctedDt,\
+			   self.correctedLitCcs, \
 			   'ko' , \
 			   fillstyle='none', \
 			   markeredgewidth=1.0, \
 			   label="calibrants")
-		p.plot(self.corrected_dt, self.baseCalCurve(self.corrected_dt, self.optparams[0], self.optparams[1], self.optparams[2]), 'black', label="fitted curve")
+		p.plot(self.correctedDt, 
+				self.baseCalCurve(self.correctedDt,\
+									self.optparams[0],\
+									self.optparams[1],\
+									self.optparams[2]),\
+				'black', \
+				label="fitted curve")
 		p.legend(loc="best")
 		p.title("CCS Calibration")
 		p.ylabel("corrected CCS")
 		p.subplot(g[1])
-		p.bar(self.corrected_dt, \
-			  numpy.array((100 * (self.mass_dt_litccs[2] - self.calibrant_calc_ccs) / self.mass_dt_litccs[2])), 
-			  0.25, \
-			  color='black', \
-			  align='center')
+		p.bar(self.correctedDt, \
+				numpy.array((100 * (self.calLitCcs - self.calCalcCcs) / self.calLitCcs)), 
+			  	0.25, \
+			  	color='black', \
+			  	align='center')
 		p.xlabel("corrected drift time (ms)")
 		p.ylabel("residual CCS (%)")
 		p.axhline(y=0, color='black')
@@ -561,7 +488,7 @@ class GenerateReport (object):
 	"""
 		GenerateReport -- Class
 		
-		DESCRIPTION GOES HERE
+		TODO: class description
 		
 		Input(s):
 			
@@ -607,8 +534,8 @@ class GenerateReport (object):
 		self.wLn("+-----------------+")
 		self.wLn()
 		self.wLn("CCS calibrants extracted drift times:")
-		self.writeDriftTimeTable(ccs_calibration_object.mass_dt_litccs[0],\
-								 ccs_calibration_object.mass_dt_litccs[1])
+		self.writeDriftTimeTable(ccs_calibration_object.calMasses,\
+								 ccs_calibration_object.calDriftTimes)
 		self.wLn()
 		self.wLn("Optimized calibration curve fit parameters:")
 		self.wLn("\tcorrected ccs = A * ((corrected drift time) + t0) ** B")
@@ -618,9 +545,9 @@ class GenerateReport (object):
 		self.wLn()
 		
 		self.wLn("Calibrant CCS, calculated vs. literature:")
-		self.writeCcsComparisonTable(ccs_calibration_object.mass_dt_litccs[0],\
-									 ccs_calibration_object.mass_dt_litccs[2],\
-									 ccs_calibration_object.calibrant_calc_ccs)
+		self.writeCcsComparisonTable(ccs_calibration_object.calMasses,\
+									 ccs_calibration_object.calLitCcs,\
+									 ccs_calibration_object.calCalcCcs)
 		self.wLn()
 	
 	"""
@@ -746,8 +673,7 @@ class GenerateReport (object):
 		self.report_file.close()
 
 ##########################################################################################
-
-
+	
 
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
@@ -757,7 +683,7 @@ if __name__ == '__main__' :
 
 		The following argument is required:
 			-i, --input			full path to ccscal_input.py
-	"""	
+	"""
 	#
 	### PARSE THE COMMAND-LINE ARGUMENTS
 	#	
@@ -806,14 +732,17 @@ if __name__ == '__main__' :
 	calibration = CcsCalibration(ccscal_input.calibrant_data_file,\
 								 ccscal_input.calibrant_masses,\
 								 ccscal_input.calibrant_literature_ccs,\
-								 ccscal_input.edc,\
-								 mass_epsilon=ccscal_input.mass_epsilon)
+								 mass_window=ccscal_input.mass_window,\
+								 edc=ccscal_input.edc)
 
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
 	# write the calibration statistics to the report file
 	report.writeCalibrationReport(calibration)
 	print "...DONE"
+	
+	
+
 	#
 	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
 	#
@@ -828,12 +757,14 @@ if __name__ == '__main__' :
 		print "Extracting Drift Time for Mass:", pair[1], "from Data File:", pair[0],\
 			  "(" + str(count), "of", str(len(ccscal_input.compound_data_files_and_masses)) + ")..."
 		# extract drift time and get calibrated CCS for the filename/mass pair
-		driftTime = collector.process(pair[1], data_file_name=(ccscal_input.compound_root_directory + pair[0]))
+		driftTime = collector.process((ccscal_input.compound_root_directory + pair[0]), pair[1], ccscal_input.mass_window)
 		print "...DONE"
 		print "Getting Calibrated CCS..."
 		ccs =  calibration.getCalibratedCcs(pair[1], driftTime)
 		report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
 		print "...DONE"
+	
+
 	#
 	### CLOSE THE REPORT FILE
 	report.finish()

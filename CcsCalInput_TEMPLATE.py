@@ -17,9 +17,9 @@ report_file_name="/Users/DylanRoss/Desktop/ccscal-test-suite/ccscal-report.txt"
 edc=1.35
 
 # mass_epsilon:
-#		m/z window to filter for desired masses (+/-)
+#		mass window to filter for desired masses (+/-)
 #		* number MUST BE A DECIMAL not an integer (i.e. 1.0 instead of 1)	*
-mass_epsilon=0.5
+mass_window=0.5
 
 
 #################################
