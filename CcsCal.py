@@ -309,6 +309,8 @@ class CcsCalibration (object):
 		CcsCalibration.getCalibratedCcs method can be used to get a calibrated ccs for a 
 		given mass and drift time
 		
+		TODO: add Data Stored section
+		
 		Input(s):
 			data_file				- name of raw data file (string)
 			cal_masses				- calibrant m/z values (list)
@@ -486,7 +488,7 @@ class GenerateReport (object):
 	"""
 		GenerateReport -- Class
 		
-		DESCRIPTION GOES HERE
+		TODO: class description
 		
 		Input(s):
 			
@@ -532,8 +534,8 @@ class GenerateReport (object):
 		self.wLn("+-----------------+")
 		self.wLn()
 		self.wLn("CCS calibrants extracted drift times:")
-		self.writeDriftTimeTable(ccs_calibration_object.mass_dt_litccs[0],\
-								 ccs_calibration_object.mass_dt_litccs[1])
+		self.writeDriftTimeTable(ccs_calibration_object.calMasses,\
+								 ccs_calibration_object.calDriftTimes)
 		self.wLn()
 		self.wLn("Optimized calibration curve fit parameters:")
 		self.wLn("\tcorrected ccs = A * ((corrected drift time) + t0) ** B")
@@ -543,9 +545,9 @@ class GenerateReport (object):
 		self.wLn()
 		
 		self.wLn("Calibrant CCS, calculated vs. literature:")
-		self.writeCcsComparisonTable(ccs_calibration_object.mass_dt_litccs[0],\
-									 ccs_calibration_object.mass_dt_litccs[2],\
-									 ccs_calibration_object.calibrant_calc_ccs)
+		self.writeCcsComparisonTable(ccs_calibration_object.calMasses,\
+									 ccs_calibration_object.calLitCcs,\
+									 ccs_calibration_object.calCalcCcs)
 		self.wLn()
 	
 	"""
@@ -721,7 +723,7 @@ if __name__ == '__main__' :
 	#
 	### INITIALIZE THE REPORT GENERATOR
 	#
-	 #report = GenerateReport(ccscal_input.report_file_name)
+	report = GenerateReport(ccscal_input.report_file_name)
 	#	
 	### PERFORM CCS CALIBRATION
 	#
@@ -736,7 +738,7 @@ if __name__ == '__main__' :
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
 	# write the calibration statistics to the report file
-	 #report.writeCalibrationReport(calibration)
+	report.writeCalibrationReport(calibration)
 	print "...DONE"
 	
 	
@@ -747,7 +749,7 @@ if __name__ == '__main__' :
 	# initialize a DataCollector object
 	collector = DataCollector()
 	# write the header for the compound data table in the report
-	 #report.writeCompoundDataTableHeader()
+	report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
 	count = 0
 	for pair in (ccscal_input.compound_data_files_and_masses):
@@ -759,13 +761,13 @@ if __name__ == '__main__' :
 		print "...DONE"
 		print "Getting Calibrated CCS..."
 		ccs =  calibration.getCalibratedCcs(pair[1], driftTime)
-		 #report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
+		report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
 		print "...DONE"
 	
 
 	#
 	### CLOSE THE REPORT FILE
-	 #report.finish()
+	report.finish()
 	#
 	print ""
 	print "CcsCal Complete."
