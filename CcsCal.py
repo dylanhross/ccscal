@@ -43,6 +43,9 @@ import os
 # need subprocess.call for calling external scripts
 from subprocess import call
 
+# need savgol_filter to smooth raw data with Savitsky-Golay filter
+from scipy.signal import savgol_filter
+
 ##########################################################################################
 class GetData (object):
 	"""
@@ -93,7 +96,7 @@ class GetData (object):
 	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
 		# pre-process data with rough mass_window (i.e. double the original mass window)
 		useWindow = 2.0 * mass_window
-		### TO DO: find a better way of specifying the PreProcessTxt.o executable location 
+		# TODO: find a better way of specifying the PreProcessTxt.o executable location 
 		functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o" + " " +\
 							data_filename + " " +\
 							str(specified_mass) + " " + \
@@ -154,6 +157,10 @@ class GaussFit (object):
 		self.mass = get_data.specifiedMass
 		self.filename = get_data.ppFileName
 		# fit the distribution on get_data
+		# perform smoothing of raw data using Savitsky-Golay filter
+		# smooth window is 5, polynomial order is 3
+		get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
+		# fit the smoothed data
 		self.doFit(get_data)
 		if not fitFailed:
 			self.opt_mean = self.optparams[1]	
@@ -226,14 +233,31 @@ class GaussFit (object):
 	"""		
 	def saveGaussFitFig (self, figure_file_name, get_data):
 		p = pplt
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[1], color='blue', ls='--', marker='o', ms=5, mec='blue', mfc='blue', label="raw")
-		p.plot(self.rawandfitdata[0], self.rawandfitdata[2], color='black', ls='-', label="gaussian fit")
+		p.plot(self.rawandfitdata[0],\
+				self.rawandfitdata[1],\
+				color='blue',\
+				ls='--',\
+				marker='o',\
+				ms=5,\
+				mec='blue',\
+				mfc='blue',\
+				label="raw data\n(smoothed)")
+		p.plot(self.rawandfitdata[0],\
+				self.rawandfitdata[2],\
+				color='black',\
+				ls='-',\
+				label="gaussian fit")
 		p.legend(loc="best")
 		p.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 		p.xlabel("dt bin")
 		p.ylabel("intensity")
-		p.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + "\nmass: " + str(self.mass))
-		p.savefig(os.path.splitext(figure_file_name)[0] + "_mass-" + str(int(self.mass)) + ".png", bbox_inches='tight')
+		p.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + \
+												"\nmass: " + \
+												str(self.mass))
+		p.savefig(os.path.splitext(figure_file_name)[0] + \
+									"_mass-" + \
+									str(int(self.mass)) + \
+									".png", bbox_inches='tight')
 		p.close()
 
 ##########################################################################################
@@ -243,6 +267,9 @@ class DataCollector (object):
 		
 		Performs all of the steps necessary to extract drift time from a raw data file
 		for a specified mass
+		
+		Data Stored:
+			TODO: fill this description in
 		
 		Input(s):
 			[optional] dtbin_to_dt	- conversion factor for going from dtbin to drift time
@@ -693,7 +720,7 @@ if __name__ == '__main__' :
 	#
 	### INITIALIZE THE REPORT GENERATOR
 	#
-	report = GenerateReport(ccscal_input.report_file_name)
+	 #report = GenerateReport(ccscal_input.report_file_name)
 	#	
 	### PERFORM CCS CALIBRATION
 	#
@@ -708,7 +735,7 @@ if __name__ == '__main__' :
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
 	# write the calibration statistics to the report file
-	report.writeCalibrationReport(calibration)
+	 #report.writeCalibrationReport(calibration)
 	print "...DONE"
 	
 	
@@ -737,7 +764,7 @@ if __name__ == '__main__' :
 	"""
 	#
 	### CLOSE THE REPORT FILE
-	report.finish()
+	 #report.finish()
 	#
 	print ""
 	print "CcsCal Complete."
