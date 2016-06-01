@@ -498,7 +498,6 @@ class GenerateReport (object):
 		self.report_file = open(self.report_file_name, "w")
 		self.writeHeader()
 
-
 	"""
 		GenerateReport.writeHeader -- Method
 		
@@ -673,52 +672,89 @@ class GenerateReport (object):
 		self.report_file.close()
 
 ##########################################################################################
-
-
-"""
-	getInputParams -- Method
+class ParseInputFile (object):
+	"""
+		ParseInputFile -- Class
+		
+		TODO: class description
+		
+		Input(s):
+			input_filename				- name (and path) of CcsCalInput.txt file (string)
+	"""
+	def __init__(self, input_filename):
+		# take in the input parameters
+		self.rawData = self.getInputParams(input_filename)
+		
+	"""
+		ParseInputFile.getInputParams -- Method
 	
-	Searches through the specified input file for the (non-list) parameters and returns a
-	list of the parameters grouped by categories (general, calibrants, and compounds):
+		Searches through the specified input file for the (all) parameters and returns a
+		list of the parameters grouped by categories (general, calibrants, and compounds):
 	
-	params contents by index:
-		params[0][0]			- path and file name to save reoprt under
-		params[0][1]			- mass window to extract drift time data from
-		params[0][2]			- edc parameter
-		params[1][0]			- full path and name to save calibration curve file under
-		params[1][1]			- full path and name of the CCS calibration data file
-		params[2][0]			- full path to the directory containing the compound data files
+		params contents by index:
+			params[0][0]			- path and file name to save reoprt under
+			params[0][1]			- mass window to extract drift time data from
+			params[0][2]			- edc parameter
+			params[1][0]			- full path and name to save calibration curve file under
+			params[1][1]			- full path and name of the CCS calibration data file
+			params[2][0]			- full path to the directory containing the compound data files
+			params[3]				- array containing the list data (calibrant masses and lit ccs
+										values, compound data file names and masses)
 		
 		Input(s):
 			filename			- file name (and full path to) CcsCalInput file (string)
 		
 		Returns:
-			params				- an array (list of three lists) containing the parameters
-									from the input file
-"""	
-def getInputParams(filename):
-	params = [[],[],[]]
-	with open(filename) as input:
-		done = False
-		for line in input:
-			if not done:
-				if line.split()[0] == ";rfn":
-					params[0].append(line.split()[2])
-				elif line.split()[0] == ";mwn":
-					params[0].append(line.split()[2])
-				elif line.split()[0] == ";edc":
-					params[0].append(line.split()[2])
-				elif line.split()[0] == ";cff":
-					params[1].append(line.split()[2])
-				elif line.split()[0] == ";cdf":
-					params[1].append(line.split()[2])
-				elif line.split()[0] == ";crd":
-					params[2].append(line.split()[2])
-					done = True
-			else:
-				break
-	return params
+			params				- an array (list of three lists and one numpy.array() object) 
+										containing the parameters from the input file
+	"""	
+	def getInputParams(filename):
+		params = [[],[],[]]
+		with open(filename) as input:
+			done = False
+			for line in input:
+				if not done:
+					if line.split()[0] == ";rfn":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";mwn":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";edc":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";cff":
+						params[1].append(line.split()[2])
+					elif line.split()[0] == ";cdf":
+						params[1].append(line.split()[2])
+					elif line.split()[0] == ";crd":
+						params[2].append(line.split()[2])
+						done = True
+				else:
+					break
+		params.append(numpy.genfromtxt(filename, dtype=str, comments=";"))
+		return params
+		
+	"""
+		ParseInputFile.unpackSingleParams -- Method
+		
+		TODO: method description
+		
+		Input(s):
+			none
+	"""
+	def unpackSingleParams(self):
+		pass
+	
+	"""
+		ParseInputFile.unpackListParams -- Method
+		
+		TODO: method description
+		
+		Input(s):
+			none
+	"""
+	def unpackListParams(self):
+		pass
 
+##########################################################################################
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
 	"""
