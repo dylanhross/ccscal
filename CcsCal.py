@@ -702,17 +702,17 @@ def getInputParams(filename):
 		done = False
 		for line in input:
 			if not done:
-				if line.split()[0] == "rfn":
+				if line.split()[0] == ";rfn":
 					params[0].append(line.split()[2])
-				elif line.split()[0] == "mwn":
+				elif line.split()[0] == ";mwn":
 					params[0].append(line.split()[2])
-				elif line.split()[0] == "edc":
+				elif line.split()[0] == ";edc":
 					params[0].append(line.split()[2])
-				elif line.split()[0] == "cff":
+				elif line.split()[0] == ";cff":
 					params[1].append(line.split()[2])
-				elif line.split()[0] == "cdf":
+				elif line.split()[0] == ";cdf":
 					params[1].append(line.split()[2])
-				elif line.split()[0] == "crd":
+				elif line.split()[0] == ";crd":
 					params[2].append(line.split()[2])
 					done = True
 			else:
