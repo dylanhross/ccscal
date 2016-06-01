@@ -793,9 +793,19 @@ if __name__ == '__main__' :
 	### IMPORT THE CCSCAL_INPUT FILE
 	#	
 	# store the ccscal_input file name and ccscal_input file path as strings
+
+	# TODO: change this part to only split the path from the file and not split the 
+	#		file extension from the file name
+
 	ccscal_input_file_path, ccscal_input_file_name = os.path.split(\
 													 os.path.splitext(\
 													 args.path_to_input)[0])
+	
+	# TODO: get rid of this add to python path and import business since the 
+	#		ParseInputFile class will just be opening the input file as it would
+	#		any other plain text file and as such it only needs the file name and
+	#		path to be able to open it 
+
 	# add ccscal_input path to python's path 
 	sys.path.append(ccscal_input_file_path)
 	# import ccscal_input file
