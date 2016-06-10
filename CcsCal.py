@@ -217,11 +217,11 @@ class GaussFit (object):
 													p0=self.initparams,\
 													maxfev=1000)
 		except RuntimeError:
+			# if fit was not achieved..
 			self.fit_failed = True
 			self.opt_mean = self.initparams[1]
-			# if fit was not achieved..
 			self.optparams = self.initparams
-            print "failed to fit gaussian for mass", self.mass, "in", self.filename
+			print "failed to fit gaussian for mass", self.mass, "in", self.filename
 			
 	"""
 		GaussFit.saveGaussFitFig -- Method
@@ -768,6 +768,7 @@ class ParseInputFile (object):
 			none
 	"""
 	def unpackListParams(self):
+		# temporary lists to build the arrays from
 		templist1 = []
 		templist2 = []
 		templist3 = []
@@ -776,14 +777,20 @@ class ParseInputFile (object):
 		for thing in self.rawData[3]:
 			if flag:
 				templist3.append(thing[0])
-				templist4.append(thing[1])
+				# need to cast compound mass to float
+				templist4.append(float(thing[1]))
 			elif thing[0] == "compound":
 				flag = True
 			else:
-				templist1.append(thing[0])
-				templist2.append(thing[1])
+				# temporary list values for ccs data are cast to floats so that the resulting array
+				# will have type float
+				templist1.append(float(thing[0]))
+				templist2.append(float(thing[1]))
+		# array of floats
 		self.calibrantData = numpy.array([templist1, templist2])
-		self.compoundData = numpy.array([templist3, templist4])
+		# make separate lists for the compound file names and compound masses
+		self.compoundFileNames = templist3
+		self.compoundMasses = templist4
 
 ##########################################################################################
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
@@ -821,12 +828,13 @@ if __name__ == '__main__' :
 	print ""
 	# all of the command-line arguments are stored in args
 	#
-	# parse the ccscalinput.txt file	
+	### PARSE THE INPUT FILE
+	#
 	input_data = ParseInputFile(args.path_to_input)
 	#
 	### INITIALIZE THE REPORT GENERATOR
 	#
-	report = GenerateReport(ccscal_input.report_file_name)
+	report = GenerateReport(input_data.reportFileName)
 	#	
 	### PERFORM CCS CALIBRATION
 	#
@@ -850,19 +858,19 @@ if __name__ == '__main__' :
 	# write the header for the compound data table in the report
 	report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
-	for n in range(len(input_data.compoundData[0])):
-		print "Extracting Drift Time for Mass:", input_data.compoundData[1][n], \
-				"from Data File:", input_data.compoundData[0][n], "(" + str(n + 1), \
-				"of", str(len(input_data.compoundData[0])) + ")..."
+	for n in range(len(input_data.compoundFileNames)):
+		print "Extracting Drift Time for Mass:", input_data.compoundMasses[n], \
+				"from Data File:", input_data.compoundFileNames[n], "(" + str(n + 1), \
+				"of", str(len(input_data.compoundFileNames)) + ")..."
 		# extract drift time and get calibrated CCS for the filename/mass pair
-		driftTime = collector.process((input_data.compoundDataDir + input_data.compoundData[0][n]), \
-										input_data.compoundData[1][n], \
+		driftTime = collector.process((input_data.compoundDataDir + input_data.compoundFileNames[n]), \
+										input_data.compoundMasses[n], \
 										input_data.massWindow)
 		print "...DONE"
 		print "Getting Calibrated CCS..."
-		ccs =  calibration.getCalibratedCcs(input_data.compoundData[1][n], driftTime)
-		report.writeCompoundDataTableLine(input_data.compoundData[0][n], \
-											input_data.compoundData[1][n], \
+		ccs =  calibration.getCalibratedCcs(input_data.compoundMasses[n], driftTime)
+		report.writeCompoundDataTableLine(input_data.compoundFileNames[n], \
+											input_data.compoundMasses[n], \
 											driftTime, \
 											ccs)
 		print "...DONE"

@@ -1,17 +1,17 @@
 ;[ general ]
-; full path and name to same the report file under
+; 	full path and name to same the report file under
 ;rfn				=	/Users/DylanRoss/Desktop/ccscal-test-suite/ccscal-report.txt
-; mass window to extract drift time data from
+; 	mass window to extract drift time data from
 ;mwn				=	0.5
-; edc parameter
+; 	edc parameter
 ;edc				=	1.35
 ;[ calibrants ]
-; full path and name to save calibration curve file under
+; 	full path and name to save calibration curve file under
 ;cff				=	/Users/DylanRoss/Desktop/ccscal-test-suite/cal-curve.png
-; full path and name of the CCS calibration data file
+; 	full path and name of the CCS calibration data file
 ;cdf				= 	/Users/DylanRoss/Desktop/ccscal-test-suite/IM_Polyalanine_50-2000-2016-05-11-10-20-1.txt
-; information for CCS calibrants
-; mass		literature ccs
+; 	information for CCS calibrants
+; 	mass		literature ccs
 232.13		151
 303.167		166
 374.204		181
@@ -31,11 +31,11 @@
 1368.722	374
 1439.759	387
 ;[ compounds ]
-; full path to the directory containing the compound data files
+; 	full path to the directory containing the compound data files
 ;crd				=	/Users/DylanRoss/Desktop/ccscal-test-suite/	
-; information for compounds
+; 	information for compounds
 compound	start
-; data file					mass
+; 	data file					mass
 IM_0881Drug.txt				152.066
 IM_0881Drug.txt				250.1952
 IM_0881Drug.txt				294.1745
