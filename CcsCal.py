@@ -808,9 +808,9 @@ if __name__ == '__main__' :
 	parser.add_argument('-i',\
 						'--input',\
 						required=True,\
-						help='full path to ccscal_input.py',\
+						help='full path to ccscal_input.txt',\
 						dest="path_to_input",\
-						metavar='"/full/path/to/ccscal_input.py"')
+						metavar='"/full/path/to/ccscal_input.txt"')
 	# parse arguments 
 	args = parser.parse_args()
 	# print the help message at the beginning of each run
@@ -818,27 +818,8 @@ if __name__ == '__main__' :
 	print ""
 	# all of the command-line arguments are stored in args
 	#
-	### IMPORT THE CCSCAL_INPUT FILE
-	#	
-	# store the ccscal_input file name and ccscal_input file path as strings
-
-	# TODO: change this part to only split the path from the file and not split the 
-	#		file extension from the file name
-
-	ccscal_input_file_path, ccscal_input_file_name = os.path.split(\
-													 os.path.splitext(\
-													 args.path_to_input)[0])
-	
-	# TODO: get rid of this add to python path and import business since the 
-	#		ParseInputFile class will just be opening the input file as it would
-	#		any other plain text file and as such it only needs the file name and
-	#		path to be able to open it 
-
-	# add ccscal_input path to python's path 
-	sys.path.append(ccscal_input_file_path)
-	# import ccscal_input file
-	ccscal_input = __import__(ccscal_input_file_name)
-	# ccscal_input contains run information from ccscal_input file
+	# parse the ccscalinput.txt file	
+	input_data = ParseInputFile(args.path_to_input)
 	#
 	### INITIALIZE THE REPORT GENERATOR
 	#
@@ -848,14 +829,14 @@ if __name__ == '__main__' :
 	#
 	print "Performing CCS Calibration..."
 	# create CcsCalibration object
-	calibration = CcsCalibration(ccscal_input.calibrant_data_file,\
-								 ccscal_input.calibrant_masses,\
-								 ccscal_input.calibrant_literature_ccs,\
-								 mass_window=ccscal_input.mass_window,\
-								 edc=ccscal_input.edc)
+	calibration = CcsCalibration(input_data.calDataFile,\
+								 input_data.calibrantData[0],\
+								 input_data.calibrantData[1],\
+								 mass_window=input_data.massWindow,\
+								 edc=input_data.edc)
 
 	# save a graph of the fitted calibration curve
-	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
+	calibration.saveCalCurveFig(figure_file_name=input_data.calCurveFileName)
 	# write the calibration statistics to the report file
 	report.writeCalibrationReport(calibration)
 	print "...DONE"
@@ -870,6 +851,9 @@ if __name__ == '__main__' :
 	# write the header for the compound data table in the report
 	report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
+	
+	# TODO: fix this part... need to use the data arrays in the ParseInputFile object
+	
 	count = 0
 	for pair in (ccscal_input.compound_data_files_and_masses):
 		count += 1
