@@ -4,6 +4,5 @@ A program for extracting drift times from ion mobility-mass spec data and obtain
 	>>>CcsCal.py<<<
 	Dylan H. Ross
 
-In this project I will be systematically replacing the modules in CcsCal.py with C++ until eventually
-the entirety (or most of) the program is written in C++. This will maybe enhance speed a bit but more
-importantly it will provide me an opportunity to learn C++. 
+This is a fork of my original CcsCal.py with an included C++ module for pre-processing the large 
+text input files quickly before performing drift time extraction from them.
