@@ -96,7 +96,9 @@ class GetData (object):
 	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
 		# pre-process data with rough mass_window (i.e. double the original mass window)
 		useWindow = 2.0 * mass_window
-		# TODO: find a better way of specifying the PreProcessTxt.o executable location 
+		# TODO: find a better way of specifying the PreProcessTxt.o executable location (otherwise
+		#		it screws up the portability of the program, plus it needs to change to .exe when
+		#		it's compiled on windows
 		functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o" + " " +\
 							data_filename + " " +\
 							str(specified_mass) + " " + \
@@ -215,11 +217,11 @@ class GaussFit (object):
 													p0=self.initparams,\
 													maxfev=1000)
 		except RuntimeError:
+			# if fit was not achieved..
 			self.fit_failed = True
 			self.opt_mean = self.initparams[1]
-			# if fit was not achieved..
 			self.optparams = self.initparams
-                        print "failed to fit gaussian for mass", self.mass, "in", self.filename
+			print "failed to fit gaussian for mass", self.mass, "in", self.filename
 			
 	"""
 		GaussFit.saveGaussFitFig -- Method
@@ -498,7 +500,6 @@ class GenerateReport (object):
 		self.report_file = open(self.report_file_name, "w")
 		self.writeHeader()
 
-
 	"""
 		GenerateReport.writeHeader -- Method
 		
@@ -673,8 +674,125 @@ class GenerateReport (object):
 		self.report_file.close()
 
 ##########################################################################################
+class ParseInputFile (object):
+	"""
+		ParseInputFile -- Class
+		
+		TODO: class description
+		TODO: data stored section
+		
+		Input(s):
+			input_filename				- name (and path) of CcsCalInput.txt file (string)
+	"""
+	def __init__(self, input_filename):
+		# take in the input parameters
+		self.rawData = self.getInputParams(input_filename)
+		# unpack the single parameters into easy to access fields
+		self.unpackSingleParams()
+		# create arrays with the list input parameters
+		self.unpackListParams()
+		
+	"""
+		ParseInputFile.getInputParams -- Method
 	
+		Searches through the specified input file for the (all) parameters and returns an
+		array of the parameters grouped by categories (general, calibrants, and compounds):
+	
+		params contents by index:
+			params[0][0]			- path and file name to save reoprt under
+			params[0][1]			- mass window to extract drift time data from
+			params[0][2]			- edc parameter
+			params[1][0]			- full path and name to save calibration curve file under
+			params[1][1]			- full path and name of the CCS calibration data file
+			params[2][0]			- full path to the directory containing the compound data files
+			params[3]				- array containing the list data (calibrant masses and lit ccs
+										values, compound data file names and masses)
+		
+		Input(s):
+			filename			- file name (and full path to) CcsCalInput file (string)
+		
+		Returns:
+			params				- an array (list of three lists and one numpy.array() object) 
+										containing the parameters from the input file
+	"""	
+	def getInputParams(self, filename):
+		params = [[],[],[]]
+		with open(filename) as input:
+			done = False
+			for line in input:
+				if not done:
+					if line.split()[0] == ";rfn":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";mwn":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";edc":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";cff":
+						params[1].append(line.split()[2])
+					elif line.split()[0] == ";cdf":
+						params[1].append(line.split()[2])
+					elif line.split()[0] == ";crd":
+						params[2].append(line.split()[2])
+						done = True
+				else:
+					break
+		params.append(numpy.genfromtxt(filename, dtype=str, comments=";"))
+		return params
+		
+	"""
+		ParseInputFile.unpackSingleParams -- Method
+		
+		Unpack the paramters from the params array into fields with names that make sunse for easy
+		access from the main execution. Cast the values into the proper types that they should be
+		for how they are going to be used.
+		
+		Input(s):
+			none
+	"""
+	def unpackSingleParams(self):
+		self.reportFileName = self.rawData[0][0]
+		# cast massWindow and edc to type float
+		self.massWindow = float(self.rawData[0][1])
+		self.edc = float(self.rawData[0][2])
+		self.calCurveFileName = self.rawData[1][0]
+		self.calDataFile = self.rawData[1][1]
+		self.compoundDataDir = self.rawData[2][0]
+	
+	"""
+		ParseInputFile.unpackListParams -- Method
+		
+		Breaks the rawData[3] array into two easy to access arrays with calibration data and 
+		compound data separated from one another
+		
+		Input(s):
+			none
+	"""
+	def unpackListParams(self):
+		# temporary lists to build the arrays from
+		templist1 = []
+		templist2 = []
+		templist3 = []
+		templist4 = []
+		flag = False
+		for thing in self.rawData[3]:
+			if flag:
+				templist3.append(thing[0])
+				# need to cast compound mass to float
+				templist4.append(float(thing[1]))
+			elif thing[0] == "compound":
+				flag = True
+			else:
+				# temporary list values for ccs data are cast to floats so that the resulting array
+				# will have type float
+				templist1.append(float(thing[0]))
+				templist2.append(float(thing[1]))
+		# array of floats
+		self.calibrantData = numpy.array([templist1, templist2])
+		# make separate lists for the compound file names and compound masses
+		self.compoundFileNames = templist3
+		self.compoundMasses = templist4
 
+##########################################################################################
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
 	"""
@@ -700,9 +818,9 @@ if __name__ == '__main__' :
 	parser.add_argument('-i',\
 						'--input',\
 						required=True,\
-						help='full path to ccscal_input.py',\
+						help='full path to ccscal_input.txt',\
 						dest="path_to_input",\
-						metavar='"/full/path/to/ccscal_input.py"')
+						metavar='"/full/path/to/ccscal_input.txt"')
 	# parse arguments 
 	args = parser.parse_args()
 	# print the help message at the beginning of each run
@@ -710,40 +828,28 @@ if __name__ == '__main__' :
 	print ""
 	# all of the command-line arguments are stored in args
 	#
-	### IMPORT THE CCSCAL_INPUT FILE
-	#	
-	# store the ccscal_input file name and ccscal_input file path as strings
-	ccscal_input_file_path, ccscal_input_file_name = os.path.split(\
-													 os.path.splitext(\
-													 args.path_to_input)[0])
-	# add ccscal_input path to python's path 
-	sys.path.append(ccscal_input_file_path)
-	# import ccscal_input file
-	ccscal_input = __import__(ccscal_input_file_name)
-	# ccscal_input contains run information from ccscal_input file
+	### PARSE THE INPUT FILE
+	#
+	input_data = ParseInputFile(args.path_to_input)
 	#
 	### INITIALIZE THE REPORT GENERATOR
 	#
-	report = GenerateReport(ccscal_input.report_file_name)
+	report = GenerateReport(input_data.reportFileName)
 	#	
 	### PERFORM CCS CALIBRATION
 	#
 	print "Performing CCS Calibration..."
 	# create CcsCalibration object
-	calibration = CcsCalibration(ccscal_input.calibrant_data_file,\
-								 ccscal_input.calibrant_masses,\
-								 ccscal_input.calibrant_literature_ccs,\
-								 mass_window=ccscal_input.mass_window,\
-								 edc=ccscal_input.edc)
-
+	calibration = CcsCalibration(input_data.calDataFile,\
+								 input_data.calibrantData[0],\
+								 input_data.calibrantData[1],\
+								 mass_window=input_data.massWindow,\
+								 edc=input_data.edc)
 	# save a graph of the fitted calibration curve
-	calibration.saveCalCurveFig(figure_file_name=ccscal_input.calibration_figure_file_name)
+	calibration.saveCalCurveFig(figure_file_name=input_data.calCurveFileName)
 	# write the calibration statistics to the report file
 	report.writeCalibrationReport(calibration)
 	print "...DONE"
-	
-	
-
 	#
 	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
 	#
@@ -752,20 +858,22 @@ if __name__ == '__main__' :
 	# write the header for the compound data table in the report
 	report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
-	count = 0
-	for pair in (ccscal_input.compound_data_files_and_masses):
-		count += 1
-		print "Extracting Drift Time for Mass:", pair[1], "from Data File:", pair[0],\
-			  "(" + str(count), "of", str(len(ccscal_input.compound_data_files_and_masses)) + ")..."
+	for n in range(len(input_data.compoundFileNames)):
+		print "Extracting Drift Time for Mass:", input_data.compoundMasses[n], \
+				"from Data File:", input_data.compoundFileNames[n], "(" + str(n + 1), \
+				"of", str(len(input_data.compoundFileNames)) + ")..."
 		# extract drift time and get calibrated CCS for the filename/mass pair
-		driftTime = collector.process((ccscal_input.compound_root_directory + pair[0]), pair[1], ccscal_input.mass_window)
+		driftTime = collector.process((input_data.compoundDataDir + input_data.compoundFileNames[n]), \
+										input_data.compoundMasses[n], \
+										input_data.massWindow)
 		print "...DONE"
 		print "Getting Calibrated CCS..."
-		ccs =  calibration.getCalibratedCcs(pair[1], driftTime)
-		report.writeCompoundDataTableLine(pair[0], pair[1], driftTime, ccs)
+		ccs =  calibration.getCalibratedCcs(input_data.compoundMasses[n], driftTime)
+		report.writeCompoundDataTableLine(input_data.compoundFileNames[n], \
+											input_data.compoundMasses[n], \
+											driftTime, \
+											ccs)
 		print "...DONE"
-	
-
 	#
 	### CLOSE THE REPORT FILE
 	report.finish()
@@ -774,7 +882,8 @@ if __name__ == '__main__' :
 	print "CcsCal Complete."
 	#
 	### COMPLETE
-
+	#
+	# report the total time taken to the user
 	end_time = time.time()
 	print ""
 	print "total time: ", (end_time - start_time)
