@@ -684,12 +684,16 @@ class ParseInputFile (object):
 	def __init__(self, input_filename):
 		# take in the input parameters
 		self.rawData = self.getInputParams(input_filename)
+		# unpack the single parameters into easy to access fields
+		self.unpackSingleParams()
+		# create arrays with the list input parameters
+		self.unpackListParams()
 		
 	"""
 		ParseInputFile.getInputParams -- Method
 	
-		Searches through the specified input file for the (all) parameters and returns a
-		list of the parameters grouped by categories (general, calibrants, and compounds):
+		Searches through the specified input file for the (all) parameters and returns an
+		array of the parameters grouped by categories (general, calibrants, and compounds):
 	
 		params contents by index:
 			params[0][0]			- path and file name to save reoprt under
@@ -708,7 +712,7 @@ class ParseInputFile (object):
 			params				- an array (list of three lists and one numpy.array() object) 
 										containing the parameters from the input file
 	"""	
-	def getInputParams(filename):
+	def getInputParams(self, filename):
 		params = [[],[],[]]
 		with open(filename) as input:
 			done = False
@@ -735,24 +739,48 @@ class ParseInputFile (object):
 	"""
 		ParseInputFile.unpackSingleParams -- Method
 		
-		TODO: method description
+		Unpack the paramters from the params array into fields with names that make sunse for easy
+		access from the main execution. Cast the values into the proper types that they should be
+		for how they are going to be used.
 		
 		Input(s):
 			none
 	"""
 	def unpackSingleParams(self):
-		pass
+		self.reportFileName = self.rawData[0][0]
+		# cast massWindow and edc to type float
+		self.massWindow = float(self.rawData[0][1])
+		self.edc = float(self.rawData[0][2])
+		self.calCurveFileName = self.rawData[1][0]
+		self.calDataFile = self.rawData[1][1]
+		self.compoundDataDir = self.rawData[2][0]
 	
 	"""
 		ParseInputFile.unpackListParams -- Method
 		
-		TODO: method description
+		Breaks the rawData[3] array into two easy to access arrays with calibration data and 
+		compound data separated from one another
 		
 		Input(s):
 			none
 	"""
 	def unpackListParams(self):
-		pass
+		templist1 = []
+		templist2 = []
+		templist3 = []
+		templist4 = []
+		flag = False
+		for thing in self.rawData[3]:
+			if flag:
+				templist3.append(thing[0])
+				templist4.append(thing[1])
+			elif thing[0] == "compound":
+				flag = True
+			else:
+				templist1.append(thing[0])
+				templist2.append(thing[1])
+		self.calibrantData = numpy.array([templist1, templist2])
+		self.compoundData = numpy.array([templist3, templist4])
 
 ##########################################################################################
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
