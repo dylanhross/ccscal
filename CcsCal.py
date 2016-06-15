@@ -806,7 +806,7 @@ if __name__ == '__main__' :
 	#
 	### PARSE THE COMMAND-LINE ARGUMENTS
 	#	
-	print ""
+	print
 	# string containing program description
 	pdesc = "This program refers to a specified input file and automagically \
 			performs a CCS calibration then obtains calibrated CCS for all \
@@ -825,7 +825,7 @@ if __name__ == '__main__' :
 	args = parser.parse_args()
 	# print the help message at the beginning of each run
 	parser.print_help()
-	print ""
+	print
 	# all of the command-line arguments are stored in args
 	#
 	### PARSE THE INPUT FILE
@@ -878,12 +878,12 @@ if __name__ == '__main__' :
 	### CLOSE THE REPORT FILE
 	report.finish()
 	#
-	print ""
+	print
 	print "CcsCal Complete."
 	#
 	### COMPLETE
 	#
 	# report the total time taken to the user
 	end_time = time.time()
-	print ""
+	print
 	print "total time: ", (end_time - start_time)
