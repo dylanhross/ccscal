@@ -6,7 +6,12 @@
 ; 	edc parameter
 ;edc				=	1.35
 ;	TOF pusher interval
-;tpf				= 	69.0
+;tpi				= 	69.0
+;       Savitsky-Golay smoothing parameters (set both to 0 for no smoothing)
+;   filter window
+;sgw                =   0
+;   filter polynomial order
+;sgp                =   0
 ;[ calibrants ]
 ; 	full path and name to save calibration curve file under
 ;cff				=	/Users/DylanRoss/Desktop/ccscal-test-suite2/cal-curve.png

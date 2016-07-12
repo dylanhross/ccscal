@@ -96,20 +96,13 @@ class GetData (object):
 	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
 		# pre-process data with rough mass_window (i.e. double the original mass window)
 		useWindow = 2.0 * mass_window
-		# TODO: find a better way of specifying the PreProcessTxt.o executable location (otherwise
-		#		it screws up the portability of the program, plus it needs to change to .exe when
-		#		it's compiled on windows
-		#
 		# For now I have just specified a relative path to the executable since it is in the same 
 		# directory as the main CcsCal.py (this file)
 		functionCallLine = "./PreProcessTxt.exe" + " " +\
 							data_filename + " " +\
 							str(specified_mass) + " " + \
 							str(useWindow)
-		# had to use shell=True flag here... not sure if I had to do that with RawToTxt 
-		# but eventually I may need to figure something else out since I am sure sure how
-		# well it will work with this flag on Windows. 
-		call(functionCallLine, shell=True)
+		call(functionCallLine)
 	
 	"""
 		GetData.fineFilterForMass -- Method
@@ -147,9 +140,13 @@ class GaussFit (object):
 		Input(s):
 			get_data				- object containing the dt distribution to be fit with 
 										Gaussian function (GetData)
+			[optional] sg_smooth	- use a Savitsky-Golay smoothing function on the raw data
+										prior to gaussian fitting. If set, provides the smooth
+										window and polynomial order to use for smoothing 
+										(boolean or tuple) [default = False]
 									  
 	"""
-	def __init__ (self, get_data):
+	def __init__ (self, get_data, sg_smooth=False):
 		# generate the initial parameters, initial sigma is set to 10 dtbins ARBITRARILY
 		self.initparams = ((numpy.amax(get_data.dtBinAndIntensity[1])),\
 							(numpy.sum(get_data.dtBinAndIntensity[0] * \
@@ -161,12 +158,12 @@ class GaussFit (object):
 		# make internal copies of the specified mass and data filename
 		self.mass = get_data.specifiedMass
 		self.filename = get_data.ppFileName
-		# fit the distribution on get_data
-		# perform smoothing of raw data using Savitsky-Golay filter
-		# smooth window is 5, polynomial order is 3
-		# TODO: make filtering optional and filtering parameters adjustable
-		get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
-		# fit the smoothed data
+		
+		if sg_smooth:
+			# perform smoothing of raw data using Savitsky-Golay filter
+			# smooth window is sg_smooth[0], polynomial order is sg_smooth[1]
+			get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
+		# fit the (smoothed or unsmoothed) data 
 		self.doFit(get_data)
 		if not fitFailed:
 			self.opt_mean = self.optparams[1]	
@@ -281,9 +278,14 @@ class DataCollector (object):
 			[optional] dtbin_to_dt	- conversion factor for going from dtbin to drift time
 										in milliseconds, based on the TOF pusher frequency
 										[default = 0.069]
+			[optional] sg_smooth	- use a Savitsky-Golay smoothing function on the raw data
+										prior to gaussian fitting. If set, provides the smooth
+										window and polynomial order to use for smoothing 
+										(boolean or tuple) [default = False]
 	"""
-	def __init__ (self, dtbin_to_dt=0.069):
+	def __init__ (self, dtbin_to_dt=0.069, sg_smooth=False):
 		self.dtBinToDt = dtbin_to_dt
+		self.sg_smooth = sg_smooth
 	
 	"""
 		DataCollector.process -- Method
@@ -300,7 +302,7 @@ class DataCollector (object):
 									- drift time for the specified mass in ms (float)						
 	"""		
 	def process (self, data_file_name, specified_mass, mass_window):
-		gauss = GaussFit(GetData(data_file_name, specified_mass, mass_window))
+		gauss = GaussFit(GetData(data_file_name, specified_mass, mass_window), sg_smooth=self.sg_smooth)
 		return gauss.opt_mean * self.dtBinToDt
 
 ##########################################################################################
@@ -321,9 +323,13 @@ class CcsCalibration (object):
 			cal_masses				- calibrant m/z values (list)
 			cal_lit_ccs				- calibrant literature ccs values (list)
 			mass_window 			- specify a mass window to extract values from (float)
-			[optional edc  			- edc delay coefficient (float) [default = 1.35]
+			[optiona] edc  			- edc delay coefficient (float) [default = 1.35]
 			[optional] dtbin_to_dt  - specify a different dtbin equivalent to use other than 
 										the default (float) [default = 0.0689]
+			[optional] sg_smooth	- use a Savitsky-Golay smoothing function on the raw data
+										prior to gaussian fitting. If set, provides the smooth
+										window and polynomial order to use for smoothing 
+										(boolean or tuple) [default = False]
 	"""
 	def __init__ (self, 
 				  data_file,\
@@ -331,12 +337,13 @@ class CcsCalibration (object):
 				  cal_lit_ccs_vals,\
 				  mass_window,\
 				  edc=1.35,\
-				  dtbin_to_dt=0.0689):
+				  dtbin_to_dt=0.0689,\
+				  sg_smooth=False):
 		# store some calculation constants
 		self.edc = edc
 		self.n2_mass = 28.0134	
 		# create an empty DataCollector object
-		self.collector = DataCollector(dtbin_to_dt=dtbin_to_dt)
+		self.collector = DataCollector(dtbin_to_dt=dtbin_to_dt, sg_smooth=sg_smooth)
 		# make an array with calibrant masses
 		self.calMasses = numpy.array(cal_masses)
 		# make an array with calibrant lit ccs values
@@ -660,7 +667,7 @@ class GenerateReport (object):
 		Writes a string to the report file then moves to a new line
 		
 		Input(s):
-			[optional] line_to_write	- line to write to file (string)
+			[optional] line_to_write	- line to write to file (string) [default = ""]
 	"""
 	def wLn(self, line_to_write=""):
 		self.report_file.write(line_to_write + "\n")		
@@ -706,6 +713,8 @@ class ParseInputFile (object):
 			params[0][1]			- mass window to extract drift time data from
 			params[0][2]			- edc parameter
 			params[0][3]			- dtbin to dt conversion factor (based on TOF pusher interval)
+			params[0][4]			- Savitsky-Golay smooth window parameter (or 0 for no smoothing)
+			params[0][5]			- Savitsky-Golay polynomial parameter
 			params[1][0]			- full path and name to save calibration curve file under
 			params[1][1]			- full path and name of the CCS calibration data file
 			params[2][0]			- full path to the directory containing the compound data files
@@ -732,6 +741,10 @@ class ParseInputFile (object):
 					elif line.split()[0] == ";edc":
 						params[0].append(line.split()[2])
 					elif line.split()[0] == ";tpi":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";sgw":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";sgp":
 						params[0].append(line.split()[2])
 					elif line.split()[0] == ";cff":
 						params[1].append(line.split()[2])
@@ -762,6 +775,13 @@ class ParseInputFile (object):
 		self.edc = float(self.rawData[0][2])
 		# convert TOF pusher interval to dtbin_to_dt (divide by 1000) and cast dtbin_to_dt to float
 		self.dtbin_to_dt = float(self.rawData[0][3]) / 1000.0
+		# set sg_smooth to False if the first parameter in the input file (sgw) is 0
+		if int(self.rawData[0][4]) == 0:
+			self.sg_smooth = False
+		else:
+			# otherwise set it to be a tuple containing the smooth window and polynomial order from 
+			# the input file (both cast to ints)
+			self.sg_smooth = (int(self.rawData[0][4]), int(self.rawData[0][5])) 
 		self.calCurveFileName = self.rawData[1][0]
 		self.calDataFile = self.rawData[1][1]
 		self.compoundDataDir = self.rawData[2][0]
@@ -852,8 +872,9 @@ if __name__ == '__main__' :
 								 input_data.calibrantData[0],\
 								 input_data.calibrantData[1],\
 								 mass_window=input_data.massWindow,\
-								 edc=input_data.edc
-								 dtbin_to_dt=input_data.dtbin_to_dt)
+								 edc=input_data.edc,\
+								 dtbin_to_dt=input_data.dtbin_to_dt,\
+								 sg_smooth=input_data.sg_smooth)
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=input_data.calCurveFileName)
 	# write the calibration statistics to the report file
@@ -863,7 +884,7 @@ if __name__ == '__main__' :
 	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
 	#
 	# initialize a DataCollector object
-	collector = DataCollector()
+	collector = DataCollector(dtbin_to_dt=input_data.dtbin_to_dt, sg_smooth=input_data.sg_smooth)
 	# write the header for the compound data table in the report
 	report.writeCompoundDataTableHeader()
 	# cycle through each compound input filename/mass pair and perform drift time extraction
@@ -895,4 +916,4 @@ if __name__ == '__main__' :
 	# report the total time taken to the user
 	end_time = time.time()
 	print
-	print "total time: ", (end_time - start_time)
+	print "total time: ", round((end_time - start_time), 3), "seconds"
