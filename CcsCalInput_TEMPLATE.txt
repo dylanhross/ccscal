@@ -5,6 +5,8 @@
 ;mwn				=	0.5
 ; 	edc parameter
 ;edc				=	1.35
+;	TOF pusher interval
+;tpf				= 	69.0
 ;[ calibrants ]
 ; 	full path and name to save calibration curve file under
 ;cff				=	/Users/DylanRoss/Desktop/ccscal-test-suite2/cal-curve.png

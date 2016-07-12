@@ -99,7 +99,10 @@ class GetData (object):
 		# TODO: find a better way of specifying the PreProcessTxt.o executable location (otherwise
 		#		it screws up the portability of the program, plus it needs to change to .exe when
 		#		it's compiled on windows
-		functionCallLine = "/Users/DylanRoss/ccscal-plusplus/PreProcessTxt.o" + " " +\
+		#
+		# For now I have just specified a relative path to the executable since it is in the same 
+		# directory as the main CcsCal.py (this file)
+		functionCallLine = "./PreProcessTxt.exe" + " " +\
 							data_filename + " " +\
 							str(specified_mass) + " " + \
 							str(useWindow)
@@ -277,9 +280,9 @@ class DataCollector (object):
 		Input(s):
 			[optional] dtbin_to_dt	- conversion factor for going from dtbin to drift time
 										in milliseconds, based on the TOF pusher frequency
-										[default = 0.0689]
+										[default = 0.069]
 	"""
-	def __init__ (self, dtbin_to_dt=0.0689):
+	def __init__ (self, dtbin_to_dt=0.069):
 		self.dtBinToDt = dtbin_to_dt
 	
 	"""
@@ -702,6 +705,7 @@ class ParseInputFile (object):
 			params[0][0]			- path and file name to save reoprt under
 			params[0][1]			- mass window to extract drift time data from
 			params[0][2]			- edc parameter
+			params[0][3]			- dtbin to dt conversion factor (based on TOF pusher interval)
 			params[1][0]			- full path and name to save calibration curve file under
 			params[1][1]			- full path and name of the CCS calibration data file
 			params[2][0]			- full path to the directory containing the compound data files
@@ -726,6 +730,8 @@ class ParseInputFile (object):
 					elif line.split()[0] == ";mwn":
 						params[0].append(line.split()[2])
 					elif line.split()[0] == ";edc":
+						params[0].append(line.split()[2])
+					elif line.split()[0] == ";tpi":
 						params[0].append(line.split()[2])
 					elif line.split()[0] == ";cff":
 						params[1].append(line.split()[2])
@@ -754,6 +760,8 @@ class ParseInputFile (object):
 		# cast massWindow and edc to type float
 		self.massWindow = float(self.rawData[0][1])
 		self.edc = float(self.rawData[0][2])
+		# convert TOF pusher interval to dtbin_to_dt (divide by 1000) and cast dtbin_to_dt to float
+		self.dtbin_to_dt = float(self.rawData[0][3]) / 1000.0
 		self.calCurveFileName = self.rawData[1][0]
 		self.calDataFile = self.rawData[1][1]
 		self.compoundDataDir = self.rawData[2][0]
@@ -844,7 +852,8 @@ if __name__ == '__main__' :
 								 input_data.calibrantData[0],\
 								 input_data.calibrantData[1],\
 								 mass_window=input_data.massWindow,\
-								 edc=input_data.edc)
+								 edc=input_data.edc
+								 dtbin_to_dt=input_data.dtbin_to_dt)
 	# save a graph of the fitted calibration curve
 	calibration.saveCalCurveFig(figure_file_name=input_data.calCurveFileName)
 	# write the calibration statistics to the report file
