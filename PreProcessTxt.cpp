@@ -1,8 +1,7 @@
 // This program is meant to pre-process the raw data text files prior to CcsCal.py importing them
 // via its GetData() object. It will take a specified mass, mass window, and data file name as 
 // arguments, then it will create a pre-processed file containing only lines with masses that are 
-// within double the mass window of the specified mass. This should speed up data file import by 
-// CcsCal.py
+// the mass window of the specified mass. This should speed up data file import by CcsCal.py
 
 #include<iostream>
 #include<fstream>

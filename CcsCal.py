@@ -94,14 +94,14 @@ class GetData (object):
 			mass_window			- window of masses to bin data together for (float)
 	"""	
 	def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
-		# pre-process data with rough mass_window (i.e. double the original mass window)
-		useWindow = 2.0 * mass_window
+		# pre-process the input file using the exact mass window speccified (do not double the mass
+		# window anymore)
 		# For now I have just specified a relative path to the executable since it is in the same 
 		# directory as the main CcsCal.py (this file)
 		functionCallLine = "./PreProcessTxt.exe" + " " +\
 							data_filename + " " +\
 							str(specified_mass) + " " + \
-							str(useWindow)
+							str(mass_window)
 		call(functionCallLine)
 	
 	"""
@@ -148,6 +148,8 @@ class GaussFit (object):
 	"""
 	def __init__ (self, get_data, sg_smooth=False):
 		# generate the initial parameters, initial sigma is set to 10 dtbins ARBITRARILY
+		# TODO: figure out a non-arbitrary initial setting for the sigma parameter
+		# 		tests with some data suggest that maybe 5.0 bins would work better than 10.0...
 		self.initparams = ((numpy.amax(get_data.dtBinAndIntensity[1])),\
 							(numpy.sum(get_data.dtBinAndIntensity[0] * \
 								get_data.dtBinAndIntensity[1]) / \
@@ -158,11 +160,10 @@ class GaussFit (object):
 		# make internal copies of the specified mass and data filename
 		self.mass = get_data.specifiedMass
 		self.filename = get_data.ppFileName
-		
 		if sg_smooth:
 			# perform smoothing of raw data using Savitsky-Golay filter
 			# smooth window is sg_smooth[0], polynomial order is sg_smooth[1]
-			get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], 5, 3)
+			get_data.dtBinAndIntensity[1] = savgol_filter(get_data.dtBinAndIntensity[1], sg_smooth[0], sg_smooth[1])
 		# fit the (smoothed or unsmoothed) data 
 		self.doFit(get_data)
 		if not fitFailed:
