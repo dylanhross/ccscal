@@ -469,16 +469,16 @@ class CcsCalibration (object):
 		p = pplt
 		p.subplot(g[0])
 		p.plot(self.correctedDt,\
-			   self.correctedLitCcs, \
-			   'ko' , \
-			   fillstyle='none', \
-			   markeredgewidth=1.0, \
-			   label="calibrants")
+				self.correctedLitCcs, \
+				'ko' , \
+				fillstyle='none', \
+				markeredgewidth=1.0, \
+				label="calibrants")
 		p.plot(self.correctedDt, 
 				self.baseCalCurve(self.correctedDt,\
-									self.optparams[0],\
-									self.optparams[1],\
-									self.optparams[2]),\
+						self.optparams[0],\
+						self.optparams[1],\
+						self.optparams[2]),\
 				'black', \
 				label="fitted curve")
 		p.legend(loc="best")
