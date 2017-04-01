@@ -1,15 +1,31 @@
-;[ general ]
+;       [ general ]
+;
 ; 	full path and name to same the report file under
-;rfn				=	/Users/DylanRoss/Desktop/ccscal-test-suite2/ccscal-report.txt
+;rfn				=	C:/Users/DRoss/Desktop/ccscal-report.txt
+;
 ; 	mass window to extract drift time data from
 ;mwn				=	0.5
+;
 ; 	edc parameter
 ;edc				=	1.35
-;[ calibrants ]
+;
+;	TOF pusher interval
+;tpi				= 	69.0
+;
+;   Savitsky-Golay smoothing parameters (set both to 0 for no smoothing)
+;   filter window
+;sgw                =   5
+;   filter polynomial order
+;sgp                =   3
+;
+;       [ calibrants ]
+;
 ; 	full path and name to save calibration curve file under
-;cff				=	/Users/DylanRoss/Desktop/ccscal-test-suite2/cal-curve.png
+;cff				=	C:/Users/DRoss/Desktop/cal-curve.png
+;
 ; 	full path and name of the CCS calibration data file
-;cdf				= 	/Users/DylanRoss/Desktop/ccscal-test-suite2/IM_Polyalanine_50-2000-2016-05-11-10-20-1.txt
+;cdf				= 	C:/Users/DRoss/Desktop/IM-polyala.txt
+;
 ; 	information for CCS calibrants
 ; 	mass		literature ccs
 232.13		151
@@ -30,18 +46,13 @@
 1297.685	361
 1368.722	374
 1439.759	387
-;[ compounds ]
+;
+;       [ compounds ]
+;
 ; 	full path to the directory containing the compound data files
-;crd				=	/Users/DylanRoss/Desktop/ccscal-test-suite2/	
+;crd				=	C:/Users/DRoss/Desktop/	
+;
 ; 	information for compounds
 compound	start
 ; 	data file					mass
-IM_0881Drug.txt				152.066
-IM_0881Drug.txt				250.1952
-IM_0881Drug.txt				294.1745
-IM_0881Drug.txt				343.1425
-IM_0881Drug.txt				455.3119
-IM_0881Drug.txt				609.3069
-IM_0881Drug.txt				734.4884
-IM_0881Drug.txt				1072.5385
-IM_0881Drug.txt				1448.5166
+IM-0881A03.txt                  123.45
