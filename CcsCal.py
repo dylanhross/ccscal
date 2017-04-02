@@ -1589,12 +1589,10 @@ class ParseInputFile (object):
 		# make separate lists for the compound file names and compound masses
 		self.compoundFileNames = templist3
 		self.compoundMasses = templist4
->>>>>>> origin/master
 
 ##########################################################################################
 # ***EXECUTION IF THIS SCRIPT IS CALLED DIRECTLY*** #
 if __name__ == '__main__' :
-<<<<<<< HEAD
     """
         This is the execution path to follow if this program is called directly through
         the commmand line. 
@@ -1687,99 +1685,3 @@ if __name__ == '__main__' :
     end_time = time.time()
     print ""
     print "total time: ", (end_time - start_time)
-=======
-	"""
-		This is the execution path to follow if this program is called directly through
-		the commmand line. 
-
-		The following argument is required:
-			-i, --input			full path to ccscal_input.py
-	"""
-	start_time = time.time()
-	#
-	### PARSE THE COMMAND-LINE ARGUMENTS
-	#	
-	print
-	# string containing program description
-	pdesc = "This program refers to a specified input file and automagically \
-			performs a CCS calibration then obtains calibrated CCS for all \
-			specified masses, finally printing a full report containing the \
-			results of the calibration and CCS of all compounds"
-	# create an ArgumentParser object 
-	parser = argparse.ArgumentParser(description=pdesc)
-	# add arguments
-	parser.add_argument('-i',\
-						'--input',\
-						required=True,\
-						help='full path to ccscal_input.txt',\
-						dest="path_to_input",\
-						metavar='"/full/path/to/ccscal_input.txt"')
-	# parse arguments 
-	args = parser.parse_args()
-	# print the help message at the beginning of each run
-	parser.print_help()
-	print
-	# all of the command-line arguments are stored in args
-	#
-	### PARSE THE INPUT FILE
-	#
-	input_data = ParseInputFile(args.path_to_input)
-	#
-	### INITIALIZE THE REPORT GENERATOR
-	#
-	report = GenerateReport(input_data.reportFileName)
-	#	
-	### PERFORM CCS CALIBRATION
-	#
-	print "Performing CCS Calibration..."
-	# create CcsCalibration object
-	calibration = CcsCalibration(input_data.calDataFile,\
-								 input_data.calibrantData[0],\
-								 input_data.calibrantData[1],\
-								 mass_window=input_data.massWindow,\
-								 edc=input_data.edc,\
-								 dtbin_to_dt=input_data.dtbin_to_dt,\
-								 sg_smooth=input_data.sg_smooth)
-	# save a graph of the fitted calibration curve
-	calibration.saveCalCurveFig(figure_file_name=input_data.calCurveFileName)
-	# write the calibration statistics to the report file
-	report.writeCalibrationReport(calibration)
-	print "...DONE"
-	#
-	### EXTRACT DRIFT TIMES OF COMPOUNDS AND GET THEIR CALIBRATED CCS
-	#
-	# initialize a DataCollector object
-	collector = DataCollector(dtbin_to_dt=input_data.dtbin_to_dt, sg_smooth=input_data.sg_smooth)
-	# write the header for the compound data table in the report
-	report.writeCompoundDataTableHeader()
-	# cycle through each compound input filename/mass pair and perform drift time extraction
-	for n in range(len(input_data.compoundFileNames)):
-		print "Extracting Drift Time for Mass:", input_data.compoundMasses[n], \
-				"from Data File:", input_data.compoundFileNames[n], "(" + str(n + 1), \
-				"of", str(len(input_data.compoundFileNames)) + ")..."
-		# extract drift time and get calibrated CCS for the filename/mass pair
-		driftTime = collector.process((input_data.compoundDataDir + input_data.compoundFileNames[n]), \
-										input_data.compoundMasses[n], \
-										input_data.massWindow)
-		print "...DONE"
-		print "Getting Calibrated CCS..."
-		ccs =  calibration.getCalibratedCcs(input_data.compoundMasses[n], driftTime)
-		report.writeCompoundDataTableLine(input_data.compoundFileNames[n], \
-											input_data.compoundMasses[n], \
-											driftTime, \
-											ccs)
-		print "...DONE"
-	#
-	### CLOSE THE REPORT FILE
-	report.finish()
-	#
-	print
-	print "CcsCal Complete."
-	#
-	### COMPLETE
-	#
-	# report the total time taken to the user
-	end_time = time.time()
-	print
-	print "total time: ", round((end_time - start_time), 3), "seconds"
->>>>>>> origin/master
