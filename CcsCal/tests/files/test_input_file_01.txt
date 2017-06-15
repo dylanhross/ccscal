@@ -1,0 +1,44 @@
+;       [ general ]
+;
+; 	full path and name to same the report file under
+;rfn				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/ccscal-report.txt
+;
+; 	mass window to extract drift time data from
+;mwn				=	0.5
+;
+; 	edc parameter
+;edc				=	1.35
+;
+;	TOF pusher interval
+;tpi				= 	69.0
+;
+;   Savitsky-Golay smoothing parameters (set both to 0 for no smoothing)
+;   filter window
+;sgw                =   5
+;   filter polynomial order
+;sgp                =   3
+;
+;       [ calibrants ]
+;
+; 	full path and name to save calibration curve file under
+;cff				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png
+;
+; 	full path and name of the CCS calibration data file
+;cdf				= 	/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt
+;
+; 	information for CCS calibrants
+; 	mass		literature ccs
+232.13		151
+303.167		166
+374.204		181
+445.241		195
+;
+;       [ compounds ]
+;
+; 	full path to the directory containing the compound data files
+;crd				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/	
+;
+; 	information for compounds
+compound	start
+; 	data file					mass
+IM-0881A03.txt                  123.45

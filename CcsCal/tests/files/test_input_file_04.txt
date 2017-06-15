@@ -1,0 +1,15 @@
+;rfn				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/ccscal-report.txt
+;mwn				=	0.5
+;edc				=	1.35
+;tpi				= 	69.0
+;sgw                =   5
+;sgp                =   3
+;cff				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png
+;cdf				= 	/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt
+;crd				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/	
+232.13		151
+303.167		166
+374.204		181
+445.241		195
+compound	start
+IM-0881A03.txt                  123.45

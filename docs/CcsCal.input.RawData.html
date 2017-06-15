@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module CcsCal.input.RawData</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="CcsCal.html"><font color="#ffffff">CcsCal</font></a>.<a href="CcsCal.input.html"><font color="#ffffff">input</font></a>.RawData</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/input/RawData.py">/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/input/RawData.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="CcsCal.globals.html">CcsCal.globals</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="CcsCal.input.RawData.html#RawData">RawData</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RawData">class <strong>RawData</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="RawData-__init__"><strong>__init__</strong></a>(self, data_filename, specified_mass, mass_window, pp<font color="#909090">=True</font>)</dt><dd><tt><a href="#RawData">RawData</a>.__init__<br>
+&nbsp;<br>
+Initializes&nbsp;a&nbsp;new&nbsp;<a href="#RawData">RawData</a>&nbsp;object<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data_filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;file&nbsp;name&nbsp;of&nbsp;the&nbsp;raw&nbsp;data&nbsp;file&nbsp;(string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;specified_mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;mass&nbsp;to&nbsp;extract&nbsp;data&nbsp;for&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;window&nbsp;of&nbsp;masses&nbsp;to&nbsp;bin&nbsp;data&nbsp;together&nbsp;for&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[pp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;whether&nbsp;to&nbsp;pre-process&nbsp;the&nbsp;text&nbsp;file&nbsp;(bool),&nbsp;optional&nbsp;default=True]</tt></dd></dl>
+
+<dl><dt><a name="RawData-callPreProcessTxt"><strong>callPreProcessTxt</strong></a>(self, data_filename, specified_mass, mass_window)</dt><dd><tt><a href="#RawData">RawData</a>.callPreProcessTxt<br>
+&nbsp;<br>
+Calls&nbsp;PreProcessTxt.o&nbsp;(or&nbsp;PreProcessTxt.exe&nbsp;on&nbsp;Windows)&nbsp;using&nbsp;the&nbsp;specified&nbsp;mass&nbsp;and&nbsp;mass&nbsp;window<br>
+provided&nbsp;as&nbsp;parameters.&nbsp;The&nbsp;mass&nbsp;window&nbsp;it&nbsp;actually&nbsp;uses&nbsp;is&nbsp;a&nbsp;rough&nbsp;mass&nbsp;window&nbsp;(i.e.&nbsp;double&nbsp;the<br>
+mass&nbsp;window&nbsp;provided)<br>
+&nbsp;<br>
+***&nbsp;This&nbsp;function&nbsp;is&nbsp;not&nbsp;very&nbsp;portable,&nbsp;needs&nbsp;some&nbsp;major&nbsp;improvements&nbsp;***<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data_filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;file&nbsp;name&nbsp;of&nbsp;the&nbsp;raw&nbsp;data&nbsp;file&nbsp;(string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;specified_mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;mass&nbsp;to&nbsp;extract&nbsp;data&nbsp;for&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;window&nbsp;of&nbsp;masses&nbsp;to&nbsp;bin&nbsp;data&nbsp;together&nbsp;for&nbsp;(float)</tt></dd></dl>
+
+<dl><dt><a name="RawData-fineFilterForMass"><strong>fineFilterForMass</strong></a>(self, specified_mass, mass_window)</dt><dd><tt><a href="#RawData">RawData</a>.fineFilterForMass<br>
+&nbsp;<br>
+Looks&nbsp;through&nbsp;the&nbsp;data&nbsp;array&nbsp;from&nbsp;the&nbsp;pre-processed&nbsp;data&nbsp;file&nbsp;for&nbsp;masses&nbsp;within&nbsp;the<br>
+fine&nbsp;mass&nbsp;window<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;specified_mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;mass&nbsp;to&nbsp;extract&nbsp;data&nbsp;for&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;window&nbsp;of&nbsp;masses&nbsp;to&nbsp;bin&nbsp;data&nbsp;together&nbsp;for&nbsp;(float)</tt></dd></dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

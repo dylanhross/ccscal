@@ -1,7 +1,7 @@
 ;       [ general ]
 ;
 ; 	full path and name to same the report file under
-;rfn				=	C:/Users/DRoss/Desktop/ccscal-report.txt
+;rfn				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/ccscal-report.txt
 ;
 ; 	mass window to extract drift time data from
 ;mwn				=	0.5
@@ -21,10 +21,10 @@
 ;       [ calibrants ]
 ;
 ; 	full path and name to save calibration curve file under
-;cff				=	C:/Users/DRoss/Desktop/cal-curve.png
+;cff				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png
 ;
 ; 	full path and name of the CCS calibration data file
-;cdf				= 	C:/Users/DRoss/Desktop/IM-polyala.txt
+;cdf				= 	/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt
 ;
 ; 	information for CCS calibrants
 ; 	mass		literature ccs
@@ -32,25 +32,11 @@
 303.167		166
 374.204		181
 445.241		195
-516.278		211
-587.315		228
-658.352		243
-729.389		256
-800.426		271
-871.463		282
-942.501		294
-1013.537	306
-1084.574	322
-1155.611	335
-1226.648	348
-1297.685	361
-1368.722	374
-1439.759	387
 ;
 ;       [ compounds ]
 ;
 ; 	full path to the directory containing the compound data files
-;crd				=	C:/Users/DRoss/Desktop/	
+;crd				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/	
 ;
 ; 	information for compounds
 compound	start

@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module CcsCal.input.ParseInputFile</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="CcsCal.html"><font color="#ffffff">CcsCal</font></a>.<a href="CcsCal.input.html"><font color="#ffffff">input</font></a>.ParseInputFile</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/input/ParseInputFile.py">/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/input/ParseInputFile.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="CcsCal.input.ParseInputFile.html#ParseInputFile">ParseInputFile</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ParseInputFile">class <strong>ParseInputFile</strong></a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ParseInputFile-__init__"><strong>__init__</strong></a>(self, input_filename)</dt></dl>
+
+<dl><dt><a name="ParseInputFile-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt><a href="#ParseInputFile">ParseInputFile</a>.__str__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prints&nbsp;all&nbsp;of&nbsp;the&nbsp;named&nbsp;parameters<br>
+&nbsp;<br>
+unpacked&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>reportFileName</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;rfn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>massWindow</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;mwn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>edc</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;edc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>TOFPusherInt</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;tpi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>savgolWindow</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;sgw<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>savgolPoly</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;sgp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>calCurveFileName</strong>&nbsp;&nbsp;&nbsp;&lt;-&nbsp;cff<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>calDataFile</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;cdf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>compoundDataDir</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;crd<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;none<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;representation&nbsp;of&nbsp;the&nbsp;object</tt></dd></dl>
+
+<dl><dt><a name="ParseInputFile-getInputParams"><strong>getInputParams</strong></a>(self, filename)</dt><dd><tt><a href="#ParseInputFile">ParseInputFile</a>.getInputParams<br>
+&nbsp;<br>
+Searches&nbsp;through&nbsp;the&nbsp;specified&nbsp;input&nbsp;file&nbsp;for&nbsp;the&nbsp;(all)&nbsp;parameters&nbsp;and&nbsp;returns&nbsp;an<br>
+array&nbsp;of&nbsp;the&nbsp;parameters&nbsp;grouped&nbsp;by&nbsp;categories&nbsp;(general,&nbsp;calibrants,&nbsp;and&nbsp;compounds):<br>
+&nbsp;<br>
+params&nbsp;contents&nbsp;by&nbsp;index:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;path&nbsp;and&nbsp;file&nbsp;name&nbsp;to&nbsp;save&nbsp;reoprt&nbsp;under<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;mass&nbsp;window&nbsp;to&nbsp;extract&nbsp;drift&nbsp;time&nbsp;data&nbsp;from<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;edc&nbsp;parameter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][3]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;TOF&nbsp;pusher&nbsp;interval<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][4]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Savitsky-Golay&nbsp;smooth&nbsp;window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[0][5]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Savitsky-Golay&nbsp;smooth&nbsp;polynomial&nbsp;order<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[1][0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;full&nbsp;path&nbsp;and&nbsp;name&nbsp;to&nbsp;save&nbsp;calibration&nbsp;curve&nbsp;file&nbsp;under<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[1][1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;full&nbsp;path&nbsp;and&nbsp;name&nbsp;of&nbsp;the&nbsp;CCS&nbsp;calibration&nbsp;data&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[2][0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;full&nbsp;path&nbsp;to&nbsp;the&nbsp;directory&nbsp;containing&nbsp;the&nbsp;compound&nbsp;data&nbsp;files<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params[3]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;array&nbsp;containing&nbsp;the&nbsp;list&nbsp;data&nbsp;(calibrant&nbsp;masses&nbsp;and&nbsp;lit&nbsp;ccs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values,&nbsp;compound&nbsp;data&nbsp;file&nbsp;names&nbsp;and&nbsp;masses)<br>
+&nbsp;<br>
+###&nbsp;TODO:&nbsp;&nbsp;&nbsp;FIX&nbsp;THIS&nbsp;CRAP,&nbsp;this&nbsp;system&nbsp;is&nbsp;terrible&nbsp;because&nbsp;it&nbsp;breaks&nbsp;if&nbsp;any&nbsp;of&nbsp;the<br>
+###&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keywords&nbsp;are&nbsp;omitted&nbsp;or&nbsp;out&nbsp;of&nbsp;order<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;file&nbsp;name&nbsp;(and&nbsp;full&nbsp;path&nbsp;to)&nbsp;CcsCalInput&nbsp;file&nbsp;(string)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;params&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;an&nbsp;array&nbsp;(list&nbsp;of&nbsp;three&nbsp;lists&nbsp;and&nbsp;one&nbsp;numpy.array()&nbsp;object)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;containing&nbsp;the&nbsp;parameters&nbsp;from&nbsp;the&nbsp;input&nbsp;file</tt></dd></dl>
+
+<dl><dt><a name="ParseInputFile-unpackListParams"><strong>unpackListParams</strong></a>(self)</dt><dd><tt><a href="#ParseInputFile">ParseInputFile</a>.unpackListParams<br>
+&nbsp;<br>
+Breaks&nbsp;the&nbsp;rawData[3]&nbsp;array&nbsp;into&nbsp;two&nbsp;easy&nbsp;to&nbsp;access&nbsp;arrays&nbsp;with&nbsp;calibration&nbsp;data&nbsp;and<br>
+compound&nbsp;data&nbsp;separated&nbsp;from&nbsp;one&nbsp;another<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none</tt></dd></dl>
+
+<dl><dt><a name="ParseInputFile-unpackSingleParams"><strong>unpackSingleParams</strong></a>(self)</dt><dd><tt><a href="#ParseInputFile">ParseInputFile</a>.unpackSingleParams<br>
+&nbsp;<br>
+Unpack&nbsp;the&nbsp;paramters&nbsp;from&nbsp;the&nbsp;params&nbsp;array&nbsp;into&nbsp;fields&nbsp;with&nbsp;names&nbsp;that&nbsp;make&nbsp;sense&nbsp;for&nbsp;easy<br>
+access&nbsp;from&nbsp;the&nbsp;main&nbsp;execution.&nbsp;Cast&nbsp;the&nbsp;values&nbsp;into&nbsp;the&nbsp;proper&nbsp;types&nbsp;that&nbsp;they&nbsp;should&nbsp;be<br>
+for&nbsp;how&nbsp;they&nbsp;are&nbsp;going&nbsp;to&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+unpacked&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>reportFileName</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;rfn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>massWindow</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;mwn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>edc</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;edc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>TOFPusherInt</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;tpi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>savgolWindow</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;sgw<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>savgolPoly</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;sgp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>calCurveFileName</strong>&nbsp;&nbsp;&nbsp;&lt;-&nbsp;cff<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>calDataFile</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;cdf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>compoundDataDir</strong>&nbsp;&nbsp;&nbsp;&nbsp;&lt;-&nbsp;crd<br>
+&nbsp;<br>
+###&nbsp;TODO:&nbsp;&nbsp;&nbsp;FIX&nbsp;THIS&nbsp;CRAP,&nbsp;this&nbsp;system&nbsp;is&nbsp;terrible&nbsp;because&nbsp;it&nbsp;breaks&nbsp;if&nbsp;any&nbsp;of&nbsp;the<br>
+###&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keywords&nbsp;are&nbsp;omitted<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none</tt></dd></dl>
+
+</td></tr></table></td></tr></table>
+</body></html>
