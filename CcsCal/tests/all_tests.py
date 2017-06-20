@@ -6,7 +6,7 @@
 """
 
 
-from tests import input_parsing
+from CcsCal.tests import input_parsing
 
 
 # run all of the tests

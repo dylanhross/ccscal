@@ -6,7 +6,7 @@
 """
 
 
-from input.ParseInputFile import ParseInputFile
+from CcsCal.input.ParseInputFile import ParseInputFile
 
 
 # define the paths to the input file(s)

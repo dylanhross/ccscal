@@ -1,5 +1,5 @@
-import globals
-from input.RawData import RawData
+from CcsCal import globals
+#from CcsCal.input.RawData import RawData
 
 
 import os

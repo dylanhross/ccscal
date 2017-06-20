@@ -1,6 +1,6 @@
-import globals
-from input.RawData import RawData
-from processing.GaussFit import GaussFit
+from CcsCal import globals
+from CcsCal.input.RawData import RawData
+from CcsCal.processing.GaussFit import GaussFit
 
 
 import numpy
@@ -230,13 +230,13 @@ CcsCalibrationExt.__init__
 Initializes all of the internal parameters needed to perform the CCS calibration
 
 Input(s):
-    calibrant_mz
-    calibrant_dt
-    calibrant_ccs
-    [init_params
-    [edc
-    [max_fev
-    [do_fit
+    calibrant_mz            - list of calibrant m/z values (list(float))
+    calibrant_dt            - list of calibrant drift times (list(float))
+    calibrant_ccs           - list of calibrant ccs values (list(float))
+    [optional] init_params  -
+    [optional] edc          -
+    [optional] max_fev      -
+    [optional] do_fit       -
 """
         # store some calculation constants
         self.edc = edc

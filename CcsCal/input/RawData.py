@@ -1,6 +1,6 @@
 
 
-import globals
+from CcsCal import globals
 
 
 import os
