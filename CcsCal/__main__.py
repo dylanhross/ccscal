@@ -25,7 +25,7 @@ if __name__ == '__main__':
     #
     print ""
     # string containing program description
-    pdesc = """This program refers to a specified input file and automagically
+    pdesc = """This program refers to a specified input file and automatically
 performs a CCS calibration then obtains calibrated CCS for all
 specified masses, finally printing a full report containing the
 results of the calibration and CCS of all compounds"""

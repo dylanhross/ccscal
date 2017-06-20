@@ -39,6 +39,9 @@ Input(s):
         # store some calculation constants
         self.edc = edc
         self.n2_mass = globals.N2_MASS
+        self.he_mass = globals.HE_MASS
+        # maximum iterations for curve fitting
+        self.max_fev = globals.CURVE_FIT_MAXFEV
         # make an array with calibrant masses
         self.calMasses = numpy.array(cal_masses)
         # make an array with calibrant lit ccs values
@@ -61,19 +64,25 @@ Input(s):
         self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
 
 
-    def reducedMass(self, mass):
+    def reducedMass(self, mass, mode='N2'):
         """
 CcsCalibration.reducedMass
 
 Calculates reduced mass of an ion using the mass of nitrogen
 
 Input(s):
-    specified_mass          - the m/z to use for the calculation (float)
+    mass          - the m/z to use for the calculation (float)
+    [mode]         - calculate reduced mass for N2 or He (str, optional default='n2')
 
 Returns:
                             - reduced mass (float)
 """
-        return (mass * self.n2_mass) / (mass + self.n2_mass)
+        if mode == 'N2':
+            return (mass * self.n2_mass) / (mass + self.n2_mass)
+        elif mode == 'He':
+            return (mass * self.he_mass) / (mass + self.he_mass)
+        else:
+            raise ValueError('CcsCalibration: reducedMass: error, mode must be either "N2" or "He"')
 
 
     def correctedDriftTime(self, dt, mass):
@@ -126,7 +135,7 @@ Input(s):
             self.correctedDt,\
             self.correctedLitCcs,\
             p0=self.optparams,\
-            maxfev=globals.CURVE_FIT_MAXFEV)
+            maxfev=self.max_fev)
         except RuntimeError:
             self.fit_failed = True
             print "CCS CALIBRATION CURVE FIT FAILED WITH RUNTIME ERROR..."
@@ -196,8 +205,56 @@ Input(s):
             plt.xlabel("corrected drift time (ms)")
             plt.ylabel("residual CCS (%)")
             plt.axhline(y=0, color='black')
-            plt.savefig(figure_file_name, bbox_inches='tight', dpi=300)
+            plt.savefig(figure_file_name, bbox_inches='tight', dpi=500)
             plt.close()
         else:
             raise ValueError ("optimized fit parameters have not been generated,\
                               \nfitCalCurve() must be successfully run first!")
+
+
+class CcsCalibrationExt(CcsCalibration):
+    """
+CcsCalibrationExt
+
+An interface to the CcsCalibration object that can be used by just supplying CCS calibrant masses, drift times,
+and reference CCS values. This way, a user may construct a calibration curve, create a curve figure, and obtain
+calibrated CCS values in their own programs without using all of the other machinery for obtaining and
+structuring inputs/outputs
+"""
+
+    def __init__(self, calibrant_mz, calibrant_dt, calibrant_ccs, \
+                 init_params=(500, 0, 0.5), edc=1.35, max_fev=5000, do_fit=True):
+        """
+CcsCalibrationExt.__init__
+
+Initializes all of the internal parameters needed to perform the CCS calibration
+
+Input(s):
+    calibrant_mz
+    calibrant_dt
+    calibrant_ccs
+    [init_params
+    [edc
+    [max_fev
+    [do_fit
+"""
+        # store some calculation constants
+        self.edc = edc
+        self.n2_mass = 28.0134
+        ### TODO: implement helium option
+        self.he_mass = 4.0026
+        self.max_fev = max_fev
+        self.optparams = init_params
+        # make numpy arrays with calibrant m/z, dt, and CCS
+        self.calMasses, self.calDriftTimes, self.calLitCcs = \
+                    numpy.array(calibrant_mz), numpy.array(calibrant_dt), numpy.array(calibrant_ccs)
+        # make arrays with corrected drift time and CCS
+        self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
+        self.correctedLitCcs = self.calLitCcs * numpy.sqrt(self.reducedMass(self.calMasses))
+        # automatically perform calibration if asked to do so
+        if do_fit:
+            # perform the calibration
+            self.fitCalCurve()
+            # make an array with calibrant calculated ccs
+            self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
+

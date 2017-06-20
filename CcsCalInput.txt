@@ -1,7 +1,7 @@
 ;       [ general ]
 ;
 ; 	full path and name to same the report file under
-;rfn				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/ccscal-report.txt
+;rfn				=	/Users/DRoss/Desktop/ccscal_test/ccscal-report.txt
 ;
 ; 	mass window to extract drift time data from
 ;mwn				=	0.5
@@ -14,31 +14,51 @@
 ;
 ;   Savitsky-Golay smoothing parameters (set both to 0 for no smoothing)
 ;   filter window
-;sgw                =   5
+;sgw                =   0
 ;   filter polynomial order
-;sgp                =   3
+;sgp                =   0
 ;
 ;       [ calibrants ]
 ;
 ; 	full path and name to save calibration curve file under
-;cff				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png
+;cff				=	/Users/DRoss/Desktop/ccscal_test/cal-curve.png
 ;
 ; 	full path and name of the CCS calibration data file
-;cdf				= 	/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt
+;cdf				= 	/Users/DRoss/Desktop/ccscal_test/IM_0881PolyAla_Mid.txt
 ;
 ; 	information for CCS calibrants
 ; 	mass		literature ccs
-232.13		151
-303.167		166
-374.204		181
-445.241		195
+161.0926		136.05
+232.13		    150.77
+303.167		    163.28
+374.204		    177.55
+445.241		    190.80
+516.278		    205.95
+587.315		    222.68
+658.352		    236.40
+729.389		    249.13
+800.426		    262.60
+871.463		    275.98
+942.501		    289.25
+1013.537		300.78
+1084.574		312.80
+1155.611		327.13
+1226.648		338.15
+1297.685		350.08
+1368.722		359.28
+1439.759		370.23
 ;
 ;       [ compounds ]
 ;
 ; 	full path to the directory containing the compound data files
-;crd				=	/Users/DylanRoss/Desktop/Projects/ccscal-package/	
+;crd				=	/Users/DRoss/Desktop/ccscal_test/	
 ;
 ; 	information for compounds
 compound	start
 ; 	data file					mass
-IM-0881A03.txt                  123.45
+IM_0881L18.txt                  195.0877
+IM_0881P06.txt                  304.0866
+IM_0881G04.txt                  406.2337
+IM_0881I21.txt                  497.1322
+IM_0881H13.txt                  611.1607
+IM_0881B07.txt                  734.4685

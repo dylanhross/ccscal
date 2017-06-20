@@ -1,6 +1,8 @@
 
 
 import globals
+
+
 import os
 import numpy
 from subprocess import call
@@ -79,7 +81,7 @@ Input(s):
 RawData.fineFilterForMass
 
 Looks through the data array from the pre-processed data file for masses within the
-fine mass window
+fine mass window, uses a zeroed 2D array to deal with possibly sparse input data
 
 Input(s):
     specified_mass      - mass to extract data for (float)

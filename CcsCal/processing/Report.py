@@ -94,8 +94,8 @@ Input(s):
         self.wLn("m/z\t\tdrift time (ms)")
         self.wLn("---------------------------")
         for n in range (len(masses)):
-            outstr = str(round(masses[n], 3)) + "\t\t" + str(round(drift_times[n], 3))
-            self.wLn(outstr)
+            #outstr = str(round(masses[n], 3)) + "\t\t" + str(round(drift_times[n], 3))
+            self.wLn("{: 10.4f}    {: 5.2f}".format(masses[n], drift_times[n]))
         self.wLn()
 
 
@@ -120,7 +120,7 @@ Input(s):
         self.wLn("m/z        lit ccs (Ang^2)     calc ccs (Ang^2)      residual ccs (Ang^2, %)")
         self.wLn("----------------------------------------------------------------------------")
         for n in range (len(masses)):
-            self.wLn("{: 9.4f}   {: 6.3f}             {: 6.3f}             {: 6.3f}    {: 6.3f}".format(\
+            self.wLn("{: 10.4f}   {: 6.3f}             {: 6.3f}             {: 6.3f}    {: 6.3f}".format(\
                         masses[n], \
                         literature_ccs[n], \
                         calculated_ccs[n], \

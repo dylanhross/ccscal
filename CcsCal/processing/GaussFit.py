@@ -36,7 +36,8 @@ Input(s):
         self.filename = raw_data.ppFileName
         # fit the distribution on raw_data
         # perform smoothing of raw data using Savitsky-Golay filter
-        if smooth:
+        self.smooth = smooth
+        if self.smooth:
             raw_data.dtBinAndIntensity[1] = savgol_filter(raw_data.dtBinAndIntensity[1], \
                                                             globals.SG_SMOOTH_WINDOW, \
                                                             globals.SG_SMOOTH_ORDER)
@@ -115,6 +116,10 @@ Input(s):
     raw_data                - object containing the dt distribution to be fit with
                                 Gaussian function (RawData)
 """
+        if self.smooth:
+            d_label = "raw data\n(smoothed)"
+        else:
+            d_label = "raw data"
         plt.plot(self.rawandfitdata[0],\
                 self.rawandfitdata[1],\
                 color='blue',\
@@ -123,7 +128,7 @@ Input(s):
                 ms=5,\
                 mec='blue',\
                 mfc='blue',\
-                label="raw data\n(smoothed)")
+                label=d_label)
         plt.plot(self.rawandfitdata[0],\
                 self.rawandfitdata[2],\
                 color='black',\
@@ -139,7 +144,7 @@ Input(s):
         plt.savefig(os.path.splitext(figure_file_name)[0] + \
                                     "_mass-" + \
                                     str(int(self.mass)) + \
-                                    ".png", bbox_inches='tight', dpi=300)
+                                    ".png", bbox_inches='tight', dpi=500)
         plt.close()
 
 
