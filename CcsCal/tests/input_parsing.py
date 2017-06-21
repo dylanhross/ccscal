@@ -43,12 +43,10 @@ input_parsing.test_shuffled_parameters
     cff = "/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png"
     cdf = "/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt"
     crd = "/Users/DylanRoss/Desktop/Projects/ccscal-package/"
-
     # initialize the three ParseInput objects
     Pif1 = ParseInputFile(TEST_INPUT_01)
     Pif2 = ParseInputFile(TEST_INPUT_02)
     Pif3 = ParseInputFile(TEST_INPUT_03)
-
     if (print_params):
         print "-----input-file-1------"
         print Pif1
@@ -57,8 +55,6 @@ input_parsing.test_shuffled_parameters
         print "-----input-file-3------"
         print Pif3
         print "-----------------------"
-
-
     # test parameter by parameter against the reference values
     files = {"test file 1":Pif1, "test file 2":Pif2, "test file 3":Pif3}
     for file in files:
@@ -89,7 +85,6 @@ input_parsing.test_shuffled_parameters
         if files[file].compoundDataDir != crd:
             print "\t\tError: compound data directory in", file, "does not match reference"
             return False
-
     # if everything works return True for a pass
     return True
 
@@ -101,8 +96,53 @@ input_parsing.test_terse_input
         tests input file with only the minimum required parameters
 
         *uses test input file 4*
+    parameters:
+        no
+    returns:
+        pass (bool) - result of test
 """
-    pass
+    # REFERENCE VALUES FOR PARAMETERS
+    rfn = "/Users/DylanRoss/Desktop/Projects/ccscal-package/ccscal-report.txt"
+    mwn = 0.5
+    edc = 1.35
+    tpi = 69.0
+    sgw = 5
+    sgp = 3
+    cff = "/Users/DylanRoss/Desktop/Projects/ccscal-package/cal-curve.png"
+    cdf = "/Users/DylanRoss/Desktop/Projects/ccscal-package/IM-polyala.txt"
+    crd = "/Users/DylanRoss/Desktop/Projects/ccscal-package/"
+    # initialize a ParseInput object with test file 04
+    Pif = ParseInputFile(TEST_INPUT_04)
+    # test the parameters
+    if Pif.reportFileName != rfn:
+        print "\t\tError: report file name does not match reference"
+        return False
+    if Pif.massWindow != mwn:
+        print "\t\tError: mass window does not match reference"
+        return False
+    if Pif.edc != edc:
+        print "\t\tError: EDC parameter does not match reference"
+        return False
+    if Pif.TOFPusherInt != tpi:
+        print "\t\tError: TOF pusher interval does not match reference"
+        return False
+    if Pif.savgolWindow != sgw:
+        print "\t\tError: Savitsky-Golay smooth window does not match reference"
+        return False
+    if Pif.savgolPoly != sgp:
+        print "\t\tError: Savitsky-Golay smooth polynomial order does not match reference"
+        return False
+    if Pif.calCurveFileName != cff:
+        print "\t\tError: calibration curve file name does not match reference"
+        return False
+    if Pif.calDataFile != cdf:
+        print "\t\tError: calibration data file does not match reference"
+        return False
+    if Pif.compoundDataDir != crd:
+        print "\t\tError: compound data directory does not match reference"
+        return False
+    # if nothing fails return True
+    return True
 
 
 # **the primary method for running all of the tests**
@@ -118,6 +158,10 @@ input_parsing.run
 """
     print "\ttesting input file with shuffled parameters..."
     assert test_shuffled_parameters()
+    print "\t...PASS"
+
+    print "\ttesting terse input file..."
+    assert test_terse_input()
     print "\t...PASS"
 
     # if everything passed return True for success

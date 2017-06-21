@@ -127,7 +127,7 @@ the corrected literature ccs data and corrected drift time values
 Input(s):
     none
 """
-        self.fit_Failed = False
+        self.fit_failed = False
         try:
             self.optparams,self.covar=\
             curve_fit(\
@@ -155,7 +155,7 @@ Input(s):
 Returns:
                             - ccs (float)
 """
-        if not self.fit_Failed:
+        if not self.fit_failed:
             ### DEBUG
             #print "opt_params[0] / sqrt(reduced mass) =", (self.optparams[0] / numpy.sqrt(self.reducedMass(mass)))
             #print "corrected drift time =", self.correctedDriftTime(dt, mass)
@@ -177,7 +177,7 @@ Input(s):
                                   calibration curve fit figure (string) [default
                                   = "cal_curve.png"]
 """
-        if not self.fit_Failed:
+        if not self.fit_failed:
             g = gs.GridSpec(2,1,height_ratios=[globals.HEIGHT_RATIO_1, globals.HEIGHT_RATIO_2])
             plt.subplot(g[0])
             plt.plot(self.correctedDt,\
@@ -233,11 +233,14 @@ Input(s):
     calibrant_mz            - list of calibrant m/z values (list(float))
     calibrant_dt            - list of calibrant drift times (list(float))
     calibrant_ccs           - list of calibrant ccs values (list(float))
-    [optional] init_params  -
-    [optional] edc          -
-    [optional] max_fev      -
-    [optional] do_fit       -
+    [optional] init_params  - A, t0, B parameters for CCS calibration power function (tuple(float), optional
+                              default=(500, 0, 0.5))
+    [optional] edc          - edc parameter (float, optional default=1.35)
+    [optional] max_fev      - maximum iterations for curve fit to converge (int, optional default=5000)
+    [optional] do_fit       - whether to perform curve fit at initialization (bool, optional default=True)
 """
+        # fitfailed must start as true to indicate curve fitting has not happened yet
+        self.fit_failed = True
         # store some calculation constants
         self.edc = edc
         self.n2_mass = 28.0134
