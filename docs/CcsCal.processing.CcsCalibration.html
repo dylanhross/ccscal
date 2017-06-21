@@ -9,7 +9,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="CcsCal.html"><font color="#ffffff">CcsCal</font></a>.<a href="CcsCal.processing.html"><font color="#ffffff">processing</font></a>.CcsCalibration</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/processing/CcsCalibration.py">/Users/DylanRoss/Desktop/Projects/ccscal-package/CcsCal/processing/CcsCalibration.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C:/users/dross/documents/github/ccscal-plusplus/ccscal/processing/ccscalibration.py">c:\users\dross\documents\github\ccscal-plusplus\ccscal\processing\ccscalibration.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -31,7 +31,12 @@
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
 <dt><font face="helvetica, arial"><a href="CcsCal.processing.CcsCalibration.html#CcsCalibration">CcsCalibration</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="CcsCal.processing.CcsCalibration.html#CcsCalibrationExt">CcsCalibrationExt</a>
 </font></dt></dl>
+</dd>
+</dl>
  <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
@@ -40,12 +45,12 @@
     
 <tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="CcsCalibration-__init__"><strong>__init__</strong></a>(self, data_file, cal_masses, cal_lit_ccs_vals, mass_window, edc<font color="#909090">=1.35</font>, dtbin_to_dt<font color="#909090">=0.0689</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>&nbsp;--&nbsp;Class<br>
+<dl><dt><a name="CcsCalibration-__init__"><strong>__init__</strong></a>(self, data_file, cal_masses, cal_lit_ccs_vals, mass_window, edc<font color="#909090">=1.35</font>, dtbin_to_dt<font color="#909090">=0.11</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>&nbsp;--&nbsp;Class<br>
 &nbsp;<br>
 Makes&nbsp;use&nbsp;of&nbsp;a&nbsp;GaussFit&nbsp;object&nbsp;to&nbsp;extract&nbsp;the&nbsp;drift&nbsp;times&nbsp;for&nbsp;a&nbsp;list&nbsp;of<br>
-calibrant&nbsp;masses.&nbsp;Then,&nbsp;using&nbsp;a&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;literature&nbsp;ccs&nbsp;values,&nbsp;a&nbsp;<br>
-ccs&nbsp;calibration&nbsp;curve&nbsp;is&nbsp;generated.&nbsp;Once&nbsp;the&nbsp;curve&nbsp;has&nbsp;been&nbsp;fit,&nbsp;the&nbsp;<br>
-<a href="#CcsCalibration">CcsCalibration</a>.getCalibratedCcs&nbsp;method&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;get&nbsp;a&nbsp;calibrated&nbsp;ccs&nbsp;for&nbsp;a&nbsp;<br>
+calibrant&nbsp;masses.&nbsp;Then,&nbsp;using&nbsp;a&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;literature&nbsp;ccs&nbsp;values,&nbsp;a<br>
+ccs&nbsp;calibration&nbsp;curve&nbsp;is&nbsp;generated.&nbsp;Once&nbsp;the&nbsp;curve&nbsp;has&nbsp;been&nbsp;fit,&nbsp;the<br>
+<a href="#CcsCalibration">CcsCalibration</a>.getCalibratedCcs&nbsp;method&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;get&nbsp;a&nbsp;calibrated&nbsp;ccs&nbsp;for&nbsp;a<br>
 given&nbsp;mass&nbsp;and&nbsp;drift&nbsp;time<br>
 &nbsp;<br>
 Input(s):<br>
@@ -54,7 +59,7 @@ Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cal_lit_ccs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;calibrant&nbsp;literature&nbsp;ccs&nbsp;values&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mass_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;specify&nbsp;a&nbsp;mass&nbsp;window&nbsp;to&nbsp;extract&nbsp;values&nbsp;from&nbsp;(float)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[optional&nbsp;edc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;edc&nbsp;delay&nbsp;coefficient&nbsp;(float)&nbsp;[default&nbsp;=&nbsp;globals.DEFAULT_EDC]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;dtbin_to_dt&nbsp;&nbsp;-&nbsp;specify&nbsp;a&nbsp;different&nbsp;dtbin&nbsp;equivalent&nbsp;to&nbsp;use&nbsp;other&nbsp;than&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;dtbin_to_dt&nbsp;&nbsp;-&nbsp;specify&nbsp;a&nbsp;different&nbsp;dtbin&nbsp;equivalent&nbsp;to&nbsp;use&nbsp;other&nbsp;than<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;default&nbsp;(float)&nbsp;[default&nbsp;=&nbsp;globals.DEFAULT_DTBIN_TO_DT]</tt></dd></dl>
 
 <dl><dt><a name="CcsCalibration-baseCalCurve"><strong>baseCalCurve</strong></a>(self, dt, A, t0, B)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.baseCalCurve<br>
@@ -64,7 +69,7 @@ Basic&nbsp;power&nbsp;function&nbsp;for&nbsp;calibration&nbsp;curve<br>
 Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;drift&nbsp;time&nbsp;(float)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;A,&nbsp;t0,&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;curve&nbsp;parameters&nbsp;(float,&nbsp;float,&nbsp;float)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ccs&nbsp;(float)</tt></dd></dl>
 
@@ -75,14 +80,14 @@ Calculates&nbsp;a&nbsp;drift&nbsp;time&nbsp;corrected&nbsp;for&nbsp;mass-depende
 Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;original&nbsp;uncorrected&nbsp;drift&nbsp;time&nbsp;(float)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;m/z&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;calculation&nbsp;(float)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;corrected&nbsp;drift&nbsp;time&nbsp;(float)</tt></dd></dl>
 
 <dl><dt><a name="CcsCalibration-fitCalCurve"><strong>fitCalCurve</strong></a>(self)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.fitCalCurve<br>
 &nbsp;<br>
 Performs&nbsp;least&nbsp;squares&nbsp;fit&nbsp;of&nbsp;the&nbsp;power&nbsp;equation&nbsp;<a href="#CcsCalibration">CcsCalibration</a>.<a href="#CcsCalibration-baseCalCurve">baseCalCurve</a>(...)&nbsp;to<br>
-the&nbsp;corrected&nbsp;literature&nbsp;ccs&nbsp;data&nbsp;and&nbsp;corrected&nbsp;drift&nbsp;time&nbsp;values&nbsp;<br>
+the&nbsp;corrected&nbsp;literature&nbsp;ccs&nbsp;data&nbsp;and&nbsp;corrected&nbsp;drift&nbsp;time&nbsp;values<br>
 &nbsp;<br>
 Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;none</tt></dd></dl>
@@ -95,27 +100,122 @@ ccs&nbsp;given&nbsp;a&nbsp;m/z&nbsp;and&nbsp;drift&nbsp;time<br>
 Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;m/z&nbsp;(float)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;drift&nbsp;time&nbsp;(float)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ccs&nbsp;(float)</tt></dd></dl>
 
-<dl><dt><a name="CcsCalibration-reducedMass"><strong>reducedMass</strong></a>(self, mass)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.reducedMass<br>
+<dl><dt><a name="CcsCalibration-reducedMass"><strong>reducedMass</strong></a>(self, mass, mode<font color="#909090">='N2'</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.reducedMass<br>
 &nbsp;<br>
 Calculates&nbsp;reduced&nbsp;mass&nbsp;of&nbsp;an&nbsp;ion&nbsp;using&nbsp;the&nbsp;mass&nbsp;of&nbsp;nitrogen<br>
 &nbsp;<br>
 Input(s):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;specified_mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;m/z&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;calculation&nbsp;(float)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;m/z&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;calculation&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[mode]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;calculate&nbsp;reduced&nbsp;mass&nbsp;for&nbsp;N2&nbsp;or&nbsp;He&nbsp;(str,&nbsp;optional&nbsp;default='n2')<br>
+&nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;reduced&nbsp;mass&nbsp;(float)</tt></dd></dl>
 
 <dl><dt><a name="CcsCalibration-saveCalCurveFig"><strong>saveCalCurveFig</strong></a>(self, figure_file_name<font color="#909090">='cal_curve.png'</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.saveCalCurveFig<br>
 &nbsp;<br>
-Outputs&nbsp;a&nbsp;Figure&nbsp;showing&nbsp;the&nbsp;CCS&nbsp;calibration&nbsp;curve&nbsp;fitted&nbsp;to&nbsp;the&nbsp;CCS&nbsp;<br>
-calibration&nbsp;data&nbsp;<br>
+Outputs&nbsp;a&nbsp;Figure&nbsp;showing&nbsp;the&nbsp;CCS&nbsp;calibration&nbsp;curve&nbsp;fitted&nbsp;to&nbsp;the&nbsp;CCS<br>
+calibration&nbsp;data<br>
 &nbsp;<br>
 Input(s):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;figure_file_name&nbsp;-&nbsp;choose&nbsp;a&nbsp;different&nbsp;filename&nbsp;to&nbsp;save&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;figure_file_name&nbsp;-&nbsp;choose&nbsp;a&nbsp;different&nbsp;filename&nbsp;to&nbsp;save&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;calibration&nbsp;curve&nbsp;fit&nbsp;figure&nbsp;(string)&nbsp;[default<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;"cal_curve.png"]</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CcsCalibrationExt">class <strong>CcsCalibrationExt</strong></a>(<a href="CcsCal.processing.CcsCalibration.html#CcsCalibration">CcsCalibration</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#CcsCalibrationExt">CcsCalibrationExt</a><br>
+&nbsp;<br>
+An&nbsp;interface&nbsp;to&nbsp;the&nbsp;<a href="#CcsCalibration">CcsCalibration</a>&nbsp;object&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;by&nbsp;just&nbsp;supplying&nbsp;CCS&nbsp;calibrant&nbsp;masses,&nbsp;drift&nbsp;times,<br>
+and&nbsp;reference&nbsp;CCS&nbsp;values.&nbsp;This&nbsp;way,&nbsp;a&nbsp;user&nbsp;may&nbsp;construct&nbsp;a&nbsp;calibration&nbsp;curve,&nbsp;create&nbsp;a&nbsp;curve&nbsp;figure,&nbsp;and&nbsp;obtain<br>
+calibrated&nbsp;CCS&nbsp;values&nbsp;in&nbsp;their&nbsp;own&nbsp;programs&nbsp;without&nbsp;using&nbsp;all&nbsp;of&nbsp;the&nbsp;other&nbsp;machinery&nbsp;for&nbsp;obtaining&nbsp;and<br>
+structuring&nbsp;inputs/outputs<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="CcsCalibrationExt-__init__"><strong>__init__</strong></a>(self, calibrant_mz, calibrant_dt, calibrant_ccs, init_params<font color="#909090">=(500, 0, 0.5)</font>, edc<font color="#909090">=1.35</font>, max_fev<font color="#909090">=5000</font>, do_fit<font color="#909090">=True</font>)</dt><dd><tt><a href="#CcsCalibrationExt">CcsCalibrationExt</a>.__init__<br>
+&nbsp;<br>
+Initializes&nbsp;all&nbsp;of&nbsp;the&nbsp;internal&nbsp;parameters&nbsp;needed&nbsp;to&nbsp;perform&nbsp;the&nbsp;CCS&nbsp;calibration<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;calibrant_mz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;m/z&nbsp;values&nbsp;(list(float))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;calibrant_dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;drift&nbsp;times&nbsp;(list(float))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;calibrant_ccs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;ccs&nbsp;values&nbsp;(list(float))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;init_params&nbsp;&nbsp;-&nbsp;A,&nbsp;t0,&nbsp;B&nbsp;parameters&nbsp;for&nbsp;CCS&nbsp;calibration&nbsp;power&nbsp;function&nbsp;(tuple(float),&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default=(500,&nbsp;0,&nbsp;0.5))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;edc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;edc&nbsp;parameter&nbsp;(float,&nbsp;optional&nbsp;default=1.35)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;max_fev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;maximum&nbsp;iterations&nbsp;for&nbsp;curve&nbsp;fit&nbsp;to&nbsp;converge&nbsp;(int,&nbsp;optional&nbsp;default=5000)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;do_fit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;whether&nbsp;to&nbsp;perform&nbsp;curve&nbsp;fit&nbsp;at&nbsp;initialization&nbsp;(bool,&nbsp;optional&nbsp;default=True)</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.processing.CcsCalibration.html#CcsCalibration">CcsCalibration</a>:<br>
+<dl><dt><a name="CcsCalibrationExt-baseCalCurve"><strong>baseCalCurve</strong></a>(self, dt, A, t0, B)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.baseCalCurve<br>
+&nbsp;<br>
+Basic&nbsp;power&nbsp;function&nbsp;for&nbsp;calibration&nbsp;curve<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;drift&nbsp;time&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;A,&nbsp;t0,&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;curve&nbsp;parameters&nbsp;(float,&nbsp;float,&nbsp;float)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ccs&nbsp;(float)</tt></dd></dl>
+
+<dl><dt><a name="CcsCalibrationExt-correctedDriftTime"><strong>correctedDriftTime</strong></a>(self, dt, mass)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.correctedDriftTime<br>
+&nbsp;<br>
+Calculates&nbsp;a&nbsp;drift&nbsp;time&nbsp;corrected&nbsp;for&nbsp;mass-dependent&nbsp;flight&nbsp;time<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;original&nbsp;uncorrected&nbsp;drift&nbsp;time&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;m/z&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;calculation&nbsp;(float)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;corrected&nbsp;drift&nbsp;time&nbsp;(float)</tt></dd></dl>
+
+<dl><dt><a name="CcsCalibrationExt-fitCalCurve"><strong>fitCalCurve</strong></a>(self)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.fitCalCurve<br>
+&nbsp;<br>
+Performs&nbsp;least&nbsp;squares&nbsp;fit&nbsp;of&nbsp;the&nbsp;power&nbsp;equation&nbsp;<a href="#CcsCalibration">CcsCalibration</a>.<a href="#CcsCalibrationExt-baseCalCurve">baseCalCurve</a>(...)&nbsp;to<br>
+the&nbsp;corrected&nbsp;literature&nbsp;ccs&nbsp;data&nbsp;and&nbsp;corrected&nbsp;drift&nbsp;time&nbsp;values<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;none</tt></dd></dl>
+
+<dl><dt><a name="CcsCalibrationExt-getCalibratedCcs"><strong>getCalibratedCcs</strong></a>(self, mass, dt)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.getCalibratedCcs<br>
+&nbsp;<br>
+Uses&nbsp;the&nbsp;fitted&nbsp;parameters&nbsp;for&nbsp;the&nbsp;ccs&nbsp;calibration&nbsp;curve&nbsp;and&nbsp;returns&nbsp;a&nbsp;calibrated<br>
+ccs&nbsp;given&nbsp;a&nbsp;m/z&nbsp;and&nbsp;drift&nbsp;time<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;m/z&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;drift&nbsp;time&nbsp;(float)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;ccs&nbsp;(float)</tt></dd></dl>
+
+<dl><dt><a name="CcsCalibrationExt-reducedMass"><strong>reducedMass</strong></a>(self, mass, mode<font color="#909090">='N2'</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.reducedMass<br>
+&nbsp;<br>
+Calculates&nbsp;reduced&nbsp;mass&nbsp;of&nbsp;an&nbsp;ion&nbsp;using&nbsp;the&nbsp;mass&nbsp;of&nbsp;nitrogen<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;m/z&nbsp;to&nbsp;use&nbsp;for&nbsp;the&nbsp;calculation&nbsp;(float)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[mode]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;calculate&nbsp;reduced&nbsp;mass&nbsp;for&nbsp;N2&nbsp;or&nbsp;He&nbsp;(str,&nbsp;optional&nbsp;default='n2')<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;reduced&nbsp;mass&nbsp;(float)</tt></dd></dl>
+
+<dl><dt><a name="CcsCalibrationExt-saveCalCurveFig"><strong>saveCalCurveFig</strong></a>(self, figure_file_name<font color="#909090">='cal_curve.png'</font>)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.saveCalCurveFig<br>
+&nbsp;<br>
+Outputs&nbsp;a&nbsp;Figure&nbsp;showing&nbsp;the&nbsp;CCS&nbsp;calibration&nbsp;curve&nbsp;fitted&nbsp;to&nbsp;the&nbsp;CCS<br>
+calibration&nbsp;data<br>
+&nbsp;<br>
+Input(s):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional]&nbsp;figure_file_name&nbsp;-&nbsp;choose&nbsp;a&nbsp;different&nbsp;filename&nbsp;to&nbsp;save&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;calibration&nbsp;curve&nbsp;fit&nbsp;figure&nbsp;(string)&nbsp;[default<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;"cal_curve.png"]</tt></dd></dl>
 

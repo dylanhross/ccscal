@@ -1,0 +1,95 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module CcsCal.tests.external_data</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="CcsCal.html"><font color="#ffffff">CcsCal</font></a>.<a href="CcsCal.tests.html"><font color="#ffffff">tests</font></a>.external_data</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:///C:/users/dross/documents/github/ccscal-plusplus/ccscal/tests/external_data.py">c:\users\dross\documents\github\ccscal-plusplus\ccscal\tests\external_data.py</a></font></td></tr></table>
+    <p><tt>Tests&nbsp;for&nbsp;the&nbsp;CcsCalibrationExt&nbsp;object,&nbsp;for&nbsp;processesing&nbsp;data&nbsp;from&nbsp;external&nbsp;sources&nbsp;using&nbsp;the&nbsp;same&nbsp;CCS<br>
+calibration&nbsp;scheme<br>
+&nbsp;<br>
+2017/06/20<br>
+Dylan&nbsp;H.&nbsp;Ross</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-percent_diff"><strong>percent_diff</strong></a>(a, b)</dt><dd><tt>external_data.percent_diff<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determines&nbsp;the&nbsp;percent&nbsp;difference&nbsp;between&nbsp;two&nbsp;numbers&nbsp;a&nbsp;and&nbsp;b<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a,&nbsp;b&nbsp;(float)&nbsp;--&nbsp;two&nbsp;numbers<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percent_difference&nbsp;(float)&nbsp;--&nbsp;percent&nbsp;difference&nbsp;of&nbsp;a&nbsp;and&nbsp;b</tt></dd></dl>
+ <dl><dt><a name="-run"><strong>run</strong></a>()</dt><dd><tt>external_data.run<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;runs&nbsp;all&nbsp;of&nbsp;the&nbsp;(currently&nbsp;implemented)&nbsp;individual&nbsp;tests<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed_all&nbsp;(bool)&nbsp;-&nbsp;all&nbsp;tests&nbsp;passed</tt></dd></dl>
+ <dl><dt><a name="-simple_test"><strong>simple_test</strong></a>()</dt><dd><tt>external_data.simple_test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;simple&nbsp;test&nbsp;to&nbsp;make&nbsp;sure&nbsp;the&nbsp;object&nbsp;can&nbsp;be&nbsp;initialized&nbsp;with&nbsp;data&nbsp;without&nbsp;errors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;(bool)&nbsp;-&nbsp;test&nbsp;passed</tt></dd></dl>
+ <dl><dt><a name="-test_cal_curve_figure"><strong>test_cal_curve_figure</strong></a>()</dt><dd><tt>external_data.test_cal_curve_figure<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialize&nbsp;the&nbsp;object&nbsp;normally,&nbsp;then&nbsp;tests&nbsp;that&nbsp;the&nbsp;CCS&nbsp;calibration&nbsp;curve&nbsp;figure&nbsp;is&nbsp;generated&nbsp;properly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;(bool)&nbsp;-&nbsp;test&nbsp;passed</tt></dd></dl>
+ <dl><dt><a name="-test_calibrant_resids"><strong>test_calibrant_resids</strong></a>()</dt><dd><tt>external_data.test_calibrant_resids<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialize&nbsp;the&nbsp;object&nbsp;normally,&nbsp;then&nbsp;tests&nbsp;that&nbsp;the&nbsp;calibrated&nbsp;CCS&nbsp;of&nbsp;the&nbsp;calibrants&nbsp;are&nbsp;within&nbsp;5%&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;(bool)&nbsp;-&nbsp;test&nbsp;passed</tt></dd></dl>
+ <dl><dt><a name="-test_ccs_cal_noauto"><strong>test_ccs_cal_noauto</strong></a>()</dt><dd><tt>external_data.test_ccs_cal_noauto<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialize&nbsp;the&nbsp;object&nbsp;without&nbsp;calling&nbsp;fitCalCurve(),&nbsp;then&nbsp;externally&nbsp;calls&nbsp;fitCalCurve()&nbsp;and&nbsp;then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;populates&nbsp;self.<strong>calCalcCcs</strong>.&nbsp;passes&nbsp;as&nbsp;long&nbsp;as&nbsp;there&nbsp;are&nbsp;no&nbsp;errors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;(bool)&nbsp;-&nbsp;test&nbsp;passed</tt></dd></dl>
+ <dl><dt><a name="-test_get_cal_ccs"><strong>test_get_cal_ccs</strong></a>()</dt><dd><tt>external_data.test_get_cal_ccs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initialize&nbsp;the&nbsp;object&nbsp;normally,&nbsp;then&nbsp;test&nbsp;that&nbsp;getting&nbsp;calibrated&nbsp;ccs&nbsp;works&nbsp;properly&nbsp;and&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;calibrated&nbsp;ccs&nbsp;for&nbsp;the&nbsp;test&nbsp;compounds&nbsp;are&nbsp;within&nbsp;5%&nbsp;of&nbsp;previously&nbsp;obtained&nbsp;reference&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;passed&nbsp;(bool)&nbsp;-&nbsp;test&nbsp;passed</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>EXTDATA1_PATH</strong> = 'CcsCal/tests/files/external_data1.csv'<br>
+<strong>EXTDATA2_PATH</strong> = 'CcsCal/tests/files/external_data2.csv'</td></tr></table>
+</body></html>
