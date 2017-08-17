@@ -1,3 +1,4 @@
+#!/bin/bash
 # updates the documentation for the CcsCal package
 
 
