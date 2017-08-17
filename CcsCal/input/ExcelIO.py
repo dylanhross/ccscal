@@ -10,7 +10,7 @@ import time
 
 class ExcelIO():
 
-    def __init__(self, xlsx_file, override_warning=True):
+    def __init__(self, xlsx_file, override_warning=True, auto_run=True):
         """
 ExcelIO -- Class
 
@@ -20,8 +20,8 @@ if the workbook is unable to be loaded.
 
 Input(s):
     xlsx_file   -   name of the excel file to read from / write to (string)
-    [override_warning]    - print a warning that the xlsx file will be overridden (bool) [optional,
-                            default=True]
+    [override_warning]    - print a warning that the xlsx file will be overridden (bool) [optional, default=True]
+    [auto_run]  -   automatically call the run() method after initialization (bool) [optional, default=True]
 """
         # load up the workbook
         try:
@@ -35,7 +35,8 @@ Input(s):
         # issue the override warning if asked to
         if override_warning:
             self.issueOverrideWarning()
-
+        if auto_run():
+            self.run()
 
     def checkInput(self):
         """
@@ -64,3 +65,10 @@ proceed. Also warn that the file cannot be open in Excel otherwise the changes c
             print "Exiting..."
             exit()
 
+    def run(self):
+        """
+ExcelIO.run
+
+performs all of the steps in the data analysis workflow, saves results in the xlsx file.
+"""
+        pass
