@@ -5,7 +5,7 @@
 
 ana-python -m pydoc -w CcsCal
 
-    ana-python -m pydoc -w CcsCal.globals
+    ana-python -m pydoc -w CcsCal.global_vars
     
     ana-python -m pydoc -w CcsCal.__main__
     
@@ -14,6 +14,8 @@ ana-python -m pydoc -w CcsCal
         ana-python -m pydoc -w CcsCal.input.ParseInputFile
         
         ana-python -m pydoc -w CcsCal.input.RawData
+
+        ana-python -m pydoc -w CcsCal.input.ExcelIO
         
     ana-python -m pydoc -w CcsCal.processing
     

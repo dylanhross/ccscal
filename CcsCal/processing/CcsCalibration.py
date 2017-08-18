@@ -1,4 +1,4 @@
-from CcsCal import globals
+from CcsCal import global_vars
 from CcsCal.input.RawData import RawData
 from CcsCal.processing.GaussFit import GaussFit
 
@@ -12,12 +12,12 @@ from scipy.optimize import curve_fit
 class CcsCalibration():
 
     def __init__ (self,
-                  data_file,\
-                  cal_masses,\
-                  cal_lit_ccs_vals,\
-                  mass_window,\
-                  edc=globals.DEFAULT_EDC,\
-                  dtbin_to_dt=globals.DEFAULT_DTBIN_TO_DT):
+                  data_file, \
+                  cal_masses, \
+                  cal_lit_ccs_vals, \
+                  mass_window, \
+                  edc=global_vars.DEFAULT_EDC, \
+                  dtbin_to_dt=global_vars.DEFAULT_DTBIN_TO_DT):
         """
 CcsCalibration -- Class
 
@@ -38,10 +38,10 @@ Input(s):
 """
         # store some calculation constants
         self.edc = edc
-        self.n2_mass = globals.N2_MASS
-        self.he_mass = globals.HE_MASS
+        self.n2_mass = global_vars.N2_MASS
+        self.he_mass = global_vars.HE_MASS
         # maximum iterations for curve fitting
-        self.max_fev = globals.CURVE_FIT_MAXFEV
+        self.max_fev = global_vars.CURVE_FIT_MAXFEV
         # make an array with calibrant masses
         self.calMasses = numpy.array(cal_masses)
         # make an array with calibrant lit ccs values
@@ -57,7 +57,7 @@ Input(s):
         # make an array with corrected lit ccs
         self.correctedLitCcs = self.calLitCcs * numpy.sqrt(self.reducedMass(self.calMasses))
         # Optimized parameters A, t0, B
-        self.optparams = [globals.INIT_A, globals.INIT_T0, globals.INIT_B]
+        self.optparams = [global_vars.INIT_A, global_vars.INIT_T0, global_vars.INIT_B]
         #perform the calibration
         self.fitCalCurve()
         # make an array with calibrant calculated ccs
@@ -178,7 +178,7 @@ Input(s):
                                   = "cal_curve.png"]
 """
         if not self.fit_failed:
-            g = gs.GridSpec(2,1,height_ratios=[globals.HEIGHT_RATIO_1, globals.HEIGHT_RATIO_2])
+            g = gs.GridSpec(2, 1, height_ratios=[global_vars.HEIGHT_RATIO_1, global_vars.HEIGHT_RATIO_2])
             plt.subplot(g[0])
             plt.plot(self.correctedDt,\
                    self.correctedLitCcs, \

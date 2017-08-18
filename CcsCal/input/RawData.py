@@ -1,6 +1,6 @@
 
 
-from CcsCal import globals
+from CcsCal import global_vars
 
 
 import os
@@ -57,14 +57,14 @@ Input(s):
     mass_window         - window of masses to bin data together for (float)
 """
         # pre-process data with rough mass_window (i.e. double the original mass window)
-        useWindow = globals.PP_MASS_WIN_SCALE * mass_window
+        useWindow = global_vars.PP_MASS_WIN_SCALE * mass_window
         # TODO: find a better way of specifying the PreProcessTxt.o executable location (otherwise
         #       it screws up the portability of the program, plus it needs to change to .exe when
         #       it's compiled on windows
-        functionCallLine = globals.PP_EXE_PATH + " " +\
-                            data_filename + " " +\
-                            str(specified_mass) + " " + \
-                            str(useWindow)
+        functionCallLine = global_vars.PP_EXE_PATH + " " + \
+                           data_filename + " " + \
+                           str(specified_mass) + " " + \
+                           str(useWindow)
         # had to use shell=True flag here... not sure if I had to do that with RawToTxt
         # but eventually I may need to figure something else out since I am sure sure how
         # well it will work with this flag on Windows.

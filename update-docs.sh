@@ -6,7 +6,7 @@
 
 pydoc -w CcsCal
 
-    pydoc -w CcsCal.globals
+    pydoc -w CcsCal.global_vars
     
     pydoc -w CcsCal.__main__
     
@@ -15,6 +15,8 @@ pydoc -w CcsCal
         pydoc -w CcsCal.input.ParseInputFile
         
         pydoc -w CcsCal.input.RawData
+
+        pydoc -w CcsCal.input.ExcelIO
         
     pydoc -w CcsCal.processing
     

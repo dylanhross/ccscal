@@ -1,4 +1,4 @@
-from CcsCal import globals
+from CcsCal import global_vars
 
 
 import time

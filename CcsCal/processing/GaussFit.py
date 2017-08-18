@@ -1,4 +1,4 @@
-from CcsCal import globals
+from CcsCal import global_vars
 #from CcsCal.input.RawData import RawData
 
 
@@ -28,7 +28,7 @@ Input(s):
                             (numpy.sum(raw_data.dtBinAndIntensity[0] * \
                                 raw_data.dtBinAndIntensity[1]) / \
                                 numpy.sum(raw_data.dtBinAndIntensity[1])),\
-                            (globals.INIT_GAUSS_SIGMA))
+                            (global_vars.INIT_GAUSS_SIGMA))
         # set fit failed flag
         fitFailed = False
         # make internal copies of the specified mass and data filename
@@ -39,8 +39,8 @@ Input(s):
         self.smooth = smooth
         if self.smooth:
             raw_data.dtBinAndIntensity[1] = savgol_filter(raw_data.dtBinAndIntensity[1], \
-                                                            globals.SG_SMOOTH_WINDOW, \
-                                                            globals.SG_SMOOTH_ORDER)
+                                                          global_vars.SG_SMOOTH_WINDOW, \
+                                                          global_vars.SG_SMOOTH_ORDER)
         # fit the data
         self.doFit(raw_data)
         if not fitFailed:
@@ -91,11 +91,11 @@ Input(s):
                                 Gaussian function (GetData)
 """
         try:
-            self.optparams,self.covar = curve_fit(self.gaussFunc,\
-                                                    raw_data.dtBinAndIntensity[0],\
-                                                    raw_data.dtBinAndIntensity[1],\
-                                                    p0=self.initparams,\
-                                                    maxfev=globals.CURVE_FIT_MAXFEV)
+            self.optparams,self.covar = curve_fit(self.gaussFunc, \
+                                                  raw_data.dtBinAndIntensity[0], \
+                                                  raw_data.dtBinAndIntensity[1], \
+                                                  p0=self.initparams, \
+                                                  maxfev=global_vars.CURVE_FIT_MAXFEV)
         except RuntimeError:
             # if fit was not achieved..
             self.fit_failed = True
@@ -148,7 +148,7 @@ Input(s):
         plt.close()
 
 
-    def getDriftTime(self, dtbin_to_dt=globals.DEFAULT_DTBIN_TO_DT):
+    def getDriftTime(self, dtbin_to_dt=global_vars.DEFAULT_DTBIN_TO_DT):
         """
 GaussFit.getDriftTime
 

@@ -1,7 +1,7 @@
 
 #from CcsCal.input.RawData import RawData
 #from CcsCal.processing.GaussFit import GaussFit
-
+from CcsCal import global_vars
 
 
 from openpyxl import load_workbook
@@ -35,7 +35,7 @@ Input(s):
         # issue the override warning if asked to
         if override_warning:
             self.issueOverrideWarning()
-        if auto_run():
+        if auto_run:
             self.run()
 
     def checkInput(self):
@@ -71,4 +71,4 @@ ExcelIO.run
 
 performs all of the steps in the data analysis workflow, saves results in the xlsx file.
 """
-        pass
+        print "----> run() called"
