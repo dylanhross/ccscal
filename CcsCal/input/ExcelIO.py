@@ -6,6 +6,7 @@ from CcsCal import global_vars
 
 from openpyxl import load_workbook
 import time
+import os
 
 
 class ExcelIO():
@@ -38,6 +39,28 @@ Input(s):
         if auto_run:
             self.run()
 
+    def incrementCell(self, cell):
+        """
+ExcelIO.incrementCell
+
+takes a cell identifier of the form {letter(s)}{number(s)} and returns the result of incrementing
+the numeric portion by 1 (keeping the letters the same)
+
+Input(s):
+    cell    -   cell identifier (str)
+
+Returns:
+            - incremented cell identifier
+"""
+        letters = ""
+        numbers = ""
+        for i in range(len(cell)):
+            if cell[i] not in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+                letters += cell[i]
+            else:
+                numbers += cell[i]
+        return letters + str(int(numbers) + 1)
+
     def checkInput(self):
         """
 ExcelIO.checkInput
@@ -47,14 +70,36 @@ running the analysis workflow. Raises an exception if not.
 """
         # first check that the workbook has a sheet called 'Input'
         if 'Input' not in self.xlsx_.get_sheet_names():
-            raise ValueError("CcsCal: ExcelIO: checkInput: no sheet named 'Input' in workbook")
+            raise ValueError("ExcelIO: checkInput: no sheet named 'Input' in workbook")
+        # check that the files entered in the excel sheet exist
+        # (not ones that are supposed to be created by this program)
+        # first check for the compound data directory
+        if not os.path.isdir(self.xlsx_["Input"][global_vars.XLSX_CELL_MAP["cmpd_data_dir"]].value):
+            raise ValueError("ExcelIO: checkInput: compound data directory '" + \
+                             str(self.xlsx_["Input"][global_vars.XLSX_CELL_MAP["cmpd_data_dir"]].value) + \
+                             "' invalid")
+        # then check for the CCS calibration data file
+        if not os.path.isfile(self.xlsx_["Input"][global_vars.XLSX_CELL_MAP["cal_data_fn"]].value):
+            raise ValueError("ExcelIO: checkInput: calibration data file '" + \
+                             str(self.xlsx_["Input"][global_vars.XLSX_CELL_MAP["cal_data_fn"]].value) + \
+                             "' not found")
+        # finally check for all of the data files
+        cmpd_data_dir = self.xlsx_["Input"][global_vars.XLSX_CELL_MAP["cmpd_data_dir"]].value
+        cell = global_vars.XLSX_CELL_MAP["cmpd_fn_start"]
+        cmpd_fn = self.xlsx_["Input"][cell].value
+        while cmpd_fn is not None:
+            fpath = cmpd_data_dir + "/" + cmpd_fn
+            if not os.path.isfile(fpath):
+                raise ValueError("ExcelIO: checkInput: data file '" + fpath + "' not found")
+            cell = self.incrementCell(cell)
+            cmpd_fn = self.xlsx_["Input"][cell].value
 
     def issueOverrideWarning(self):
         """
 ExcelIO.issueOverrideWarning
 
 Warns the user that the current xlsx file will be overridden and asks if they wish to
-proceed. Also warn that the file cannot be open in Excel otherwise the changes cannot be written.
+proceed. Also warn that the file cannot be open in Excel otherwise the changes will not be written.
 """
         print
         print "!!WARNING: the file " + self.xlsx_name_ + " will be overridden. Please ensure that " + \
