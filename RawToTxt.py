@@ -45,6 +45,9 @@ def buildFunctionCall(pathToCDCReader,\
                       outputPath,\
                       outputBaseName,\
                       imBin = 0.05):
+    # if CDCReader.exe is provided without the './' it will not be recognized
+    if pathToCDCReader == "CDCReader.exe":
+        pathToCDCReader = "./" + pathToCDCReader
     # build all the function call flags
     rFlagLine = "--raw_file '" + pathToInputFile + "' "
     mFlagLine = "--ms_file '" + outputPath + "MS_" + outputBaseName + ".txt' "
