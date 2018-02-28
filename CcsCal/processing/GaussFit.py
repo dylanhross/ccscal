@@ -1,17 +1,20 @@
+"""
+"""
+
+
 from CcsCal import globals
-#from CcsCal.input.RawData import RawData
 
 
-import os
-import numpy
-import matplotlib.pyplot as plt
+from os.path import split, splitext
+from numpy import amax, sum, array, exp
+from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 
 
-class GaussFit():
+class GaussFit:
 
-    def __init__ (self, raw_data, smooth=False):
+    def __init__(self, raw_data, smooth=False):
         """
 GaussFit.__init__
 
@@ -24,11 +27,11 @@ Input(s):
                     optional, default=True]
 """
         # generate the initial parameters
-        self.initparams = ((numpy.amax(raw_data.dtBinAndIntensity[1])),\
-                            (numpy.sum(raw_data.dtBinAndIntensity[0] * \
-                                raw_data.dtBinAndIntensity[1]) / \
-                                numpy.sum(raw_data.dtBinAndIntensity[1])),\
-                            (globals.INIT_GAUSS_SIGMA))
+        self.initparams = (amax(raw_data.dtBinAndIntensity[1]),
+                           sum(raw_data.dtBinAndIntensity[0] *
+                                raw_data.dtBinAndIntensity[1]) /
+                                sum(raw_data.dtBinAndIntensity[1]),
+                           globals.INIT_GAUSS_SIGMA)
         # set fit failed flag
         fitFailed = False
         # make internal copies of the specified mass and data filename
@@ -38,26 +41,25 @@ Input(s):
         # perform smoothing of raw data using Savitsky-Golay filter
         self.smooth = smooth
         if self.smooth:
-            raw_data.dtBinAndIntensity[1] = savgol_filter(raw_data.dtBinAndIntensity[1], \
-                                                            globals.SG_SMOOTH_WINDOW, \
+            raw_data.dtBinAndIntensity[1] = savgol_filter(raw_data.dtBinAndIntensity[1],
+                                                            globals.SG_SMOOTH_WINDOW,
                                                             globals.SG_SMOOTH_ORDER)
         # fit the data
         self.doFit(raw_data)
         if not fitFailed:
             self.opt_mean = self.optparams[1]
-        #create an array with the raw dtbin and intensity values
+        # create an array with the raw dtbin and intensity values
         # and fitted intensity values
-        self.rawandfitdata = numpy.array([raw_data.dtBinAndIntensity[0], \
-                                            raw_data.dtBinAndIntensity[1], \
+        self.rawandfitdata = array([raw_data.dtBinAndIntensity[0],
+                                            raw_data.dtBinAndIntensity[1],
                                             raw_data.dtBinAndIntensity[1]])
-        self.rawandfitdata[2] = self.gaussFunc(raw_data.dtBinAndIntensity[0], \
-                                                self.optparams[0], \
-                                                self.optparams[1], \
+        self.rawandfitdata[2] = self.gaussFunc(raw_data.dtBinAndIntensity[0],
+                                                self.optparams[0],
+                                                self.optparams[1],
                                                 self.optparams[2])
         self.saveGaussFitFig(self.filename, raw_data)
 
-
-    def gaussFunc (self,x, A, mu, sigma):
+    def gaussFunc(self,x, A, mu, sigma):
         """
 GaussFit.gaussFunc
 
@@ -72,10 +74,9 @@ Input(s):
 Returns:
                         - intensity (float)
 """
-        return A*numpy.exp(-(x-mu)**2/(2.*sigma**2))
+        return A*exp(-(x-mu)**2/(2.*sigma**2))
 
-
-    def doFit (self, raw_data):
+    def doFit(self, raw_data):
         """
 GaussFit.doFit
 
@@ -91,20 +92,19 @@ Input(s):
                                 Gaussian function (GetData)
 """
         try:
-            self.optparams,self.covar = curve_fit(self.gaussFunc,\
-                                                    raw_data.dtBinAndIntensity[0],\
-                                                    raw_data.dtBinAndIntensity[1],\
-                                                    p0=self.initparams,\
+            self.optparams,self.covar = curve_fit(self.gaussFunc,
+                                                    raw_data.dtBinAndIntensity[0],
+                                                    raw_data.dtBinAndIntensity[1],
+                                                    p0=self.initparams,
                                                     maxfev=globals.CURVE_FIT_MAXFEV)
         except RuntimeError:
             # if fit was not achieved..
             self.fit_failed = True
             self.opt_mean = self.initparams[1]
             self.optparams = self.initparams
-            print "failed to fit gaussian for mass", self.mass, "in", self.filename
+            print("failed to fit gaussian for mass", self.mass, "in", self.filename)
 
-
-    def saveGaussFitFig (self, figure_file_name, raw_data):
+    def saveGaussFitFig(self, figure_file_name, raw_data):
         """
 GaussFit.saveGaussFitFig
 
@@ -120,33 +120,29 @@ Input(s):
             d_label = "raw data\n(smoothed)"
         else:
             d_label = "raw data"
-        plt.plot(self.rawandfitdata[0],\
-                self.rawandfitdata[1],\
-                color='blue',\
-                ls='--',\
-                marker='o',\
-                ms=5,\
-                mec='blue',\
-                mfc='blue',\
+        plt.plot(self.rawandfitdata[0],
+                self.rawandfitdata[1],
+                color='blue',
+                ls='--',
+                marker='o',
+                ms=5,
+                mec='blue',
+                mfc='blue',
                 label=d_label)
-        plt.plot(self.rawandfitdata[0],\
-                self.rawandfitdata[2],\
-                color='black',\
-                ls='-',\
+        plt.plot(self.rawandfitdata[0],
+                self.rawandfitdata[2],
+                color='black',
+                ls='-',
                 label="gaussian fit")
         plt.legend(loc="best")
-        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+        plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
         plt.xlabel("dt bin")
         plt.ylabel("intensity")
-        plt.title(os.path.split(os.path.splitext(figure_file_name)[0])[1] + \
-                                                "\nmass: " + \
-                                                str(self.mass))
-        plt.savefig(os.path.splitext(figure_file_name)[0] + \
-                                    "_mass-" + \
-                                    str(int(self.mass)) + \
-                                    ".png", bbox_inches='tight', dpi=500)
+        title = split(splitext(figure_file_name)[0])[1] + "\nmass: " + str(self.mass)
+        plt.title(title)
+        fname = splitext(figure_file_name)[0] + "_mass-" + str(int(self.mass)) + ".png"
+        plt.savefig(fname, bbox_inches='tight', dpi=500)
         plt.close()
-
 
     def getDriftTime(self, dtbin_to_dt=globals.DEFAULT_DTBIN_TO_DT):
         """

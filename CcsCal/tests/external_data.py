@@ -10,8 +10,9 @@
 from CcsCal.processing.CcsCalibration import CcsCalibrationExt
 
 
-import numpy
-import os
+from numpy import genfromtxt, abs, mean
+from os import remove
+from os.path import isfile
 
 
 # define the path to the first external data file
@@ -30,7 +31,7 @@ external_data.percent_diff
     returns:
         percent_difference (float) -- percent difference of a and b
 """
-    return 100. * numpy.abs(a - b) / numpy.mean([a, b])
+    return 100. * abs(a - b) / mean([a, b])
 
 
 def simple_test():
@@ -44,7 +45,7 @@ external_data.simple_test
         passed (bool) - test passed
 """
     # load the external dataset
-    ext_data = numpy.genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
+    ext_data = genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
     # initialize the CcsCalibrationExt object
     cce = CcsCalibrationExt(*ext_data)
     # passes as long as there were no errors
@@ -63,14 +64,14 @@ external_data.test_ccs_cal_noauto
         passed (bool) - test passed
 """
     # load the external dataset
-    ext_data = numpy.genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
+    ext_data = genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
     # initialize the CcsCalibrationExt object without automatically doing the curve fitting
     cce = CcsCalibrationExt(*ext_data, do_fit=False)
     # try to do get calibrated CCS, should be an error
     try:
         cce.getCalibratedCcs(ext_data[0][0], ext_data[1][0])
         # if the above does not throw an error, then the test has failed
-        print "\t\tError: getCalibratedCcs() cannot be called prior to curve fitting"
+        print("\t\tError: getCalibratedCcs() cannot be called prior to curve fitting")
         return False
     except ValueError:
         pass
@@ -96,14 +97,14 @@ external_data.test_get_cal_ccs
         passed (bool) - test passed
 """
     # load the external dataset
-    ext_data = numpy.genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
+    ext_data = genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
     # initialize the CcsCalibrationExt object
     cce = CcsCalibrationExt(*ext_data)
     # load the compound dataset
-    cmpd_data = numpy.genfromtxt(EXTDATA2_PATH, delimiter=",", unpack=True)
+    cmpd_data = genfromtxt(EXTDATA2_PATH, delimiter=",", unpack=True)
     for i in range(len(cmpd_data[0])):
         if percent_diff(cce.getCalibratedCcs(cmpd_data[0][i], cmpd_data[1][i]), cmpd_data[2][i]) > 5:
-            print "\t\tError: compound with m/z", cmpd_data[0][i], "calibrated CCS more than 5% different from reference"
+            print("\t\tError: compound with m/z", cmpd_data[0][i], "calibrated CCS more than 5% different from reference")
             return False
     # if it makes it through the entire list of compounds then it passes
     return True
@@ -121,12 +122,12 @@ external_data.test_calibrant_resids
         passed (bool) - test passed
 """
     # load the external dataset
-    ext_data = numpy.genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
+    ext_data = genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
     # initialize the CcsCalibrationExt object
     cce = CcsCalibrationExt(*ext_data)
     for i in range(len(cce.calCalcCcs)):
         if percent_diff(cce.calCalcCcs[i], cce.calLitCcs[i]) > 5:
-            print "\t\tError: calibrant with m/z", cce.calMasses[i], "calibrated CCS more than 5% different from reference"
+            print("\t\tError: calibrant with m/z", cce.calMasses[i], "calibrated CCS more than 5% different from reference")
             return False
     # if it makes it through the entire list of compounds then it passes
     return True
@@ -143,21 +144,21 @@ external_data.test_cal_curve_figure
         passed (bool) - test passed
 """
     # load the external dataset
-    ext_data = numpy.genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
+    ext_data = genfromtxt(EXTDATA1_PATH, delimiter=",", unpack=True)
     # initialize the CcsCalibrationExt object
     cce = CcsCalibrationExt(*ext_data)
     cce.saveCalCurveFig(figure_file_name="CcsCal/tests/files/test_cal_curve_figure.png")
     # if no errors, check that the image exists then delete it and return True
-    if os.path.isfile("CcsCal/tests/files/test_cal_curve_figure.png"):
-        os.remove("CcsCal/tests/files/test_cal_curve_figure.png")
+    if isfile("CcsCal/tests/files/test_cal_curve_figure.png"):
+        remove("CcsCal/tests/files/test_cal_curve_figure.png")
         return True
     else:
         # anything goes wrong, FAIL
-        print "\t\tError: could not find the calibration curve figure"
+        print("\t\tError: could not find the calibration curve figure")
         return False
 
 
-# **the primary method for running all of the tests**
+# *the primary method for running all of the tests*
 def run():
     """
 external_data.run
@@ -168,26 +169,25 @@ external_data.run
     returns:
         passed_all (bool) - all tests passed
 """
-    print "\trunning simple initialization test..."
+    print("\trunning simple initialization test...")
     assert simple_test()
-    print "\t...PASS"
+    print("\t...PASS")
 
-    print "\trunning initialization test without automatic curve fitting..."
+    print("\trunning initialization test without automatic curve fitting...")
     assert test_ccs_cal_noauto()
-    print "\t...PASS"
+    print("\t...PASS")
 
-    print "\trunning CCS calibration test with known reference compounds..."
+    print("\trunning CCS calibration test with known reference compounds...")
     assert test_get_cal_ccs()
-    print "\t...PASS"
+    print("\t...PASS")
 
-    print "\ttesting calibrant CCS calibration residuals..."
+    print("\ttesting calibrant CCS calibration residuals...")
     assert test_get_cal_ccs()
-    print "\t...PASS"
+    print("\t...PASS")
 
-    print "\ttesting calibration curve figure generation..."
+    print("\ttesting calibration curve figure generation...")
     assert test_cal_curve_figure()
-    print "\t...PASS"
+    print("\t...PASS")
 
     # if everything passed return True for success
     return True
-

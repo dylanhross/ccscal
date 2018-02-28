@@ -1,7 +1,7 @@
 """
 globals.py
 
-Global varaibles used in modules throughout the package. DO NOT mess with these unless
+Global variables used in modules throughout the package. DO NOT mess with these unless
 you really know what you are doing.
 
 """
@@ -10,7 +10,7 @@ you really know what you are doing.
 PP_MASS_WIN_SCALE = 2.0
 
 # path to the pre-processing executable
-PP_EXE_PATH = "/Users/DRoss/Documents/GitHub/ccscal-plusplus/CcsCal/input/PreProcessTxt.exe"
+PP_EXE_PATH = "/Users/DRoss/Desktop/Documents/GitHub/ccscal/CcsCal/input/PreProcessTxt.exe"
 
 # initial gaussian function sigma parameter
 INIT_GAUSS_SIGMA = 10.0

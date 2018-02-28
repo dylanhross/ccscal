@@ -1,3 +1,7 @@
+"""
+"""
+
+
 from CcsCal import globals
 from CcsCal.input.RawData import RawData
 from CcsCal.processing.GaussFit import GaussFit
@@ -9,15 +13,14 @@ import matplotlib.gridspec as gs
 from scipy.optimize import curve_fit
 
 
-class CcsCalibration():
+class CcsCalibration:
 
     def __init__ (self,
-                  data_file,\
-                  cal_masses,\
-                  cal_lit_ccs_vals,\
-                  mass_window,\
-                  edc=globals.DEFAULT_EDC,\
-                  dtbin_to_dt=globals.DEFAULT_DTBIN_TO_DT):
+                  data_file,
+                  cal_masses,
+                  cal_lit_ccs_vals,
+                  mass_window,
+                  edc=globals.DEFAULT_EDC):
         """
 CcsCalibration -- Class
 
@@ -33,8 +36,6 @@ Input(s):
     cal_lit_ccs             - calibrant literature ccs values (list)
     mass_window             - specify a mass window to extract values from (float)
     [optional edc           - edc delay coefficient (float) [default = globals.DEFAULT_EDC]
-    [optional] dtbin_to_dt  - specify a different dtbin equivalent to use other than
-                                the default (float) [default = globals.DEFAULT_DTBIN_TO_DT]
 """
         # store some calculation constants
         self.edc = edc
@@ -49,8 +50,8 @@ Input(s):
         # make an array with calibrant drift times
         self.calDriftTimes = numpy.zeros([len(self.calMasses)])
         for n in range(len(self.calMasses)):
-            self.calDriftTimes[n - 1] = GaussFit(RawData(data_file, \
-                                                 self.calMasses[n - 1], \
+            self.calDriftTimes[n - 1] = GaussFit(RawData(data_file,
+                                                 self.calMasses[n - 1],
                                                  mass_window)).getDriftTime()
         # make an array with corrected drift time
         self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
@@ -58,11 +59,12 @@ Input(s):
         self.correctedLitCcs = self.calLitCcs * numpy.sqrt(self.reducedMass(self.calMasses))
         # Optimized parameters A, t0, B
         self.optparams = [globals.INIT_A, globals.INIT_T0, globals.INIT_B]
-        #perform the calibration
+        self.covar = None
+        self.fit_failed = True
+        # perform the calibration
         self.fitCalCurve()
         # make an array with calibrant calculated ccs
         self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
-
 
     def reducedMass(self, mass, mode='N2'):
         """
@@ -82,8 +84,7 @@ Returns:
         elif mode == 'He':
             return (mass * self.he_mass) / (mass + self.he_mass)
         else:
-            raise ValueError('CcsCalibration: reducedMass: error, mode must be either "N2" or "He"')
-
+            raise ValueError('CcsCalibration: reducedMass: mode must be either "N2" or "He"')
 
     def correctedDriftTime(self, dt, mass):
         """
@@ -100,7 +101,6 @@ Returns:
 """
         return dt - ((numpy.sqrt(mass) * self.edc) / 1000.0)
 
-
     def baseCalCurve (self, dt, A, t0, B):
         """
     CcsCalibration.baseCalCurve
@@ -116,7 +116,6 @@ Returns:
     """
         return (A  * (dt + t0)**B)
 
-
     def fitCalCurve(self):
         """
 CcsCalibration.fitCalCurve
@@ -129,17 +128,14 @@ Input(s):
 """
         self.fit_failed = False
         try:
-            self.optparams,self.covar=\
-            curve_fit(\
-            self.baseCalCurve,\
-            self.correctedDt,\
-            self.correctedLitCcs,\
-            p0=self.optparams,\
-            maxfev=self.max_fev)
+            self.optparams, self.covar = curve_fit(self.baseCalCurve,
+                                                   self.correctedDt,
+                                                   self.correctedLitCcs,
+                                                   p0=self.optparams,
+                                                   maxfev=self.max_fev)
         except RuntimeError:
             self.fit_failed = True
-            print "CCS CALIBRATION CURVE FIT FAILED WITH RUNTIME ERROR..."
-
+            print("CCS CALIBRATION CURVE FIT FAILED WITH RUNTIME ERROR...")
 
     def getCalibratedCcs(self, mass, dt):
         """
@@ -156,14 +152,13 @@ Returns:
                             - ccs (float)
 """
         if not self.fit_failed:
-            ### DEBUG
-            #print "opt_params[0] / sqrt(reduced mass) =", (self.optparams[0] / numpy.sqrt(self.reducedMass(mass)))
-            #print "corrected drift time =", self.correctedDriftTime(dt, mass)
+            # DEBUG
+            # print("opt_params[0] / sqrt(reduced mass) =", (self.optparams[0] / numpy.sqrt(self.reducedMass(mass))))
+            # print("corrected drift time =", self.correctedDriftTime(dt, mass))
             return (self.optparams[0] / numpy.sqrt(self.reducedMass(mass))) * ((self.correctedDriftTime(dt, mass) + self.optparams[1])**self.optparams[2])
         else:
-            raise ValueError ("optimized fit parameters have not been generated,\
-                              \nfitCalCurve() must be successfully run first!")
-
+            raise ValueError("CcsCalibration: getcalibratedCcs: optimized fit parameters have not been generated," +
+                             " fitCalCurve() must be successfully run first!")
 
     def saveCalCurveFig(self, figure_file_name="cal_curve.png"):
         """
@@ -180,27 +175,24 @@ Input(s):
         if not self.fit_failed:
             g = gs.GridSpec(2,1,height_ratios=[globals.HEIGHT_RATIO_1, globals.HEIGHT_RATIO_2])
             plt.subplot(g[0])
-            plt.plot(self.correctedDt,\
-                   self.correctedLitCcs, \
-                   'ko' , \
-                   fillstyle='none', \
-                   markeredgewidth=1.0, \
+            plt.plot(self.correctedDt,
+                   self.correctedLitCcs,
+                   'ko' ,
+                   fillstyle='none',
+                   markeredgewidth=1.0,
                    label="calibrants")
             plt.plot(self.correctedDt,
-                    self.baseCalCurve(self.correctedDt,\
-                                        self.optparams[0],\
-                                        self.optparams[1],\
-                                        self.optparams[2]),\
-                    'black', \
-                    label="fitted curve")
+                     self.baseCalCurve(self.correctedDt, self.optparams[0], self.optparams[1], self.optparams[2]),
+                     'black',
+                     label="fitted curve")
             plt.legend(loc="best")
             plt.title("CCS Calibration")
             plt.ylabel("corrected CCS")
             plt.subplot(g[1])
-            plt.bar(self.correctedDt, \
+            plt.bar(self.correctedDt,
                     numpy.array((100 * (self.calLitCcs - self.calCalcCcs) / self.calLitCcs)),
-                    0.25, \
-                    color='black', \
+                    0.25,
+                    color='black',
                     align='center')
             plt.xlabel("corrected drift time (ms)")
             plt.ylabel("residual CCS (%)")
@@ -208,8 +200,8 @@ Input(s):
             plt.savefig(figure_file_name, bbox_inches='tight', dpi=500)
             plt.close()
         else:
-            raise ValueError ("optimized fit parameters have not been generated,\
-                              \nfitCalCurve() must be successfully run first!")
+            raise ValueError("CcsCalibration: saveCalCurveFig: optimized fit parameters have not been generated," +
+                             " fitCalCurve() must be successfully run first!")
 
 
 class CcsCalibrationExt(CcsCalibration):
@@ -222,7 +214,7 @@ calibrated CCS values in their own programs without using all of the other machi
 structuring inputs/outputs
 """
 
-    def __init__(self, calibrant_mz, calibrant_dt, calibrant_ccs, \
+    def __init__(self, calibrant_mz, calibrant_dt, calibrant_ccs,
                  init_params=(500, 0, 0.5), edc=1.35, max_fev=5000, do_fit=True):
         """
 CcsCalibrationExt.__init__
@@ -244,7 +236,7 @@ Input(s):
         # store some calculation constants
         self.edc = edc
         self.n2_mass = 28.0134
-        ### TODO: implement helium option
+        # TODO: implement helium option
         self.he_mass = 4.0026
         self.max_fev = max_fev
         self.optparams = init_params
@@ -260,4 +252,3 @@ Input(s):
             self.fitCalCurve()
             # make an array with calibrant calculated ccs
             self.calCalcCcs = self.getCalibratedCcs(self.calMasses, self.calDriftTimes)
-
