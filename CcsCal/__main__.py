@@ -50,6 +50,11 @@ results of the calibration and CCS of all compounds"""
         from CcsCal.tests import all_tests
         all_tests.run()
         exit()
+        # no path to input provided
+    elif not args.path_to_input:
+        parser.print_help()
+        print("\nNo path to input file provided, exiting...")
+        exit(1)
     # print the help message at the beginning of each run
     parser.print_help()
     # all of the command-line arguments are stored in args
