@@ -156,11 +156,11 @@ input_parsing.run
     returns:
         passed_all (bool) - all tests passed
 """
-    print("\ttesting input file with shuffled parameters...")
+    print("\t(1 of 2) testing input file with shuffled parameters...")
     assert test_shuffled_parameters()
     print("\t...PASS")
 
-    print("\ttesting terse input file...")
+    print("\t(2 of 2) testing terse input file...")
     assert test_terse_input()
     print("\t...PASS")
 

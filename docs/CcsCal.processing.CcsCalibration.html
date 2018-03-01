@@ -49,7 +49,7 @@
     
 <tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="CcsCalibration-__init__"><strong>__init__</strong></a>(self, data_file, cal_masses, cal_lit_ccs_vals, mass_window, edc=1.35)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>&nbsp;--&nbsp;Class<br>
+<dl><dt><a name="CcsCalibration-__init__"><strong>__init__</strong></a>(self, data_file, cal_masses, cal_lit_ccs_vals, mass_window, edc=1.35, pp=True, gauss_figs=True)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>&nbsp;--&nbsp;Class<br>
 &nbsp;<br>
 Makes&nbsp;use&nbsp;of&nbsp;a&nbsp;GaussFit&nbsp;<a href="builtins.html#object">object</a>&nbsp;to&nbsp;extract&nbsp;the&nbsp;drift&nbsp;times&nbsp;for&nbsp;a&nbsp;list&nbsp;of<br>
 calibrant&nbsp;masses.&nbsp;Then,&nbsp;using&nbsp;a&nbsp;list&nbsp;of&nbsp;calibrant&nbsp;literature&nbsp;ccs&nbsp;values,&nbsp;a<br>
@@ -62,7 +62,9 @@ Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cal_masses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;calibrant&nbsp;m/z&nbsp;values&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cal_lit_ccs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;calibrant&nbsp;literature&nbsp;ccs&nbsp;values&nbsp;(list)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;mass_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;specify&nbsp;a&nbsp;mass&nbsp;window&nbsp;to&nbsp;extract&nbsp;values&nbsp;from&nbsp;(float)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[optional&nbsp;edc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;edc&nbsp;delay&nbsp;coefficient&nbsp;(float)&nbsp;[default&nbsp;=&nbsp;globals.DEFAULT_EDC]</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional&nbsp;edc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;edc&nbsp;delay&nbsp;coefficient&nbsp;(float)&nbsp;[default&nbsp;=&nbsp;globals.DEFAULT_EDC]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional&nbsp;pp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;pp&nbsp;parameter&nbsp;passed&nbsp;to&nbsp;RawData&nbsp;instances&nbsp;[default&nbsp;=&nbsp;True]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[optional&nbsp;gauss_figs&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;generate&nbsp;figures&nbsp;of&nbsp;the&nbsp;gaussian&nbsp;fits&nbsp;[default&nbsp;=&nbsp;True]</tt></dd></dl>
 
 <dl><dt><a name="CcsCalibration-baseCalCurve"><strong>baseCalCurve</strong></a>(self, dt, A, t0, B)</dt><dd><tt><a href="#CcsCalibration">CcsCalibration</a>.baseCalCurve<br>
 &nbsp;<br>

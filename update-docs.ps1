@@ -35,6 +35,8 @@ py -m pydoc -w CcsCal
         
         py -m pydoc -w CcsCal.tests.external_data
 
+        py -m pydoc -w CcsCal.tests.ccscal_main
+
 
 # move all of the html files into the docs directory, overwrite whatever is there
 mv -force .\*.html .\docs

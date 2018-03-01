@@ -14,7 +14,7 @@ from scipy.signal import savgol_filter
 
 class GaussFit:
 
-    def __init__(self, raw_data, smooth=False):
+    def __init__(self, raw_data, smooth=False, gen_fig=True):
         """
 GaussFit.__init__
 
@@ -25,6 +25,7 @@ Input(s):
     raw_data    - the object containing the raw data (RawData)
     [smooth     - use Savitsky-Golay filter to remove high frequency variation from the data
                     optional, default=True]
+    [gen_fig    - whether to generate the gaussian fit figure. optional, default = True]
 """
         # generate the initial parameters
         self.initparams = (amax(raw_data.dtBinAndIntensity[1]),
@@ -57,7 +58,9 @@ Input(s):
                                                 self.optparams[0],
                                                 self.optparams[1],
                                                 self.optparams[2])
-        self.saveGaussFitFig(self.filename, raw_data)
+        # generate a figure of the gaussian fit if requested
+        if gen_fig:
+            self.saveGaussFitFig(self.filename, raw_data)
 
     def gaussFunc(self,x, A, mu, sigma):
         """

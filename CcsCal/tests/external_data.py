@@ -1,5 +1,5 @@
 """
-    Tests for the CcsCalibrationExt object, for processesing data from external sources using the same CCS
+    Tests for the CcsCalibrationExt object, for processing data from external sources using the same CCS
     calibration scheme
 
     2017/06/20
@@ -169,23 +169,23 @@ external_data.run
     returns:
         passed_all (bool) - all tests passed
 """
-    print("\trunning simple initialization test...")
+    print("\t(1 of 5) running simple initialization test...")
     assert simple_test()
     print("\t...PASS")
 
-    print("\trunning initialization test without automatic curve fitting...")
+    print("\t(2 of 5) running initialization test without automatic curve fitting...")
     assert test_ccs_cal_noauto()
     print("\t...PASS")
 
-    print("\trunning CCS calibration test with known reference compounds...")
+    print("\t(3 of 5) running CCS calibration test with known reference compounds...")
     assert test_get_cal_ccs()
     print("\t...PASS")
 
-    print("\ttesting calibrant CCS calibration residuals...")
+    print("\t(4 of 5) testing calibrant CCS calibration residuals...")
     assert test_get_cal_ccs()
     print("\t...PASS")
 
-    print("\ttesting calibration curve figure generation...")
+    print("\t(5 of 5) testing calibration curve figure generation...")
     assert test_cal_curve_figure()
     print("\t...PASS")
 

@@ -8,8 +8,8 @@ from CcsCal.processing.GaussFit import GaussFit
 
 
 import numpy
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gs
+from matplotlib import pyplot as plt
+from matplotlib import gridspec as gs
 from scipy.optimize import curve_fit
 
 
@@ -20,7 +20,9 @@ class CcsCalibration:
                   cal_masses,
                   cal_lit_ccs_vals,
                   mass_window,
-                  edc=globals.DEFAULT_EDC):
+                  edc=globals.DEFAULT_EDC,
+                  pp=True,
+                  gauss_figs=True):
         """
 CcsCalibration -- Class
 
@@ -36,7 +38,9 @@ Input(s):
     cal_lit_ccs             - calibrant literature ccs values (list)
     mass_window             - specify a mass window to extract values from (float)
     [optional edc           - edc delay coefficient (float) [default = globals.DEFAULT_EDC]
-"""
+    [optional pp            - pp parameter passed to RawData instances [default = True]
+    [optional gauss_figs    - generate figures of the gaussian fits [default = True]
+ """
         # store some calculation constants
         self.edc = edc
         self.n2_mass = globals.N2_MASS
@@ -51,8 +55,8 @@ Input(s):
         self.calDriftTimes = numpy.zeros([len(self.calMasses)])
         for n in range(len(self.calMasses)):
             self.calDriftTimes[n - 1] = GaussFit(RawData(data_file,
-                                                 self.calMasses[n - 1],
-                                                 mass_window)).getDriftTime()
+                                                         self.calMasses[n - 1],
+                                                         mass_window, pp=pp), gen_fig=gauss_figs).getDriftTime()
         # make an array with corrected drift time
         self.correctedDt = self.correctedDriftTime(self.calDriftTimes, self.calMasses)
         # make an array with corrected lit ccs
@@ -190,7 +194,7 @@ Input(s):
             plt.ylabel("corrected CCS")
             plt.subplot(g[1])
             plt.bar(self.correctedDt,
-                    numpy.array((100 * (self.calLitCcs - self.calCalcCcs) / self.calLitCcs)),
+                    numpy.array((100. * (self.calLitCcs - self.calCalcCcs) / self.calLitCcs)),
                     0.25,
                     color='black',
                     align='center')

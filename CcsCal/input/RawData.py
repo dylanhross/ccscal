@@ -35,13 +35,15 @@ Input(s):
             self.data = genfromtxt(self.ppFileName, unpack=True)
         else:
             self.data = genfromtxt(data_filename, unpack=True)
+            # other objects that use RawData objects expect to use the ppFileName attribute, in this case we do not
+            # generate a pre-processed file so we just set the ppFileName to the original data file name
+            self.ppFileName = data_filename
         # this is set by fineFilterForMass
         self.dtBinAndIntensity = None
         # fine filter extracted data for mass and mass window
         self.fineFilterForMass(specified_mass, mass_window)
         # store the specified mass
         self.specifiedMass = specified_mass
-
 
     def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
         """

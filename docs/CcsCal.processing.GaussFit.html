@@ -42,7 +42,7 @@
     
 <tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
-<dl><dt><a name="GaussFit-__init__"><strong>__init__</strong></a>(self, raw_data, smooth=False)</dt><dd><tt><a href="#GaussFit">GaussFit</a>.__init__<br>
+<dl><dt><a name="GaussFit-__init__"><strong>__init__</strong></a>(self, raw_data, smooth=False, gen_fig=True)</dt><dd><tt><a href="#GaussFit">GaussFit</a>.__init__<br>
 &nbsp;<br>
 Initializes&nbsp;a&nbsp;<a href="#GaussFit">GaussFit</a>&nbsp;<a href="builtins.html#object">object</a>&nbsp;used&nbsp;for&nbsp;fitting&nbsp;a&nbsp;dtbin&nbsp;vs.&nbsp;intensity&nbsp;spectrum&nbsp;with&nbsp;a&nbsp;gaussian<br>
 function&nbsp;to&nbsp;determine&nbsp;an&nbsp;accurate&nbsp;drift&nbsp;time<br>
@@ -50,7 +50,8 @@ function&nbsp;to&nbsp;determine&nbsp;an&nbsp;accurate&nbsp;drift&nbsp;time<br>
 Input(s):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;raw_data&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;containing&nbsp;the&nbsp;raw&nbsp;data&nbsp;(RawData)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[smooth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;use&nbsp;Savitsky-Golay&nbsp;filter&nbsp;to&nbsp;remove&nbsp;high&nbsp;frequency&nbsp;variation&nbsp;from&nbsp;the&nbsp;data<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optional,&nbsp;default=True]</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optional,&nbsp;default=True]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[gen_fig&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;whether&nbsp;to&nbsp;generate&nbsp;the&nbsp;gaussian&nbsp;fit&nbsp;figure.&nbsp;optional,&nbsp;default&nbsp;=&nbsp;True]</tt></dd></dl>
 
 <dl><dt><a name="GaussFit-doFit"><strong>doFit</strong></a>(self, raw_data)</dt><dd><tt><a href="#GaussFit">GaussFit</a>.doFit<br>
 &nbsp;<br>
