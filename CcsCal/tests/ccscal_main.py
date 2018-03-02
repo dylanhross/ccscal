@@ -72,7 +72,7 @@ ccscal_main.single_ccs_calibration_accuracy
     passed = True
     for residual, mass in zip(residuals, CCSCALIBRATION_01.calMasses):
         if abs(residual) > 3.:
-            print("\t\tError: encountered residual CCS 32% " +
+            print("\t\tError: encountered residual CCS >3% " +
                   "({:.1f}%, m/z={:.4f}) in CCS Calibration".format(residual, mass))
             passed = False
     return passed

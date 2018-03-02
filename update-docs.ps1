@@ -18,6 +18,8 @@ py -m pydoc -w CcsCal
         py -m pydoc -w CcsCal.input.ParseInputFile
         
         py -m pydoc -w CcsCal.input.RawData
+
+        py -m pydoc -w CcsCal.input.ExcelIO
         
     py -m pydoc -w CcsCal.processing
     

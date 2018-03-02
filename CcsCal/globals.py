@@ -40,3 +40,19 @@ INIT_B = 1.0
 # height ratios for subplots in calibration curve figure
 HEIGHT_RATIO_1 = 5
 HEIGHT_RATIO_2 = 2
+
+# map specific xlsx spreadsheet cells to input values
+XLSX_CELL_MAP = {
+    "cal_curve_fn": "F4",
+    "cal_data_fn": "F5",
+    "cmpd_data_dir": "F6",
+    "mass_window": "E10",
+    "edc": "E11",
+    "tof_pusher": "E12",
+    "smooth_window": "E13",
+    "smooth_order": "E14",
+    "cal_mz_start": "B19",
+    "cal_ccs_start": "C19",
+    "cmpd_mz_start": "E19",
+    "cmpd_fn_start": "F19"
+}
