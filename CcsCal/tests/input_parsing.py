@@ -48,42 +48,42 @@ input_parsing.test_shuffled_parameters
     Pif2 = ParseInputFile(TEST_INPUT_02)
     Pif3 = ParseInputFile(TEST_INPUT_03)
     if (print_params):
-        print "-----input-file-1------"
-        print Pif1
-        print "-----input-file-2------"
-        print Pif2
-        print "-----input-file-3------"
-        print Pif3
-        print "-----------------------"
+        print("-----input-file-1------")
+        print(Pif1)
+        print("-----input-file-2------")
+        print(Pif2)
+        print("-----input-file-3------")
+        print(Pif3)
+        print("-----------------------")
     # test parameter by parameter against the reference values
     files = {"test file 1":Pif1, "test file 2":Pif2, "test file 3":Pif3}
     for file in files:
         if files[file].reportFileName != rfn:
-            print "\t\tError: report file name in", file, "does not match reference"
+            print("\t\tError: report file name in", file, "does not match reference")
             return False
         if files[file].massWindow != mwn:
-            print "\t\tError: mass window in", file, "does not match reference"
+            print("\t\tError: mass window in", file, "does not match reference")
             return False
         if files[file].edc != edc:
-            print "\t\tError: EDC parameter in", file, "does not match reference"
+            print("\t\tError: EDC parameter in", file, "does not match reference")
             return False
         if files[file].TOFPusherInt != tpi:
-            print "\t\tError: TOF pusher interval in", file, "does not match reference"
+            print("\t\tError: TOF pusher interval in", file, "does not match reference")
             return False
         if files[file].savgolWindow != sgw:
-            print "\t\tError: Savitsky-Golay smooth window in", file, "does not match reference"
+            print("\t\tError: Savitsky-Golay smooth window in", file, "does not match reference")
             return False
         if files[file].savgolPoly != sgp:
-            print "\t\tError: Savitsky-Golay smooth polynomial order in", file, "does not match reference"
+            print("\t\tError: Savitsky-Golay smooth polynomial order in", file, "does not match reference")
             return False
         if files[file].calCurveFileName != cff:
-            print "\t\tError: calibration curve file name in", file, "does not match reference"
+            print("\t\tError: calibration curve file name in", file, "does not match reference")
             return False
         if files[file].calDataFile != cdf:
-            print "\t\tError: calibration data file in", file, "does not match reference"
+            print("\t\tError: calibration data file in", file, "does not match reference")
             return False
         if files[file].compoundDataDir != crd:
-            print "\t\tError: compound data directory in", file, "does not match reference"
+            print("\t\tError: compound data directory in", file, "does not match reference")
             return False
     # if everything works return True for a pass
     return True
@@ -115,37 +115,37 @@ input_parsing.test_terse_input
     Pif = ParseInputFile(TEST_INPUT_04)
     # test the parameters
     if Pif.reportFileName != rfn:
-        print "\t\tError: report file name does not match reference"
+        print("\t\tError: report file name does not match reference")
         return False
     if Pif.massWindow != mwn:
-        print "\t\tError: mass window does not match reference"
+        print("\t\tError: mass window does not match reference")
         return False
     if Pif.edc != edc:
-        print "\t\tError: EDC parameter does not match reference"
+        print("\t\tError: EDC parameter does not match reference")
         return False
     if Pif.TOFPusherInt != tpi:
-        print "\t\tError: TOF pusher interval does not match reference"
+        print("\t\tError: TOF pusher interval does not match reference")
         return False
     if Pif.savgolWindow != sgw:
-        print "\t\tError: Savitsky-Golay smooth window does not match reference"
+        print("\t\tError: Savitsky-Golay smooth window does not match reference")
         return False
     if Pif.savgolPoly != sgp:
-        print "\t\tError: Savitsky-Golay smooth polynomial order does not match reference"
+        print("\t\tError: Savitsky-Golay smooth polynomial order does not match reference")
         return False
     if Pif.calCurveFileName != cff:
-        print "\t\tError: calibration curve file name does not match reference"
+        print("\t\tError: calibration curve file name does not match reference")
         return False
     if Pif.calDataFile != cdf:
-        print "\t\tError: calibration data file does not match reference"
+        print("\t\tError: calibration data file does not match reference")
         return False
     if Pif.compoundDataDir != crd:
-        print "\t\tError: compound data directory does not match reference"
+        print("\t\tError: compound data directory does not match reference")
         return False
     # if nothing fails return True
     return True
 
 
-# **the primary method for running all of the tests**
+# *the primary method for running all of the tests*
 def run():
     """
 input_parsing.run
@@ -156,14 +156,13 @@ input_parsing.run
     returns:
         passed_all (bool) - all tests passed
 """
-    print "\ttesting input file with shuffled parameters..."
+    print("\t(1 of 2) testing input file with shuffled parameters...")
     assert test_shuffled_parameters()
-    print "\t...PASS"
+    print("\t...PASS")
 
-    print "\ttesting terse input file..."
+    print("\t(2 of 2) testing terse input file...")
     assert test_terse_input()
-    print "\t...PASS"
+    print("\t...PASS")
 
     # if everything passed return True for success
     return True
-

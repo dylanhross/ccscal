@@ -1,7 +1,11 @@
-import numpy
+"""
+"""
 
 
-class ParseInputFile():
+from numpy import genfromtxt, array
+
+
+class ParseInputFile:
 
     def __init__(self, input_filename):
         # take in the input parameters
@@ -70,7 +74,7 @@ Returns:
                         done = True
                 else:
                     break
-        params.append(numpy.genfromtxt(filename, dtype=str, comments=";"))
+        params.append(genfromtxt(filename, dtype=str, comments=";"))
         return params
 
 
@@ -93,14 +97,14 @@ unpacked parameters:
     self.calDataFile        <- cdf
     self.compoundDataDir    <- crd
 
-### TODO:   FIX THIS CRAP, this system is terrible because it breaks if any of the
-###         keywords are omitted
+    TODO:   FIX THIS CRAP, this system is terrible because it breaks if any of the
+            keywords are omitted
 
 Input(s):
     none
 """
-        ### TODO:   FIX THIS CRAP, this system is terrible because it breaks if any of the
-        ###         keywords are omitted or out of order
+        # TODO:   FIX THIS CRAP, this system is terrible because it breaks if any of the
+        #         keywords are omitted or out of order
         self.reportFileName = self.rawData[0][0]
         # cast massWindow, edc, and TOFPusherInt to type float
         self.massWindow = float(self.rawData[0][1])
@@ -143,7 +147,7 @@ Input(s):
                 templist1.append(float(thing[0]))
                 templist2.append(float(thing[1]))
         # array of floats
-        self.calibrantData = numpy.array([templist1, templist2])
+        self.calibrantData = array([templist1, templist2])
         # make separate lists for the compound file names and compound masses
         self.compoundFileNames = templist3
         self.compoundMasses = templist4

@@ -3,12 +3,12 @@
 from CcsCal import globals
 
 
-import os
-import numpy
-from subprocess import call
+from os.path import splitext, exists
+from numpy import genfromtxt, zeros, abs
+from subprocess import run
 
 
-class RawData():
+class RawData:
 
     def __init__ (self, data_filename, specified_mass, mass_window, pp=True):
         """
@@ -26,20 +26,24 @@ Input(s):
             # create the pre-processed data file
             self.callPreProcessTxt(data_filename, specified_mass, mass_window)
             # store the file name of the pre-processed file
-            self.ppFileName = os.path.splitext(data_filename)[0] + ".pp-" + str(specified_mass) + ".txt"
+            self.ppFileName = splitext(data_filename)[0] + ".pp-" + str(specified_mass) + ".txt"
             # check if pre-processing was successful
-            if not os.path.exists(self.ppFileName):
+            if not exists(self.ppFileName):
                 raise RuntimeError("pre-processing for file " + data_filename + " failed!")
             # generate an array with the mass, dtbin, and intensity values from the pre-processed
             # data file
-            self.data = numpy.genfromtxt(self.ppFileName, unpack=True)
+            self.data = genfromtxt(self.ppFileName, unpack=True)
         else:
-            self.data = numpy.genfromtxt(data_filename, unpack=True)
+            self.data = genfromtxt(data_filename, unpack=True)
+            # other objects that use RawData objects expect to use the ppFileName attribute, in this case we do not
+            # generate a pre-processed file so we just set the ppFileName to the original data file name
+            self.ppFileName = data_filename
+        # this is set by fineFilterForMass
+        self.dtBinAndIntensity = None
         # fine filter extracted data for mass and mass window
         self.fineFilterForMass(specified_mass, mass_window)
         # store the specified mass
         self.specifiedMass = specified_mass
-
 
     def callPreProcessTxt(self, data_filename, specified_mass, mass_window):
         """
@@ -58,9 +62,8 @@ Input(s):
 """
         # pre-process data with rough mass_window (i.e. double the original mass window)
         useWindow = globals.PP_MASS_WIN_SCALE * mass_window
-        # TODO: find a better way of specifying the PreProcessTxt.o executable location (otherwise
-        #       it screws up the portability of the program, plus it needs to change to .exe when
-        #       it's compiled on windows
+        # generate this string for logging purposes, but it isn't used for the actual
+        # function call
         functionCallLine = globals.PP_EXE_PATH + " " +\
                             data_filename + " " +\
                             str(specified_mass) + " " + \
@@ -68,12 +71,14 @@ Input(s):
         # had to use shell=True flag here... not sure if I had to do that with RawToTxt
         # but eventually I may need to figure something else out since I am sure sure how
         # well it will work with this flag on Windows.
-        print "\tCalling PreProcessTxt.exe..."
-        print "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        print "\t" + functionCallLine
-        print "\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        call(functionCallLine, shell=True)
-        print "\t...Done\n"
+        print("\tCalling PreProcessTxt.exe...")
+        print("\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("\t" + functionCallLine)
+        print("\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        # NOTE: call the executable with each of the params as separate args, this way we do not
+        #       need the shell=True flag. Still haven't quite fixed the portability issue though.
+        run(globals.PP_EXE_PATH, data_filename, specified_mass, mass_window)
+        print("\t...Done\n")
 
 
     def fineFilterForMass(self, specified_mass, mass_window):
@@ -88,10 +93,10 @@ Input(s):
     mass_window         - window of masses to bin data together for (float)
 """
         # prepare an array with dtbin and intensity values
-        self.dtBinAndIntensity = numpy.zeros([2, 200])
+        self.dtBinAndIntensity = zeros([2, 200])
         for n in range(1, 201):
             self.dtBinAndIntensity[0][n - 1] = n
         for n in range(len(self.data[0])):
-            if (numpy.abs(specified_mass - self.data[0][n]) <= mass_window):
+            if abs(specified_mass - self.data[0][n]) <= mass_window:
                 # add the intensity to its corresponding bin
                 self.dtBinAndIntensity[1][int(self.data[1][n]) - 1] += self.data[2][n]

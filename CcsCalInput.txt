@@ -24,7 +24,7 @@
 ;cff				=	/Users/DRoss/Desktop/ccscal_test/cal-curve.png
 ;
 ; 	full path and name of the CCS calibration data file
-;cdf				= 	/Users/DRoss/Desktop/ccscal_test/IM_0881PolyAla_Mid.txt
+;cdf				= 	/Users/DRoss/Desktop/ccscal_test/IM_0881PolyAla.txt
 ;
 ; 	information for CCS calibrants
 ; 	mass		literature ccs

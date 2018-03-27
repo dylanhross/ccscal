@@ -1,0 +1,5 @@
+# PyCharm IDE-generated directory
+.idea/
+# Python byte-compiled/optimized/DLL files
+__pycache__/
+*.py[cod]

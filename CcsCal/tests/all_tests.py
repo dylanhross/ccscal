@@ -6,8 +6,9 @@
 """
 
 
-from CcsCal.tests import input_parsing
-from CcsCal.tests import external_data
+from CcsCal.tests import (input_parsing,
+                          external_data,
+                          ccscal_main)
 
 
 def run_subtest(subtest, name):
@@ -22,13 +23,11 @@ all_tests.run_subtest
         no
 """
     try:
-        print "testing " + name + "..."
+        print("testing " + name + "...")
         assert subtest.run()
-        print "...PASS"
+        print("...PASS\n")
     except AssertionError:
-        print "...FAIL"
-    print
-
+        print("...FAIL\n")
 
 # run all of the tests
 def run():
@@ -42,5 +41,5 @@ all_tests.run
         no
 """
     run_subtest(input_parsing, "ParseInputFile")
-    run_subtest(external_data, "CcsCalibrationExt with external data source")
-
+    run_subtest(ccscal_main, "CcsCal main execution")
+    run_subtest(external_data, "CcsCalibrationExt with an external data source")
