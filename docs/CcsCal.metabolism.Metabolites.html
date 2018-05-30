@@ -1,0 +1,739 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module CcsCal.metabolism.Metabolites</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="CcsCal.html"><font color="#ffffff">CcsCal</font></a>.<a href="CcsCal.metabolism.html"><font color="#ffffff">metabolism</font></a>.Metabolites</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cdylan%5Cpycharmprojects%5Cccscal%5Cccscal%5Cmetabolism%5Cmetabolites.py">c:\users\dylan\pycharmprojects\ccscal\ccscal\metabolism\metabolites.py</a></font></td></tr></table>
+    <p><tt>CcsCal/metabolism/Metabolites.py<br>
+Dylan&nbsp;H.&nbsp;Ross<br>
+2018/05/23<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data&nbsp;structures&nbsp;encapsulating&nbsp;various&nbsp;types&nbsp;of&nbsp;drug&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;their&nbsp;mass&nbsp;shifts&nbsp;from&nbsp;parent&nbsp;compounds.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Acetyl">Acetyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Desethyl">Desethyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Desmethyl">Desmethyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Glucuronyl">Glucuronyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Glutathionyl">Glutathionyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#HAOxidized">HAOxidized</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Hydrolyzed">Hydrolyzed</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Hydroxyl">Hydroxyl</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Oxidized">Oxidized</a>
+</font></dt><dt><font face="helvetica, arial"><a href="CcsCal.metabolism.Metabolites.html#Reduced">Reduced</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Acetyl">class <strong>Acetyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Acetyl">Acetyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;R-NH2&nbsp;-&gt;&nbsp;R-NH-C=O-CH3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;42.01056]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Acetyl">Acetyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Acetyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Acetyl">Acetyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Acetyl">Acetyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Acetyl">Acetyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Acetyl">Acetyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Acetyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Acetyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Acetyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Desethyl">class <strong>Desethyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Desethyl">Desethyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;(O/N)-CH2CH3&nbsp;-&gt;&nbsp;(O/N)-H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;-&nbsp;29.03910]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Desethyl">Desethyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Desethyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Desethyl">Desethyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Desethyl">Desethyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Desethyl">Desethyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Desethyl">Desethyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Desethyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Desethyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Desethyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Desmethyl">class <strong>Desmethyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Desmethyl">Desmethyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;(O/N)-CH3&nbsp;-&gt;&nbsp;(O/N)-H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;-&nbsp;14.01564]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Desmethyl">Desmethyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Desmethyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Desmethyl">Desmethyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Desmethyl">Desmethyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Desmethyl">Desmethyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Desmethyl">Desmethyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Desmethyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Desmethyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Desmethyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Glucuronyl">class <strong>Glucuronyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Glucuronyl">Glucuronyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;(O/N)-H&nbsp;-&gt;&nbsp;(O/N)-Glc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;176.03208]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Glucuronyl">Glucuronyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Glucuronyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Glucuronyl">Glucuronyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Glucuronyl">Glucuronyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Glucuronyl">Glucuronyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Glucuronyl">Glucuronyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Glucuronyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Glucuronyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Glucuronyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Glutathionyl">class <strong>Glutathionyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Glutathionyl">Glutathionyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;308.08374]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Glutathionyl">Glutathionyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Glutathionyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Glutathionyl">Glutathionyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Glutathionyl">Glutathionyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Glutathionyl">Glutathionyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Glutathionyl">Glutathionyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Glutathionyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Glutathionyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Glutathionyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="HAOxidized">class <strong>HAOxidized</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#HAOxidized">HAOxidized</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Metabolic&nbsp;modification&nbsp;representing&nbsp;heteroatom&nbsp;oxidation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R-S-R&nbsp;-&gt;&nbsp;R-S=O-R&nbsp;sulfone<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R-S=O-R&nbsp;-&gt;&nbsp;R-O=S=O-R&nbsp;sulfoxide<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R3-N&nbsp;-&gt;&nbsp;R3-N-&gt;O&nbsp;N-oxide<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;15.99492]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#HAOxidized">HAOxidized</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="HAOxidized-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#HAOxidized">HAOxidized</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#HAOxidized">HAOxidized</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#HAOxidized">HAOxidized</a>)&nbsp;--&nbsp;new&nbsp;<a href="#HAOxidized">HAOxidized</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="HAOxidized-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="HAOxidized-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="HAOxidized-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Hydrolyzed">class <strong>Hydrolyzed</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Hydrolyzed">Hydrolyzed</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;A-C=O-(O/N)-B&nbsp;-&gt;&nbsp;A-C=O-OH&nbsp;+&nbsp;H-(C/N)-B<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;mass&nbsp;of&nbsp;the&nbsp;carbonyl&nbsp;half&nbsp;(A)&nbsp;is&nbsp;specified&nbsp;at&nbsp;initialization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M_A&nbsp;+&nbsp;17.00274]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M_B&nbsp;+&nbsp;1.00782]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Hydrolyzed">Hydrolyzed</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Hydrolyzed-__init__"><strong>__init__</strong></a>(self, base_mass, depth, mass_A)</dt><dd><tt><a href="#Hydrolyzed">Hydrolyzed</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Hydrolyzed">Hydrolyzed</a>&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mass_A&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;one&nbsp;of&nbsp;the&nbsp;carbonyl&nbsp;half<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Hydrolyzed">Hydrolyzed</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Hydrolyzed">Hydrolyzed</a>&nbsp;instance</tt></dd></dl>
+
+<dl><dt><a name="Hydrolyzed-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Hydrolyzed">Hydrolyzed</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;Adds&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;both&nbsp;mass_A&nbsp;and&nbsp;mass_B.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Hydrolyzed-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Hydrolyzed">Hydrolyzed</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Hydrolyzed-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Hydroxyl">class <strong>Hydroxyl</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Hydroxyl">Hydroxyl</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Metabolic&nbsp;modification&nbsp;representing&nbsp;R-H&nbsp;-&gt;&nbsp;R-O-H<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;15.99492]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Hydroxyl">Hydroxyl</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Hydroxyl-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Hydroxyl">Hydroxyl</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Hydroxyl">Hydroxyl</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Hydroxyl">Hydroxyl</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Hydroxyl">Hydroxyl</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Hydroxyl-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Hydroxyl-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Hydroxyl-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Metabolite">class <strong>Metabolite</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Metabolite">Metabolite</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;base&nbsp;class&nbsp;for&nbsp;metabolic&nbsp;modifications.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Metabolite-__init__"><strong>__init__</strong></a>(self, base_mass, depth)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Metabolite">Metabolite</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;instance</tt></dd></dl>
+
+<dl><dt><a name="Metabolite-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Metabolite-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Metabolite-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Oxidized">class <strong>Oxidized</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Oxidized">Oxidized</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;RH-RH&nbsp;-&gt;&nbsp;R=R<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;-&nbsp;2.01564]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Oxidized">Oxidized</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Oxidized-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Oxidized">Oxidized</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Oxidized">Oxidized</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Oxidized">Oxidized</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Oxidized">Oxidized</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Oxidized-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Oxidized-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Oxidized-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Reduced">class <strong>Reduced</strong></a>(<a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Reduced">Reduced</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;modification&nbsp;representing&nbsp;R=R&nbsp;-&gt;&nbsp;RH-RH<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[M&nbsp;+&nbsp;2.01564]<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Reduced">Reduced</a></dd>
+<dd><a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Reduced-__init__"><strong>__init__</strong></a>(self, base_mass, depth, label=None)</dt><dd><tt><a href="#Reduced">Reduced</a>.__init__<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates&nbsp;a&nbsp;new&nbsp;<a href="#Reduced">Reduced</a>&nbsp;instance.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base_mass&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;compound&nbsp;before&nbsp;metabolism<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int)&nbsp;--&nbsp;depth<br>
+&nbsp;&nbsp;&nbsp;&nbsp;returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="#Reduced">Reduced</a>)&nbsp;--&nbsp;new&nbsp;<a href="#Reduced">Reduced</a>&nbsp;instance</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><a name="Reduced-add_sub"><strong>add_sub</strong></a>(self, metabolite, *args)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.add_sub<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds&nbsp;an&nbsp;instance&nbsp;of&nbsp;a&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;(or,&nbsp;more&nbsp;likely&nbsp;a&nbsp;child&nbsp;class)&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;<a href="#Metabolite">Metabolite</a>'s&nbsp;subsequent&nbsp;metabolites&nbsp;list.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metabolite&nbsp;(str)&nbsp;--&nbsp;name&nbsp;of&nbsp;<a href="#Metabolite">Metabolite</a>&nbsp;or&nbsp;child&nbsp;class</tt></dd></dl>
+
+<dl><dt><a name="Reduced-labels"><strong>labels</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.labels<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;yields&nbsp;the&nbsp;label&nbsp;for&nbsp;this&nbsp;metabolite&nbsp;and&nbsp;all&nbsp;subsequent&nbsp;metabolites<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str)&nbsp;--&nbsp;metabolite&nbsp;label</tt></dd></dl>
+
+<dl><dt><a name="Reduced-masses"><strong>masses</strong></a>(self)</dt><dd><tt><a href="#Metabolite">Metabolite</a>.masses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;description:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generator&nbsp;that&nbsp;calculates&nbsp;the&nbsp;metabolite&nbsp;mass&nbsp;for&nbsp;this&nbsp;modification&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;all&nbsp;of&nbsp;the&nbsp;metabolite&nbsp;masses&nbsp;of&nbsp;subsequent&nbsp;metabolites&nbsp;in&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.<strong>sub</strong>&nbsp;and&nbsp;yields&nbsp;them.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(float)&nbsp;--&nbsp;mass&nbsp;of&nbsp;metabolites</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="CcsCal.metabolism.Metabolites.html#Metabolite">Metabolite</a>:<br>
+<dl><dt><strong>meta_</strong> = {'Acetyl': &lt;class 'CcsCal.metabolism.Metabolites.Acetyl'&gt;, 'Desethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desethyl'&gt;, 'Desmethyl': &lt;class 'CcsCal.metabolism.Metabolites.Desmethyl'&gt;, 'Glucuronyl': &lt;class 'CcsCal.metabolism.Metabolites.Glucuronyl'&gt;, 'Glutathionyl': &lt;class 'CcsCal.metabolism.Metabolites.Glutathionyl'&gt;, 'HAOxidized': &lt;class 'CcsCal.metabolism.Metabolites.HAOxidized'&gt;, 'Hydrolyzed': &lt;class 'CcsCal.metabolism.Metabolites.Hydrolyzed'&gt;, 'Hydroxyl': &lt;class 'CcsCal.metabolism.Metabolites.Hydroxyl'&gt;, 'Metabolite': &lt;class 'CcsCal.metabolism.Metabolites.Metabolite'&gt;, 'Oxidized': &lt;class 'CcsCal.metabolism.Metabolites.Oxidized'&gt;, ...}</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

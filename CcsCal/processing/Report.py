@@ -1,4 +1,9 @@
-from CcsCal import globals
+"""
+    CcsCal/processing/Report.py
+    Dylan H. Ross
+        description:
+            TODO
+"""
 
 
 import time
@@ -176,7 +181,7 @@ Input(s):
         self.wLn("{:32s} {: 9.4f}      {: 6.3f}         {: 6.3f}".format(data_file_name, mz, dt, ccs))
 
 
-    def wLn(self, line_to_write=""):
+    def wLn(self, *args):
         """
 Report.wLn
 
@@ -185,7 +190,10 @@ convenient shorthand for self.report_file.write("..." + "\n")
 Input(s):
     [optional] line_to_write    - line to write to file (string)
 """
-        self.report_file.write(line_to_write + "\n")
+        if args:
+            for arg in args:
+                self.report_file.write(arg)
+        self.report_file.write("\n")
 
 
     def finish(self):

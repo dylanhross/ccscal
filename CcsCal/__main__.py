@@ -1,9 +1,12 @@
 """
-        This is the execution path to follow if this program is called directly through
-        the command line.
+    CcsCal/__main__.py
+    Dylan H. Ross
+        description:
+            This is the execution path to follow if this program is called directly through
+            the command line.
 
-        The following argument is required:
-            -i, --input         full path to ccscal_input.txt
+            The following argument is required:
+                -i, --input         full path to ccscal_input.txt
 """
 
 

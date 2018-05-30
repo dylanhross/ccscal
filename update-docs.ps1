@@ -20,6 +20,12 @@ py -m pydoc -w CcsCal
         py -m pydoc -w CcsCal.input.RawData
 
         py -m pydoc -w CcsCal.input.ExcelIO
+
+    py -m pydoc -w CcsCal.metabolism
+
+        py -m pydoc -w CcsCal.metabolism.Metabolites
+
+        py -m pydoc -w CcsCal.metabolism.Encoder
         
     py -m pydoc -w CcsCal.processing
     
